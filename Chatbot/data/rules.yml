@@ -2,12 +2,73 @@ version: "3.1"
 
 rules:
 
-- rule: Say goodbye anytime the user says goodbye
+- rule: Saluto iniziale
   steps:
-  - intent: goodbye
-  - action: utter_goodbye
+    - intent: saluta
+    - action: utter_saluta
 
-- rule: Say 'I am a bot' anytime the user challenges
+- rule: Arrivederci
   steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+    - intent: arrivederci
+    - action: utter_arrivederci
+
+- rule: Inizio ricerca laptop
+  steps:
+    - intent: ricerca_laptop
+    - action: utter_ask_budget
+
+- rule: Filtro per prezzo
+  steps:
+    - intent: filtra_per_prezzo
+    - action: action_filtra_laptop
+
+- rule: Filtro per marca
+  steps:
+    - intent: filtra_per_marca
+    - action: action_filtra_laptop
+
+- rule: Filtro per specifiche
+  steps:
+    - intent: filtra_per_specifiche
+    - action: action_filtra_laptop
+
+- rule: Mostra dettagli laptop
+  steps:
+    - intent: mostra_dettagli
+    - action: action_mostra_dettagli
+
+- rule: Salva laptop nei preferiti
+  steps:
+    - intent: salva_preferito
+    - action: action_salva_preferito
+    - action: utter_conferma_salvataggio
+
+- rule: Rimuovi dai preferiti
+  steps:
+    - intent: rimuovi_preferito
+    - action: action_rimuovi_preferito
+    - action: utter_conferma_rimozione
+
+- rule: Mostra preferiti
+  steps:
+    - intent: mostra_preferiti
+    - action: action_mostra_preferiti
+    - action: utter_mostra_preferiti
+
+- rule: Conferma acquisto
+  steps:
+    - intent: conferma_acquisto
+    - action: action_conferma_acquisto
+    - action: utter_acquisto_confermato
+
+- rule: Annulla operazione
+  steps:
+    - intent: annulla
+    - action: action_annulla_operazione
+    - action: utter_azione_annullata
+
+# Gestione fallback (opzionale, se configurato)
+- rule: Nessuna intenzione riconosciuta
+  steps:
+    - intent: nessuna_intenzione
+    - action: utter_azione_annullata

@@ -1,33 +1,98 @@
 version: "3.1"
 
 intents:
-  - greet
-  - goodbye
-  - affirm
-  - deny
-  - mood_great
-  - mood_unhappy
-  - bot_challenge
+  - saluta
+  - arrivederci
+  - ricerca_laptop
+  - filtra_per_prezzo
+  - filtra_per_marca
+  - filtra_per_specifiche
+  - mostra_dettagli
+  - salva_preferito
+  - rimuovi_preferito
+  - mostra_preferiti
+  - conferma_acquisto
+  - annulla
+  - nessuna_intenzione
+
+entities:
+  - prezzo_min
+  - prezzo_max
+  - marca
+  - ram
+  - storage
+  - processore
+  - gpu
+  - dimensione_schermo
+  - modello
+  - display
+  - battery_life
+
+slots:
+  prezzo_min:
+    type: float
+    influence_conversation: true
+  prezzo_max:
+    type: float
+    influence_conversation: true
+  marca:
+    type: text
+    influence_conversation: true
+  ram:
+    type: text
+    influence_conversation: true
+  storage:
+    type: text
+    influence_conversation: true
+  processore:
+    type: text
+    influence_conversation: true
+  gpu:
+    type: text
+    influence_conversation: true
+  dimensione_schermo:
+    type: text
+    influence_conversation: true
+  modello:
+    type: text
+    influence_conversation: true
+  display:
+    type: text
+    influence_conversation: true
+  battery_life:
+    type: text
+    influence_conversation: true
 
 responses:
-  utter_greet:
-  - text: "Hey! How are you?"
+  utter_saluta:
+    - text: "Ciao! Come posso aiutarti nella ricerca del tuo nuovo laptop?"
+  utter_arrivederci:
+    - text: "A presto! Se hai bisogno di aiuto, torna pure."
+  utter_ask_budget:
+    - text: "Qual è il tuo budget massimo?"
+  utter_ask_marca:
+    - text: "C'è una marca che preferisci?"
+  utter_ask_specifiche:
+    - text: "Hai qualche preferenza tecnica? RAM, processore, dimensioni, autonomia?"
+  utter_mostra_preferiti:
+    - text: "Ecco i laptop che hai salvato finora."
+  utter_conferma_salvataggio:
+    - text: "Laptop salvato tra i preferiti!"
+  utter_conferma_rimozione:
+    - text: "Rimosso dai preferiti."
+  utter_acquisto_confermato:
+    - text: "Perfetto! Procediamo con l'acquisto."
+  utter_azione_annullata:
+    - text: "Operazione annullata. Fammi sapere se vuoi fare altro."
 
-  utter_cheer_up:
-  - text: "Here is something to cheer you up:"
-    image: "https://i.imgur.com/nGF1K8f.jpg"
-
-  utter_did_that_help:
-  - text: "Did that help you?"
-
-  utter_happy:
-  - text: "Great, carry on!"
-
-  utter_goodbye:
-  - text: "Bye"
-
-  utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
+actions:
+  - action_filtra_laptop
+  - action_mostra_dettagli
+  - action_salva_preferito
+  - action_rimuovi_preferito
+  - action_mostra_preferiti
+  - action_conferma_acquisto
+  - action_annulla_operazione
 
 session_config:
   session_expiration_time: 60

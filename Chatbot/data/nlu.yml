@@ -1,91 +1,168 @@
 version: "3.1"
 
 nlu:
-- intent: greet
+- intent: saluta
   examples: |
-    - hey
-    - hello
-    - hi
-    - hello there
-    - good morning
-    - good evening
-    - moin
-    - hey there
-    - let's go
-    - hey dude
-    - goodmorning
-    - goodevening
-    - good afternoon
+    - Ciao
+    - Ehi
+    - Salve
+    - Buongiorno
+    - Ciao bot
+    - Hey
+    - Buonasera
+    - Ciao, come va?
+    - Ehi, sei lì?
 
-- intent: goodbye
+- intent: arrivederci
   examples: |
-    - cu
-    - good by
-    - cee you later
-    - good night
-    - bye
-    - goodbye
-    - have a nice day
-    - see you around
-    - bye bye
-    - see you later
+    - A presto
+    - Grazie, ciao
+    - Ci sentiamo
+    - Arrivederci
+    - Alla prossima
+    - Ok, grazie
+    - Va bene, ciao
+    - Chiudo qui
+    - Devo andare, saluti
+  
 
-- intent: affirm
+- intent: filtra_per_prezzo
   examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
+    - Vorrei spendere meno di [800 euro](prezzo_max)
+    - Il mio budget è [1000€](prezzo_max)
+    - Voglio qualcosa sotto i [600 euro](prezzo_max)
+    - Tra [700](prezzo_min) e [900 euro](prezzo_max)
+    - Non voglio spendere più di [1200 euro](prezzo_max)
+    - Il massimo che posso spendere è [1500 euro](prezzo_max)
+    - Hai qualcosa sui [500 euro](prezzo_max)?
+    - Portatili fino a [900 euro](prezzo_max)
+    - Mi serve qualcosa sopra i [700 euro](prezzo_min)
 
-- intent: deny
+- intent: filtra_per_marca
   examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+    - Preferisco [Lenovo](marca)
+    - Solo [ASUS](marca), per favore
+    - Hai qualcosa della [HP](marca)?
+    - Cerco un laptop [Dell](marca)
+    - Mostrami [Acer](marca)
+    - Mi interessano i portatili [MSI](marca)
+    - Evita i [MacBook](marca)
+    - Quali modelli [ASUS](marca) avete?
+    - Mostra solo [Lenovo](marca) e [HP](marca)
 
-- intent: mood_great
+- intent: filtra_per_specifiche
   examples: |
-    - perfect
-    - great
-    - amazing
-    - feeling like a king
-    - wonderful
-    - I am feeling very good
-    - I am great
-    - I am amazing
-    - I am going to save the world
-    - super stoked
-    - extremely good
-    - so so perfect
-    - so good
-    - so perfect
+    - Vorrei [16 GB](ram) di RAM
+    - Mi serve un SSD da almeno [512 GB](storage)
+    - Cerco un [i7](processore)
+    - Deve avere una [scheda grafica dedicata](gpu)
+    - Voglio uno schermo da [15 pollici](dimensione_schermo)
+    - Mi serve per giocare, quindi buona [GPU](gpu)
+    - Cerco un laptop con [Ryzen 5](processore)
+    - Voglio almeno [8GB](ram) di RAM
+    - Preferisco un disco [SSD](storage)
+    - Cerco un portatile da [13 pollici](dimensione_schermo)
+    - Voglio uno con [32 GB](ram) di RAM e [1 TB](storage) di SSD
+    - Uno con [Intel i5](processore) va bene
+    - Mi interessa un laptop con display [4K](display)
+    - Preferisco un portatile con schermo [OLED](display)
+    - Voglio un laptop con batteria da almeno [10 ore](battery_life)
+    - Cerco un'autonomia di almeno [8 ore](battery_life)
 
-- intent: mood_unhappy
+- intent: mostra_dettagli
   examples: |
-    - my day was horrible
-    - I am sad
-    - I don't feel very well
-    - I am disappointed
-    - super sad
-    - I'm so sad
-    - sad
-    - very sad
-    - unhappy
-    - not good
-    - not very good
-    - extremly sad
-    - so saad
-    - so sad
+    - Fammi vedere i dettagli del [secondo](modello)
+    - Mostrami più info sul [primo](modello)
+    - Voglio sapere di più sul laptop [ASUS](marca)
+    - Che caratteristiche ha il [Dell](marca)?
+    - Dettagli su quello da [899 euro](prezzo_max)
+    - Cosa ha quel portatile con [16GB](ram) RAM?
+    - Fammi vedere le specifiche del modello con [Ryzen 7](processore)
+    - Dammi più informazioni su quello che costa meno
+    - Voglio vedere le caratteristiche tecniche del modello [HP Pavilion](modello)
+    - Questo ha un display [OLED](display)?
+    - Com'è il display? È [4K](display)?
+    - Quanta [batteria](battery_life) ha questo?
+    - Quanto dura la [batteria](battery_life)?
 
-- intent: bot_challenge
+- intent: ricerca_laptop
   examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+    - Voglio comprare un laptop
+    - Mi serve un portatile
+    - Sto cercando un computer
+    - Consigliami un notebook
+    - Aiutami a trovare un laptop
+    - Hai qualche buon portatile da consigliarmi?
+    - Mi interessano i laptop in offerta
+    - Quali laptop consigli?
+    - Voglio un nuovo computer
+    - Mi serve un notebook per lavorare
+- intent: salva_preferito
+  examples: |
+    - Salva questo
+    - Aggiungilo ai preferiti
+    - Voglio ricordarlo
+    - Tienilo da parte
+    - Mettilo tra i preferiti
+    - Lo salvo
+    - Salva il terzo
+    - Voglio tenere questo
+    - Aggiungi ai miei salvataggi
+
+- intent: rimuovi_preferito
+  examples: |
+    - Rimuovi questo dai preferiti
+    - Non mi interessa più
+    - Elimina il secondo
+    - Togli quello che costa 900 euro
+    - Non voglio più quel laptop
+    - Cancella il primo preferito
+    - Non mi serve più quello salvato
+    - Eliminalo dai preferiti
+
+- intent: mostra_preferiti
+  examples: |
+    - Mostra i miei preferiti
+    - Fammi vedere quelli salvati
+    - Cosa ho messo da parte?
+    - Voglio vedere i miei salvataggi
+    - Elenco dei laptop che ho salvato
+    - Lista preferiti
+    - Visualizza i preferiti
+    - Voglio rivedere quelli che mi interessavano
+
+- intent: conferma_acquisto
+  examples: |
+    - Lo voglio comprare
+    - Ordina questo
+    - Procediamo con l'acquisto
+    - Aggiungilo al carrello
+    - Confermo l'acquisto
+    - Acquisto confermato
+    - Compralo ora
+    - Voglio concludere l'acquisto
+
+- intent: annulla
+  examples: |
+    - Annulla
+    - Ho cambiato idea
+    - Lascia stare
+    - Interrompi la ricerca
+    - Non mi interessa più
+    - Annulla tutto
+    - Ferma la conversazione
+    - Ricomincia da capo
+
+- intent: nessuna_intenzione
+  examples: |
+    - Boh
+    - Non so
+    - Fammi pensare
+    - Forse dopo
+    - Non ora
+    - Non sono sicuro
+    - Vedrò più tardi
+    - Lasciamo stare per ora
+
+# Gli altri intent (saluta, arrivederci, salva_preferito, mostra_preferiti, ecc.)
+# restano invariati perché non usano entità

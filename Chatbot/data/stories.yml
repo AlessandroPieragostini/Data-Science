@@ -2,29 +2,71 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: Flusso completo di ricerca laptop con filtri
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
+    - intent: saluta
+    - action: utter_saluta
+    - intent: ricerca_laptop
+    - action: utter_ask_budget
+    - intent: filtra_per_prezzo
+      entities:
+        - prezzo_max: 1000
+    - action: action_filtra_laptop
+    - intent: filtra_per_marca
+      entities:
+        - marca: "Lenovo"
+    - action: action_filtra_laptop
+    - intent: filtra_per_specifiche
+      entities:
+        - ram: "16 GB"
+        - processore: "i7"
+    - action: action_filtra_laptop
 
-- story: sad path 1
+- story: Mostrare dettagli di un modello
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: affirm
-  - action: utter_happy
+    - intent: mostra_dettagli
+      entities:
+        - modello: "ASUS ZenBook"
+    - action: action_mostra_dettagli
 
-- story: sad path 2
+- story: Aggiungere un modello ai preferiti
   steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: mood_unhappy
-  - action: utter_cheer_up
-  - action: utter_did_that_help
-  - intent: deny
-  - action: utter_goodbye
+    - intent: salva_preferito
+      entities:
+        - modello: "HP Envy"
+    - action: action_salva_preferito
+    - action: utter_conferma_salvataggio
+
+- story: Visualizzare preferiti salvati
+  steps:
+    - intent: mostra_preferiti
+    - action: action_mostra_preferiti
+    - action: utter_mostra_preferiti
+
+- story: Rimuovere un preferito
+  steps:
+    - intent: rimuovi_preferito
+      entities:
+        - modello: "HP Envy"
+    - action: action_rimuovi_preferito
+    - action: utter_conferma_rimozione
+
+- story: Confermare acquisto
+  steps:
+    - intent: conferma_acquisto
+    - action: action_conferma_acquisto
+    - action: utter_acquisto_confermato
+
+- story: Annullare operazione
+  steps:
+    - intent: annulla
+    - action: action_annulla_operazione
+    - action: utter_azione_annullata
+
+- story: Ricerca laptop con preferenza per display e batteria
+  steps:
+    - intent: filtra_per_specifiche
+      entities:
+        - display: "touch"
+        - battery_life: "10 ore"
+    - action: action_filtra_laptop
