@@ -32,36 +32,79 @@ slots:
   prezzo_min:
     type: float
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: prezzo_min
+
   prezzo_max:
     type: float
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: prezzo_max
+
   marca:
     type: text
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: marca
+
   ram:
     type: text
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: ram
+
   storage:
     type: text
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: storage
+
   processore:
     type: text
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: processore
+
   gpu:
     type: text
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: gpu
+
   dimensione_schermo:
     type: text
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: dimensione_schermo
+
   modello:
     type: text
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: modello
+
   display:
     type: text
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: display
+
   battery_life:
     type: text
     influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: battery_life
 
 responses:
   utter_saluta:

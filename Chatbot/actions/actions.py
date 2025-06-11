@@ -1,67 +1,53 @@
 from typing import Any, Dict, List
+import pandas as pd
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 
-# Simulazione di un "catalogo" di laptop
-catalogo_laptop = [
-    {
-        "modello": "HP Envy",
-        "marca": "HP",
-        "prezzo": 999,
-        "ram": "16 GB",
-        "storage": "512 GB SSD",
-        "processore": "i7",
-        "gpu": "Intel Iris",
-        "dimensione_schermo": "13.3",
-        "display": "touch",
-        "battery_life": "10 ore"
-    },
-    {
-        "modello": "Lenovo IdeaPad 5",
-        "marca": "Lenovo",
-        "prezzo": 749,
-        "ram": "8 GB",
-        "storage": "256 GB SSD",
-        "processore": "i5",
-        "gpu": "Intel UHD",
-        "dimensione_schermo": "15.6",
-        "display": "opaco",
-        "battery_life": "8 ore"
-    },
-    {
-        "modello": "ASUS ZenBook",
-        "marca": "ASUS",
-        "prezzo": 1199,
-        "ram": "16 GB",
-        "storage": "1 TB SSD",
-        "processore": "i7",
-        "gpu": "NVIDIA MX450",
-        "dimensione_schermo": "14",
-        "display": "OLED",
-        "battery_life": "12 ore"
-    }
-]
+# Carica il DataFrame dal CSV
+df = pd.read_csv("./dataset/laptop.csv").fillna("Dato non disponibile")
 
 # Dizionario per memorizzare i preferiti degli utenti
 user_favorites = {}
 
-def match_laptop(filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-    results = []
-    for laptop in catalogo_laptop:
-        match = True
-        for key, value in filters.items():
-            if value and key in laptop:
-                if isinstance(value, (int, float)):
-                    if key == "prezzo_max" and laptop["prezzo"] > value:
-                        match = False
-                    elif key == "prezzo_min" and laptop["prezzo"] < value:
-                        match = False
-                elif value.lower() not in str(laptop[key]).lower():
-                    match = False
-        if match:
-            results.append(laptop)
-    return results
+# Funzione di filtro laptop
+def match_laptop(filters: Dict[str, Any]) -> pd.DataFrame:
+    query = df.copy()
+
+    if filters.get("prezzo_min"):
+        query = query[query["price"] >= float(filters["prezzo_min"])]
+
+    if filters.get("prezzo_max"):
+        query = query[query["price"] <= float(filters["prezzo_max"])]
+
+    if filters.get("marca"):
+        query = query[query["Brand"].str.lower().str.contains(filters["marca"].lower())]
+
+    if filters.get("ram"):
+        query = query[query["ram_gb"].astype(str).str.contains(filters["ram"])]
+
+    if filters.get("storage"):
+        query = query[
+            query["ssd_gb"].astype(str).str.contains(filters["storage"]) |
+            query["hdd_gb"].astype(str).str.contains(filters["storage"])
+        ]
+
+    if filters.get("processore"):
+        query = query[query["Processor_Name"].str.lower().str.contains(filters["processore"].lower())]
+
+    if filters.get("gpu"):
+        query = query[query["GPU"].str.lower().str.contains(filters["gpu"].lower())]
+
+    if filters.get("dimensione_schermo"):
+        query = query[query["display_inch"].astype(str).str.contains(filters["dimensione_schermo"])]
+
+    if filters.get("display"):
+        query = query[query["Display_type"].str.lower().str.contains(filters["display"].lower())]
+
+    if filters.get("battery_life"):
+        query = query[query["battery_hrs"].astype(str).str.contains(filters["battery_life"])]
+
+    return query
 
 
 class ActionFiltraLaptop(Action):
@@ -87,10 +73,13 @@ class ActionFiltraLaptop(Action):
 
         results = match_laptop(filters)
 
-        if results:
+        if not results.empty:
             message = "Ecco alcuni laptop che corrispondono ai tuoi criteri:\n"
-            for r in results:
-                message += f"- {r['modello']} ({r['marca']}), {r['ram']}, {r['processore']}, {r['prezzo']}€\n"
+            for _, r in results.head(5).iterrows():
+                message += (
+                    f"- {r['Name']} ({r['Brand']}), CPU: {r['Processor_Name']}, "
+                    f"RAM: {r['ram_gb']}GB, Prezzo: {r['price']}€\n"
+                )
         else:
             message = "Non ho trovato laptop che corrispondono ai criteri forniti."
 
@@ -107,13 +96,28 @@ class ActionMostraDettagli(Action):
             domain: Dict[str, Any]) -> List[Dict[str, Any]]:
 
         modello = tracker.get_slot("modello")
-        laptop = next((l for l in catalogo_laptop if modello and modello.lower() in l["modello"].lower()), None)
 
-        if laptop:
-            details = "\n".join([f"{k.capitalize()}: {v}" for k, v in laptop.items()])
-            dispatcher.utter_message(text=f"Ecco i dettagli per {modello}:\n{details}")
+        if modello:
+            match = df[df["Name"].str.lower().str.contains(modello.lower())]
+            if not match.empty:
+                r = match.iloc[0]
+                details = (
+                    f"Modello: {r['Name']}\n"
+                    f"Marca: {r['Brand']}\n"
+                    f"Prezzo: {r['price']}€\n"
+                    f"Processore: {r['Processor_Name']} ({r['processor_brand']}) - {r['ghz']} GHz\n"
+                    f"RAM: {r['ram_gb']} GB ({r['ram_type']}, espandibile fino a {r['ram_expandable_gb']} GB)\n"
+                    f"Storage: {r['ssd_gb']} GB SSD + {r['hdd_gb']} GB HDD\n"
+                    f"GPU: {r['GPU']} ({r['gpu_brand']})\n"
+                    f"Display: {r['Display_type']} - {r['display_inch']} pollici\n"
+                    f"Autonomia: {r['battery_hrs']} ore\n"
+                    f"Alimentatore: {r['adapter_w']} W"
+                )
+                dispatcher.utter_message(text=details)
+            else:
+                dispatcher.utter_message(text="Non ho trovato il modello indicato.")
         else:
-            dispatcher.utter_message(text="Non ho trovato il modello indicato.")
+            dispatcher.utter_message(text="Per favore specifica un modello.")
 
         return []
 

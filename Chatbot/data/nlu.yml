@@ -28,15 +28,15 @@ nlu:
 
 - intent: filtra_per_prezzo
   examples: |
-    - Vorrei spendere meno di [800 euro](prezzo_max)
-    - Il mio budget è [1000€](prezzo_max)
-    - Voglio qualcosa sotto i [600 euro](prezzo_max)
-    - Tra [700](prezzo_min) e [900 euro](prezzo_max)
-    - Non voglio spendere più di [1200 euro](prezzo_max)
-    - Il massimo che posso spendere è [1500 euro](prezzo_max)
-    - Hai qualcosa sui [500 euro](prezzo_max)?
-    - Portatili fino a [900 euro](prezzo_max)
-    - Mi serve qualcosa sopra i [700 euro](prezzo_min)
+    - Vorrei spendere meno di [800](prezzo_max)
+    - Il mio budget è [1000](prezzo_max)
+    - Voglio qualcosa sotto i [600](prezzo_max)
+    - Tra [700](prezzo_min) e [900](prezzo_max)
+    - Non voglio spendere più di [1200](prezzo_max)
+    - Il massimo che posso spendere è [1500](prezzo_max)
+    - Hai qualcosa sui [500](prezzo_max)?
+    - Portatili fino a [900](prezzo_max)
+    - Mi serve qualcosa sopra i [700](prezzo_min)
 
 - intent: filtra_per_marca
   examples: |
@@ -75,8 +75,8 @@ nlu:
     - Mostrami più info sul [primo](modello)
     - Voglio sapere di più sul laptop [ASUS](marca)
     - Che caratteristiche ha il [Dell](marca)?
-    - Dettagli su quello da [899 euro](prezzo_max)
-    - Cosa ha quel portatile con [16GB](ram) RAM?
+    - Dettagli su quello da [899](prezzo_max)
+    - Cosa ha quelcd  portatile con [16GB](ram) RAM?
     - Fammi vedere le specifiche del modello con [Ryzen 7](processore)
     - Dammi più informazioni su quello che costa meno
     - Voglio vedere le caratteristiche tecniche del modello [HP Pavilion](modello)
