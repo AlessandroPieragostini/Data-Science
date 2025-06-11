@@ -201,3 +201,21 @@ class ActionAnnullaOperazione(Action):
             domain: Dict[str, Any]) -> List[Dict[str, Any]]:
         dispatcher.utter_message(text="Operazione annullata. Se vuoi fare altro, chiedimi pure!")
         return []
+
+class ActionSvuotaSlot(Action):
+    def name(self) -> str:
+        return "action_svuota_slot"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[str, Any]) -> List[Dict[str, Any]]:
+
+        slots_da_svuotare = [
+            "marca", "ram", "storage", "processore", "gpu",
+            "dimensione_schermo", "display", "battery_life",
+            "prezzo_min", "prezzo_max", "modello"
+        ]
+
+        dispatcher.utter_message(text="Tutti i criteri di ricerca sono stati azzerati.")
+
+        return [SlotSet(slot, None) for slot in slots_da_svuotare]

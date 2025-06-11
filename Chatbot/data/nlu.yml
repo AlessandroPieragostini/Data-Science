@@ -52,22 +52,22 @@ nlu:
 
 - intent: filtra_per_specifiche
   examples: |
-    - Vorrei [16 GB](ram) di RAM
-    - Mi serve un SSD da almeno [512 GB](storage)
+    - Vorrei [16](ram) GB di RAM
+    - Mi serve un SSD da almeno [512](storage) GB
     - Cerco un [i7](processore)
     - Deve avere una [scheda grafica dedicata](gpu)
-    - Voglio uno schermo da [15 pollici](dimensione_schermo)
+    - Voglio uno schermo da [15](dimensione_schermo) pollici
     - Mi serve per giocare, quindi buona [GPU](gpu)
     - Cerco un laptop con [Ryzen 5](processore)
-    - Voglio almeno [8GB](ram) di RAM
+    - Voglio almeno [8](ram) GB di RAM
     - Preferisco un disco [SSD](storage)
-    - Cerco un portatile da [13 pollici](dimensione_schermo)
-    - Voglio uno con [32 GB](ram) di RAM e [1 TB](storage) di SSD
+    - Cerco un portatile da [13](dimensione_schermo) pollici
+    - Voglio uno con [32](ram) GB di RAM e [1](storage) TB di SSD
     - Uno con [Intel i5](processore) va bene
-    - Mi interessa un laptop con display [4K](display)
-    - Preferisco un portatile con schermo [OLED](display)
-    - Voglio un laptop con batteria da almeno [10 ore](battery_life)
-    - Cerco un'autonomia di almeno [8 ore](battery_life)
+    - Mi interessa un laptop con display [LCD](display)
+    - Preferisco un portatile con schermo [LED](display)
+    - Voglio un laptop con batteria da almeno [10](battery_life) ore
+    - Cerco un'autonomia di almeno [8](battery_life) ore
 
 - intent: mostra_dettagli
   examples: |
@@ -76,12 +76,12 @@ nlu:
     - Voglio sapere di più sul laptop [ASUS](marca)
     - Che caratteristiche ha il [Dell](marca)?
     - Dettagli su quello da [899](prezzo_max)
-    - Cosa ha quelcd  portatile con [16GB](ram) RAM?
+    - Cosa ha quelcd  portatile con [16](ram) GB RAM?
     - Fammi vedere le specifiche del modello con [Ryzen 7](processore)
     - Dammi più informazioni su quello che costa meno
     - Voglio vedere le caratteristiche tecniche del modello [HP Pavilion](modello)
-    - Questo ha un display [OLED](display)?
-    - Com'è il display? È [4K](display)?
+    - Questo ha un display [LED](display)?
+    - Com'è il display? È [LCD](display)?
     - Quanta [batteria](battery_life) ha questo?
     - Quanto dura la [batteria](battery_life)?
 
@@ -141,6 +141,16 @@ nlu:
     - Acquisto confermato
     - Compralo ora
     - Voglio concludere l'acquisto
+
+- intent: svuota_ricerca
+  examples: |
+    - resetta i filtri
+    - svuota i criteri di ricerca
+    - ricomincia da capo
+    - togli tutti i filtri
+    - annulla i parametri
+    - cancella la mia selezione
+    - voglio ripartire da zero
 
 - intent: annulla
   examples: |

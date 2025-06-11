@@ -18,7 +18,7 @@ stories:
     - action: action_filtra_laptop
     - intent: filtra_per_specifiche
       entities:
-        - ram: "16 GB"
+        - ram: "16"
         - processore: "i7"
     - action: action_filtra_laptop
 
@@ -68,5 +68,5 @@ stories:
     - intent: filtra_per_specifiche
       entities:
         - display: "touch"
-        - battery_life: "10 ore"
+        - battery_life: "10"
     - action: action_filtra_laptop

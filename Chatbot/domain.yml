@@ -14,6 +14,7 @@ intents:
   - conferma_acquisto
   - annulla
   - nessuna_intenzione
+  - svuota_ricerca
 
 entities:
   - prezzo_min
@@ -51,14 +52,14 @@ slots:
         entity: marca
 
   ram:
-    type: text
+    type: float
     influence_conversation: true
     mappings:
       - type: from_entity
         entity: ram
 
   storage:
-    type: text
+    type: float
     influence_conversation: true
     mappings:
       - type: from_entity
@@ -79,7 +80,7 @@ slots:
         entity: gpu
 
   dimensione_schermo:
-    type: text
+    type: float
     influence_conversation: true
     mappings:
       - type: from_entity
@@ -100,7 +101,7 @@ slots:
         entity: display
 
   battery_life:
-    type: text
+    type: float
     influence_conversation: true
     mappings:
       - type: from_entity
@@ -136,6 +137,7 @@ actions:
   - action_mostra_preferiti
   - action_conferma_acquisto
   - action_annulla_operazione
+  - action_svuota_slot
 
 session_config:
   session_expiration_time: 60

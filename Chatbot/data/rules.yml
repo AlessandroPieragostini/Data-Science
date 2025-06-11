@@ -72,3 +72,8 @@ rules:
   steps:
     - intent: nessuna_intenzione
     - action: utter_azione_annullata
+
+- rule: Svuota filtri di ricerca
+  steps:
+    - intent: svuota_ricerca
+    - action: action_svuota_slot
