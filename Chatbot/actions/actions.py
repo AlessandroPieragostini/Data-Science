@@ -72,16 +72,17 @@ class ActionFiltraLaptop(Action):
         }
 
         results = match_laptop(filters)
-
+        message = (f"{filters['prezzo_min']} - {filters['prezzo_max']} - {filters['marca']} - {filters['ram']} - {filters['storage']} - {filters['processore']} -"
+                   f"{filters['gpu']} - {filters['dimensione_schermo']} - {filters['display']} - {filters['battery_life']}")
         if not results.empty:
-            message = "Ecco alcuni laptop che corrispondono ai tuoi criteri:\n"
+            message +=  "Ecco alcuni laptop che corrispondono ai tuoi criteri:\n"
             for _, r in results.head(5).iterrows():
                 message += (
                     f"- {r['name']} ({r['brand']}), CPU: {r['processor_name']}, "
                     f"RAM: {r['ram_gb']}GB, Prezzo: {r['price']}€\n"
                 )
         else:
-            message = "Non ho trovato laptop che corrispondono ai criteri forniti."
+            message += "Non ho trovato laptop che corrispondono ai criteri forniti."
 
         dispatcher.utter_message(text=message)
         return []
