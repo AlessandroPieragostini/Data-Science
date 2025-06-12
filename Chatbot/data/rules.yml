@@ -15,7 +15,7 @@ rules:
 - rule: Inizio ricerca laptop
   steps:
     - intent: ricerca_laptop
-    - action: utter_ask_budget
+    - action: utter_ask_requisiti
 
 - rule: Filtro per prezzo
   steps:

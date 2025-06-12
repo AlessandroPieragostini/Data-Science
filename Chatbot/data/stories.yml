@@ -7,7 +7,7 @@ stories:
     - intent: saluta
     - action: utter_saluta
     - intent: ricerca_laptop
-    - action: utter_ask_budget
+    - action: utter_ask_requisiti
     - intent: filtra_per_prezzo
       entities:
         - prezzo_max: 1000
