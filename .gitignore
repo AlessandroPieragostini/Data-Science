@@ -4,3 +4,6 @@ best_model.pkl
 IMDB.zip
 Data_Science___SNA.pdf
 laptop.csv
+.rasa
+models
+__pycache__
