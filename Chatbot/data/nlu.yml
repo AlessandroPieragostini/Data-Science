@@ -227,13 +227,21 @@ nlu:
     - Hewlett-Packard
     - h p
 
+- synonym: laptop
+  examples: |
+    - portatile
+    - computer
+    - computer portatile
+    - pc 
+    - pc portatile
+
 - synonym: dell
   examples: |
     - Dell
     - dell
     - DELL
 
-- synonym: lenovo
+- synonym: Lenovo
   examples: |
     - Lenovo
     - lenovo
@@ -247,12 +255,6 @@ nlu:
   examples: |
     - Intel
     - intel
-    - i3
-    - i5
-    - i7
-    - core i3
-    - core i5
-    - core i7
 
 - synonym: amd
   examples: |
@@ -267,26 +269,13 @@ nlu:
     - MediaTek
     - mediatek
 
-- synonym: 4 GB
+- synonym: GB
   examples: |
-    - 4 GB
-    - 4gb
-    - quattro giga
-    - 4 gigabyte
+    - GB
+    - gb
+    - giga
+    - gigabyte
 
-- synonym: 8 GB
-  examples: |
-    - 8 GB
-    - 8gb
-    - otto giga
-    - 8 gigabyte
-
-- synonym: 16 GB
-  examples: |
-    - 16 GB
-    - 16gb
-    - sedici giga
-    - 16 gigabyte
 
 - synonym: ssd
   examples: |
@@ -351,3 +340,8 @@ nlu:
     - meno di 5 ore
     - durata bassa
     - batteria debole
+
+- synonym: Acer
+  examples: |
+    - ACER
+    - acer

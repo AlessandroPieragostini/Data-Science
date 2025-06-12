@@ -88,7 +88,7 @@ stories:
         - battery_life: 13
     - action: action_filtra_laptop
     - intent: svuota_ricerca
-    - action: svuota_slot
+    - action: action_svuota_slot
 
 - story: Flusso completo di ricerca laptop con filtri 2
   steps:
