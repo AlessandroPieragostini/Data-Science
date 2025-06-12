@@ -112,6 +112,8 @@ responses:
     - text: "Ciao! Come posso aiutarti nella ricerca del tuo nuovo laptop?"
   utter_arrivederci:
     - text: "A presto! Se hai bisogno di aiuto, torna pure."
+  utter_ask_requisiti:
+    - text: "Quali sono i requisiti che cerchi in un laptop?"
   utter_ask_budget:
     - text: "Qual è il tuo budget massimo?"
   utter_ask_marca:
