@@ -21,31 +21,31 @@ def match_laptop(filters: Dict[str, Any]) -> pd.DataFrame:
         query = query[query["price"] <= float(filters["prezzo_max"])]
 
     if filters.get("marca"):
-        query = query[query["Brand"].str.lower().str.contains(filters["marca"].lower())]
+        query = query[query["brand"].str.lower().str.contains(filters["marca"].lower())]
 
     if filters.get("ram"):
-        query = query[query["ram_gb"].astype(str).str.contains(filters["ram"])]
+        query = query[query["ram_gb"]>= float(filters["ram"])]
 
     if filters.get("storage"):
         query = query[
-            query["ssd_gb"].astype(str).str.contains(filters["storage"]) |
-            query["hdd_gb"].astype(str).str.contains(filters["storage"])
+            query["ssd_gb"]>= float(filters["storage"])  |
+            query["hdd_gb"]>= float(filters["storage"])
         ]
 
     if filters.get("processore"):
-        query = query[query["Processor_Name"].str.lower().str.contains(filters["processore"].lower())]
+        query = query[query["processor_name"].str.lower().str.contains(filters["processore"].lower())]
 
     if filters.get("gpu"):
         query = query[query["GPU"].str.lower().str.contains(filters["gpu"].lower())]
 
     if filters.get("dimensione_schermo"):
-        query = query[query["display_inch"].astype(str).str.contains(filters["dimensione_schermo"])]
+        query = query[query["display_inch"]>= float(filters["dimensione_schermo"]) ]
 
     if filters.get("display"):
-        query = query[query["Display_type"].str.lower().str.contains(filters["display"].lower())]
+        query = query[query["display_type"].str.lower().str.contains(filters["display"].lower())]
 
     if filters.get("battery_life"):
-        query = query[query["battery_hrs"].astype(str).str.contains(filters["battery_life"])]
+        query = query[query["battery_hrs"] >= float(filters["battery_life"])]
 
     return query
 
@@ -77,7 +77,7 @@ class ActionFiltraLaptop(Action):
             message = "Ecco alcuni laptop che corrispondono ai tuoi criteri:\n"
             for _, r in results.head(5).iterrows():
                 message += (
-                    f"- {r['Name']} ({r['Brand']}), CPU: {r['Processor_Name']}, "
+                    f"- {r['name']} ({r['brand']}), CPU: {r['processor_name']}, "
                     f"RAM: {r['ram_gb']}GB, Prezzo: {r['price']}€\n"
                 )
         else:
@@ -98,18 +98,18 @@ class ActionMostraDettagli(Action):
         modello = tracker.get_slot("modello")
 
         if modello:
-            match = df[df["Name"].str.lower().str.contains(modello.lower())]
+            match = df[df["name"].str.lower().str.contains(modello.lower())]
             if not match.empty:
                 r = match.iloc[0]
                 details = (
-                    f"Modello: {r['Name']}\n"
-                    f"Marca: {r['Brand']}\n"
+                    f"Modello: {r['name']}\n"
+                    f"Marca: {r['brand']}\n"
                     f"Prezzo: {r['price']}€\n"
-                    f"Processore: {r['Processor_Name']} ({r['processor_brand']}) - {r['ghz']} GHz\n"
+                    f"Processore: {r['processor_name']} ({r['processor_brand']}) - {r['ghz']} GHz\n"
                     f"RAM: {r['ram_gb']} GB ({r['ram_type']}, espandibile fino a {r['ram_expandable_gb']} GB)\n"
                     f"Storage: {r['ssd_gb']} GB SSD + {r['hdd_gb']} GB HDD\n"
                     f"GPU: {r['GPU']} ({r['gpu_brand']})\n"
-                    f"Display: {r['Display_type']} - {r['display_inch']} pollici\n"
+                    f"Display: {r['display_type']} - {r['display_inch']} pollici\n"
                     f"Autonomia: {r['battery_hrs']} ore\n"
                     f"Alimentatore: {r['adapter_w']} W"
                 )
