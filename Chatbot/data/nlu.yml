@@ -80,7 +80,7 @@ nlu:
     - Mi serve per giocare, quindi buona [GPU](gpu)
     - Vorrei un portatile con [RTX 3060](gpu)
     - Deve avere almeno una [integrata Intel Iris Xe](gpu)
-    - Cerco un laptop con [GPU Nvidia](gpu)
+    - Cerco un laptop con GPU [Nvidia](gpu)
 
 - intent: filtra_per_dimensione_schermo
   examples: |
@@ -209,17 +209,6 @@ nlu:
     - Ferma la conversazione
     - Ricomincia da capo
 
-- intent: nessuna_intenzione
-  examples: |
-    - Boh
-    - Non so
-    - Fammi pensare
-    - Forse dopo
-    - Non ora
-    - Non sono sicuro
-    - Vedrò più tardi
-    - Lasciamo stare per ora
-
 - synonym: hp
   examples: |
     - HP
@@ -245,11 +234,13 @@ nlu:
   examples: |
     - Lenovo
     - lenovo
+    - LENOVO
 
 - synonym: infinix
   examples: |
     - Infinix
     - infinix
+    - INFINIX
 
 - synonym: intel
   examples: |
@@ -260,14 +251,12 @@ nlu:
   examples: |
     - AMD
     - amd
-    - Ryzen
-    - Ryzen 5
-    - Ryzen 7
 
 - synonym: mediatek
   examples: |
     - MediaTek
     - mediatek
+    - MEDIATEK
 
 - synonym: GB
   examples: |
@@ -289,57 +278,6 @@ nlu:
     - HDD
     - disco rigido
     - hard disk
-    - memoria meccanica
-
-- synonym: economico
-  examples: |
-    - economico
-    - a basso prezzo
-    - low cost
-    - meno di 300 euro
-    - sotto i 400
-
-- synonym: espandibile
-  examples: |
-    - espandibile
-    - si può aggiornare
-    - ampliabile
-    - si può aumentare
-
-- synonym: non espandibile
-  examples: |
-    - non espandibile
-    - fissa
-    - non aggiornabile
-    - non ampliabile
-
-- synonym: 15.6 pollici
-  examples: |
-    - 15.6 pollici
-    - quindici virgola sei
-    - schermo grande
-    - display da 15
-
-- synonym: 11.6 pollici
-  examples: |
-    - 11.6 pollici
-    - undici virgola sei
-    - schermo piccolo
-    - display da 11
-
-- synonym: lunga durata
-  examples: |
-    - lunga durata
-    - buona batteria
-    - più di 8 ore
-    - durata lunga
-
-- synonym: breve durata
-  examples: |
-    - scarsa batteria
-    - meno di 5 ore
-    - durata bassa
-    - batteria debole
 
 - synonym: Acer
   examples: |

@@ -33,10 +33,10 @@ def match_laptop(filters: Dict[str, Any]) -> pd.DataFrame:
         ]
 
     if filters.get("processore"):
-        query = query[query["processor_name"].str.lower().str.contains(filters["processore"].lower())]
+        query = query[query["processor_brand"].str.lower().str.contains(filters["processore"].lower())]
 
     if filters.get("gpu"):
-        query = query[query["GPU"].str.lower().str.contains(filters["gpu"].lower())]
+        query = query[query["gpu"].str.lower().str.contains(filters["gpu"].lower())]
 
     if filters.get("dimensione_schermo"):
         query = query[query["display_inch"]>= float(filters["dimensione_schermo"]) ]
