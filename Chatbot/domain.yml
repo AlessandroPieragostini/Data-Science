@@ -6,7 +6,14 @@ intents:
   - ricerca_laptop
   - filtra_per_prezzo
   - filtra_per_marca
-  - filtra_per_specifiche
+  - filtra_per_ram
+  - filtra_per_storage
+  - filtra_per_processore
+  - filtra_per_gpu
+  - filtra_per_dimensione_schermo
+  - filtra_per_display
+  - filtra_per_battery_life
+  - filtra_per_modello
   - mostra_dettagli
   - salva_preferito
   - rimuovi_preferito

@@ -76,7 +76,7 @@ class ActionFiltraLaptop(Action):
                    f"{filters['gpu']} - {filters['dimensione_schermo']} - {filters['display']} - {filters['battery_life']}")
         if not results.empty:
             message +=  "Ecco alcuni laptop che corrispondono ai tuoi criteri:\n"
-            for _, r in results.head(5).iterrows():
+            for _, r in results.sample(n=5).iterrows():
                 message += (
                     f"- {r['name']} ({r['brand']}), CPU: {r['processor_name']}, "
                     f"RAM: {r['ram_gb']}GB, Prezzo: {r['price']}€\n"
