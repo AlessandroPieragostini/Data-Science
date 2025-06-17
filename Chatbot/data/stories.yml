@@ -1,224 +1,61 @@
 version: "3.1"
 
 stories:
+  - story: greet and exit
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: goodbye
+      - action: utter_goodbye
 
-- story: Flusso completo di ricerca laptop con filtri
-  steps:
-    - intent: saluta
-    - action: utter_saluta
-    - intent: ricerca_laptop
-    - action: utter_ask_requisiti
-    - intent: filtra_per_prezzo
-      entities:
-        - prezzo_max: 1000
-    - action: action_filtra_laptop
-    - intent: filtra_per_marca
-      entities:
-        - marca: "Lenovo"
-    - action: action_filtra_laptop
-    - intent: filtra_per_ram
-      entities:
-        - ram: 16
-    - action: action_filtra_laptop
-    - intent: filtra_per_storage
-      entities:
-        - storage: 500
-    - action: action_filtra_laptop
-    - intent: filtra_per_processore
-      entities:
-        - processore: "i7"
-    - action: action_filtra_laptop
-    - intent: filtra_per_gpu
-      entities:
-        - gpu: "GeForce 2070"
-    - action: action_filtra_laptop
-    - intent: filtra_per_dimensione_schermo
-      entities:
-        - dimensione_schermo: 15.1
-    - action: action_filtra_laptop
-    - intent: filtra_per_display
-      entities:
-        - display: "LED"
-    - action: action_filtra_laptop
-    - intent: filtra_per_battery_life
-      entities:
-        - battery_life: 13
-    - action: action_filtra_laptop
+  - story: happy path laptop search
+    steps:
+      - intent: search_laptop
+      - action: laptop_search_form
+      - active_loop: laptop_search_form
+      - intent: inform
+        entities:
+          - brand: "Dell"
+      - action: laptop_search_form
+      - intent: inform
+        entities:
+          - price_min: 500
+      - action: laptop_search_form
+      - intent: inform
+        entities:
+          - price_max: 1200
+      - action: laptop_search_form
+      - intent: inform
+        entities:
+          - ram_gb: 16
+      - action: laptop_search_form
+      - intent: affirm
+      - active_loop: null
+      - action: action_search_laptop
 
-- story: Flusso completo di ricerca laptop con filtri e rifiuto finale
-  steps:
-    - intent: saluta
-    - action: utter_saluta
-    - intent: ricerca_laptop
-    - action: utter_ask_requisiti
-    - intent: filtra_per_prezzo
-      entities:
-        - prezzo_max: 1000
-    - action: action_filtra_laptop
-    - intent: filtra_per_marca
-      entities:
-        - marca: "Lenovo"
-    - action: action_filtra_laptop
-    - intent: filtra_per_ram
-      entities:
-        - ram: 16
-    - action: action_filtra_laptop
-    - intent: filtra_per_storage
-      entities:
-        - storage: 500
-    - action: action_filtra_laptop
-    - intent: filtra_per_processore
-      entities:
-        - processore: "i7"
-    - action: action_filtra_laptop
-    - intent: filtra_per_gpu
-      entities:
-        - gpu: "GeForce 2070"
-    - action: action_filtra_laptop
-    - intent: filtra_per_dimensione_schermo
-      entities:
-        - dimensione_schermo: 15.1
-    - action: action_filtra_laptop
-    - intent: filtra_per_display
-      entities:
-        - display: "LED"
-    - action: action_filtra_laptop
-    - intent: filtra_per_battery_life
-      entities:
-        - battery_life: 13
-    - action: action_filtra_laptop
-    - intent: svuota_ricerca
-    - action: action_svuota_slot
+  - story: correction on invalid input
+    steps:
+      - intent: search_laptop
+      - action: laptop_search_form
+      - active_loop: laptop_search_form
+      - intent: inform
+        entities:
+          - price_min: -100
+      - action: action_search_laptop
+      - action: utter_ask_price_min
+      - intent: inform
+        entities:
+          - price_min: 300
+      - action: laptop_search_form
+      - intent: affirm
+      - active_loop: null
+      - action: action_search_laptop
 
-- story: Flusso completo di ricerca laptop con filtri 2
-  steps:
-    - intent: saluta
-    - action: utter_saluta
-    - intent: ricerca_laptop
-    - action: utter_ask_requisiti
-    - intent: filtra_per_prezzo
-      entities:
-        - prezzo_max: 1000
-    - action: action_filtra_laptop
-    - intent: filtra_per_marca
-      entities:
-        - marca: "Lenovo"
-    - action: action_filtra_laptop
-    - intent: filtra_per_ram
-      entities:
-        - ram: 16
-    - action: action_filtra_laptop
-    - intent: filtra_per_storage
-      entities:
-        - storage: 500
-    - action: action_filtra_laptop
-    - intent: filtra_per_processore
-      entities:
-        - processore: "i7"
-    - action: action_filtra_laptop
-    - intent: filtra_per_dimensione_schermo
-      entities:
-        - dimensione_schermo: 15.1
-    - action: action_filtra_laptop
-    - intent: filtra_per_display
-      entities:
-        - display: "LED"
-    - action: action_filtra_laptop
-    - intent: filtra_per_battery_life
-      entities:
-        - battery_life: 13
-    - action: action_filtra_laptop
-
-
-
-- story: Mostrare dettagli di un modello
-  steps:
-    - intent: mostra_dettagli
-      entities:
-        - modello: "ASUS ZenBook"
-    - action: action_mostra_dettagli
-
-- story: Aggiungere un modello ai preferiti
-  steps:
-    - intent: salva_preferito
-      entities:
-        - modello: "HP Envy"
-    - action: action_salva_preferito
-    - action: utter_conferma_salvataggio
-
-- story: Visualizzare preferiti salvati
-  steps:
-    - intent: mostra_preferiti
-    - action: action_mostra_preferiti
-    - action: utter_mostra_preferiti
-
-- story: Rimuovere un preferito
-  steps:
-    - intent: rimuovi_preferito
-      entities:
-        - modello: "HP Envy"
-    - action: action_rimuovi_preferito
-    - action: utter_conferma_rimozione
-
-- story: Confermare acquisto
-  steps:
-    - intent: conferma_acquisto
-    - action: action_conferma_acquisto
-    - action: utter_acquisto_confermato
-
-- story: Annullare operazione
-  steps:
-    - intent: annulla
-    - action: action_annulla_operazione
-    - action: utter_azione_annullata
-
-- story: Ricerca laptop con preferenza per batteria
-  steps:
-    - intent: filtra_per_battery_life
-      entities:
-        - battery_life: "10"
-    - action: action_filtra_laptop
-
-- story: Ricerca laptop con preferenza per ram
-  steps:
-    - intent: filtra_per_ram
-      entities:
-        - ram: "16"
-    - action: action_filtra_laptop
-
-- story: Ricerca laptop con preferenza per storage
-  steps:
-    - intent: filtra_per_storage
-      entities:
-        - storage: "500"
-    - action: action_filtra_laptop
-
-- story: Ricerca laptop con preferenza per processore
-  steps:
-    - intent: filtra_per_processore
-      entities:
-        - processore: "i7"
-    - action: action_filtra_laptop
-
-- story: Ricerca laptop con preferenza per gpu
-  steps:
-    - intent: filtra_per_gpu
-      entities:
-        - gpu: "GeForce 3060"
-    - action: action_filtra_laptop
-
-- story: Ricerca laptop con preferenza per dimensione schermo
-  steps:
-    - intent: filtra_per_dimensione_schermo
-      entities:
-        - dimensione_schermo: "15.1"
-    - action: action_filtra_laptop
-
-- story: Ricerca laptop con preferenza per display
-  steps:
-    - intent: filtra_per_display
-      entities:
-        - display: "LED"
-    - action: action_filtra_laptop
-
-
+  - story: user denies further search
+    steps:
+      - intent: search_laptop
+      - action: laptop_search_form
+      - active_loop: laptop_search_form
+      - intent: deny
+      - action: utter_goodbye
+      - active_loop: null

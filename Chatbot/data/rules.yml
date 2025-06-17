@@ -1,119 +1,33 @@
 version: "3.1"
 
 rules:
+  - rule: Greet user
+    steps:
+      - intent: greet
+      - action: utter_greet
 
-- rule: Saluto iniziale
-  steps:
-    - intent: saluta
-    - action: utter_saluta
+  - rule: Say goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+      - active_loop: null
 
-- rule: Arrivederci
-  steps:
-    - intent: arrivederci
-    - action: utter_arrivederci
+  - rule: Activate laptop search form
+    steps:
+      - intent: search_laptop
+      - action: laptop_search_form
+      - active_loop: laptop_search_form
 
-- rule: Inizio ricerca laptop
-  steps:
-    - intent: ricerca_laptop
-    - action: utter_ask_requisiti
+  - rule: User denies search midway
+    steps:
+      - intent: deny
+      - active_loop: laptop_search_form
+      - action: utter_goodbye
+      - active_loop: null
 
-- rule: Filtro per prezzo
-  steps:
-    - intent: filtra_per_prezzo
-    - action: action_filtra_laptop
-
-- rule: Filtro per marca
-  steps:
-    - intent: filtra_per_marca
-    - action: action_filtra_laptop
-
-- rule: Filtro per specifiche
-  steps:
-    - intent: filtra_per_specifiche
-    - action: action_filtra_laptop
-
-- rule: Filtro per ram
-  steps:
-    - intent: filtra_per_ram
-    - action: action_filtra_laptop
-
-- rule: Filtro per storage
-  steps:
-    - intent: filtra_per_storage
-    - action: action_filtra_laptop
-
-- rule: Filtro per processore
-  steps:
-    - intent: filtra_per_processore
-    - action: action_filtra_laptop
-
-- rule: Filtro per gpu
-  steps:
-    - intent: filtra_per_gpu
-    - action: action_filtra_laptop
-
-- rule: Filtro per dimensione schermo
-  steps:
-    - intent: filtra_per_dimensione_schermo
-    - action: action_filtra_laptop
-
-- rule: Filtro per display
-  steps:
-    - intent: filtra_per_display
-    - action: action_filtra_laptop
-
-- rule: Filtro per battery life
-  steps:
-    - intent: filtra_per_battery_life
-    - action: action_filtra_laptop
-
-- rule: Filtro per modello
-  steps:
-    - intent: filtra_per_modello
-    - action: action_filtra_laptop
-
-- rule: Mostra dettagli laptop
-  steps:
-    - intent: mostra_dettagli
-    - action: action_mostra_dettagli
-
-- rule: Salva laptop nei preferiti
-  steps:
-    - intent: salva_preferito
-    - action: action_salva_preferito
-    - action: utter_conferma_salvataggio
-
-- rule: Rimuovi dai preferiti
-  steps:
-    - intent: rimuovi_preferito
-    - action: action_rimuovi_preferito
-    - action: utter_conferma_rimozione
-
-- rule: Mostra preferiti
-  steps:
-    - intent: mostra_preferiti
-    - action: action_mostra_preferiti
-    - action: utter_mostra_preferiti
-
-- rule: Conferma acquisto
-  steps:
-    - intent: conferma_acquisto
-    - action: action_conferma_acquisto
-    - action: utter_acquisto_confermato
-
-- rule: Annulla operazione
-  steps:
-    - intent: annulla
-    - action: action_annulla_operazione
-    - action: utter_azione_annullata
-
-# Gestione fallback (opzionale, se configurato)
-- rule: Nessuna intenzione riconosciuta
-  steps:
-    - intent: nessuna_intenzione
-    - action: utter_azione_annullata
-
-- rule: Svuota filtri di ricerca
-  steps:
-    - intent: svuota_ricerca
-    - action: action_svuota_slot
+  - rule: Submit laptop search form
+    steps:
+      - intent: affirm
+      - active_loop: laptop_search_form
+      - action: action_search_laptop
+      - active_loop: null
