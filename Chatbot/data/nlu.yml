@@ -1,285 +1,81 @@
 version: "3.1"
 
 nlu:
-- intent: saluta
-  examples: |
-    - Ciao
-    - Ehi
-    - Salve
-    - Buongiorno
-    - Ciao bot
-    - Hey
-    - Buonasera
-    - Ciao, come va?
-    - Ehi, sei lì?
+  - intent: greet
+    examples: |
+      - ciao
+      - buongiorno
+      - salve
+      - ehi
+      - ciao a tutti
 
-- intent: arrivederci
-  examples: |
-    - A presto
-    - Grazie, ciao
-    - Ci sentiamo
-    - Arrivederci
-    - Alla prossima
-    - Ok, grazie
-    - Va bene, ciao
-    - Chiudo qui
-    - Devo andare, saluti
-  
+  - intent: goodbye
+    examples: |
+      - arrivederci
+      - a presto
+      - ciao ciao
+      - ci sentiamo
+      - grazie, ciao
 
-- intent: filtra_per_prezzo
-  examples: |
-    - Vorrei spendere meno di [800](prezzo_max) euro
-    - Il mio budget è [1000](prezzo_max)
-    - Voglio qualcosa sotto i [600](prezzo_max)
-    - Tra [700](prezzo_min) e [900](prezzo_max) euro
-    - Non voglio spendere più di [1200](prezzo_max) euro
-    - Il massimo che posso spendere è [1500](prezzo_max)
-    - Hai qualcosa sui [500](prezzo_max)?
-    - Portatili fino a [900](prezzo_max)
-    - Mi serve qualcosa sopra i [700](prezzo_min)
+  - intent: search_laptop
+    examples: |
+      - cerco un laptop
+      - voglio comprare un portatile
+      - aiutami a trovare un computer portatile
+      - ho bisogno di un nuovo laptop
+      - mostrami dei portatili disponibili
+      - fammi vedere i laptop
 
-- intent: filtra_per_marca
-  examples: |
-    - Preferisco [Lenovo](marca)
-    - Solo [ASUS](marca), per favore
-    - Hai qualcosa della [HP](marca)?
-    - Cerco un laptop [Dell](marca)
-    - Mostrami [Acer](marca)
-    - Mi interessano i portatili [MSI](marca)
-    - Evita i [MacBook](marca)
-    - Quali modelli [ASUS](marca) avete?
-    - Mostra solo [Lenovo](marca) e [HP](marca)
+  - intent: inform
+    examples: |
+      - della marca {brand}
+      - marca {brand}
+      - marchio {brand}
+      - prezzo massimo {price_max} euro
+      - non più di {price_max}€
+      - budget fino a {price_max}
+      - prezzo minimo {price_min}€
+      - almeno {price_min} euro
+      - processore {processor_brand}
+      - processore {processor_name}
+      - CPU {processor_brand}
+      - almeno {ram_gb} GB di RAM
+      - RAM {ram_gb}GB
+      - SSD {ssd_gb}GB
+      - HDD {hdd_gb}GB
+      - scheda grafica {gpu_brand}
+      - GPU {GPU}
+      - display da {display_inch} pollici
+      - schermo {display_inch}"
+      - autonomia di almeno {battery_hrs} ore
+      - batteria {battery_hrs} ore
 
-- intent: filtra_per_ram
-  examples: |
-    - Vorrei [16](ram) GB di RAM
-    - Voglio almeno [8](ram) GB di RAM
-    - Mi serve un portatile con [32](ram) GB di RAM
-    - Penso che [4](ram) GB siano sufficienti
-    - Ho bisogno di almeno [12](ram) GB
+  - intent: affirm
+    examples: |
+      - sì
+      - certo
+      - esatto
+      - confermo
+      - d’accordo
 
-- intent: filtra_per_storage
-  examples: |
-    - Mi serve un SSD da almeno [512](storage) GB
-    - Preferisco un disco HDD da [256](storage) GB
-    - Voglio un laptop con [1000](storage) GB di SSD
-    - Ho bisogno di almeno [256](storage) GB di memoria
-    - Meglio se ha [2000](storage) giga di spazio
+  - intent: deny
+    examples: |
+      - no
+      - non adesso
+      - lasciamo stare
+      - no grazie
 
-- intent: filtra_per_processore
-  examples: |
-    - Cerco un [i7](processore)
-    - Cerco un laptop con [Ryzen 5](processore)
-    - Uno con [Intel i5](processore) va bene
-    - Mi interessa un [i3](processore)
-    - Deve avere almeno un [Ryzen 7](processore)
-
-- intent: filtra_per_gpu
-  examples: |
-    - Deve avere una [scheda grafica dedicata](gpu)
-    - Mi serve per giocare, quindi buona [GPU](gpu)
-    - Vorrei un portatile con [RTX 3060](gpu)
-    - Deve avere almeno una [integrata Intel Iris Xe](gpu)
-    - Cerco un laptop con GPU [Nvidia](gpu)
-
-- intent: filtra_per_dimensione_schermo
-  examples: |
-    - Voglio uno schermo da [15](dimensione_schermo) pollici
-    - Cerco un portatile da [13](dimensione_schermo) pollici
-    - Mi serve un laptop con display da [17](dimensione_schermo)
-    - Non più grande di [14](dimensione_schermo) pollici
-    - Schermo da [11.6](dimensione_schermo) pollici va bene
-
-- intent: filtra_per_modello
-  examples: |
-    - Cerco il modello [Ideapad Slim 3](modello)
-    - Mi interessa il [HP Chromebook 11A](modello)
-    - Ho sentito parlare bene del [Dell G15-5520](modello)
-    - Voglio info sul modello [Inbook Y2 Plus](modello)
-    - Mostrami i dettagli di [HP 15s-fy5007TU](modello)
-
-- intent: filtra_per_display
-  examples: |
-    - Mi interessa un laptop con display [LCD](display)
-    - Preferisco un portatile con schermo [LED](display)
-    - Voglio uno schermo [IPS](display)
-    - Meglio un display [OLED](display)
-    - Deve avere uno schermo [Touchscreen](display)
-
-- intent: filtra_per_battery_life
-  examples: |
-    - Voglio un laptop con batteria da almeno [10](battery_life) ore
-    - Cerco un'autonomia di almeno [8](battery_life) ore
-    - Deve durare almeno [12](battery_life) ore
-    - Autonomia di [6](battery_life) ore va bene
-    - Mi serve per lavorare tutto il giorno, almeno [9](battery_life) ore
-
-
-- intent: mostra_dettagli
-  examples: |
-    - Fammi vedere i dettagli del [secondo](modello)
-    - Mostrami più info sul [primo](modello)
-    - Voglio sapere di più sul laptop [ASUS](marca)
-    - Che caratteristiche ha il [Dell](marca)?
-    - Dettagli su quello da [899](prezzo_max)
-    - Cosa ha quelcd  portatile con [16](ram) GB RAM?
-    - Fammi vedere le specifiche del modello con [Ryzen 7](processore)
-    - Dammi più informazioni su quello che costa meno
-    - Voglio vedere le caratteristiche tecniche del modello [HP Pavilion](modello)
-    - Questo ha un display [LED](display)?
-    - Com'è il display? È [LCD](display)?
-    - Quanta [batteria](battery_life) ha questo?
-    - Quanto dura la [batteria](battery_life)?
-
-- intent: ricerca_laptop
-  examples: |
-    - Voglio comprare un laptop
-    - Mi serve un portatile
-    - Sto cercando un computer
-    - Consigliami un notebook
-    - Aiutami a trovare un laptop
-    - Hai qualche buon portatile da consigliarmi?
-    - Mi interessano i laptop in offerta
-    - Quali laptop consigli?
-    - Voglio un nuovo computer
-    - Mi serve un notebook per lavorare
-- intent: salva_preferito
-  examples: |
-    - Salva questo
-    - Aggiungilo ai preferiti
-    - Voglio ricordarlo
-    - Tienilo da parte
-    - Mettilo tra i preferiti
-    - Lo salvo
-    - Salva il terzo
-    - Voglio tenere questo
-    - Aggiungi ai miei salvataggi
-
-- intent: rimuovi_preferito
-  examples: |
-    - Rimuovi questo dai preferiti
-    - Non mi interessa più
-    - Elimina il secondo
-    - Togli quello che costa 900 euro
-    - Non voglio più quel laptop
-    - Cancella il primo preferito
-    - Non mi serve più quello salvato
-    - Eliminalo dai preferiti
-
-- intent: mostra_preferiti
-  examples: |
-    - Mostra i miei preferiti
-    - Fammi vedere quelli salvati
-    - Cosa ho messo da parte?
-    - Voglio vedere i miei salvataggi
-    - Elenco dei laptop che ho salvato
-    - Lista preferiti
-    - Visualizza i preferiti
-    - Voglio rivedere quelli che mi interessavano
-
-- intent: conferma_acquisto
-  examples: |
-    - Lo voglio comprare
-    - Ordina questo
-    - Procediamo con l'acquisto
-    - Aggiungilo al carrello
-    - Confermo l'acquisto
-    - Acquisto confermato
-    - Compralo ora
-    - Voglio concludere l'acquisto
-
-- intent: svuota_ricerca
-  examples: |
-    - resetta i filtri
-    - svuota i criteri di ricerca
-    - ricomincia da capo
-    - togli tutti i filtri
-    - annulla i parametri
-    - cancella la mia selezione
-    - voglio ripartire da zero
-
-- intent: annulla
-  examples: |
-    - Annulla
-    - Ho cambiato idea
-    - Lascia stare
-    - Interrompi la ricerca
-    - Non mi interessa più
-    - Annulla tutto
-    - Ferma la conversazione
-    - Ricomincia da capo
-
-- synonym: hp
-  examples: |
-    - HP
-    - hp
-    - Hewlett-Packard
-    - h p
-
-- synonym: laptop
-  examples: |
-    - portatile
-    - computer
-    - computer portatile
-    - pc 
-    - pc portatile
-
-- synonym: dell
-  examples: |
-    - Dell
-    - dell
-    - DELL
-
-- synonym: Lenovo
-  examples: |
-    - Lenovo
-    - lenovo
-    - LENOVO
-
-- synonym: infinix
-  examples: |
-    - Infinix
-    - infinix
-    - INFINIX
-
-- synonym: intel
-  examples: |
-    - Intel
-    - intel
-
-- synonym: amd
-  examples: |
-    - AMD
-    - amd
-
-- synonym: mediatek
-  examples: |
-    - MediaTek
-    - mediatek
-    - MEDIATEK
-
-- synonym: GB
-  examples: |
-    - GB
-    - gb
-    - giga
-    - gigabyte
-
-
-- synonym: ssd
-  examples: |
-    - SSD
-    - disco a stato solido
-    - ssd drive
-    - memoria veloce
-
-- synonym: hdd
-  examples: |
-    - HDD
-    - disco rigido
-    - hard disk
-
-- synonym: Acer
-  examples: |
-    - ACER
-    - acer
+# -----------------------------
+# Entities
+# -----------------------------
+# brand: nome del produttore (es. Asus, Dell, HP, Lenovo)
+# price_min / price_max: valori numerici per il budget
+# processor_brand: Intel, AMD, ecc.
+# processor_name: Intel Core i7, Ryzen 5, ecc.
+# ram_gb: quantità di RAM in GB
+# ssd_gb: capacità SSD in GB
+# hdd_gb: capacità HDD in GB
+# GPU: nome del modello GPU (es. GeForce GTX 1650)
+# gpu_brand: NVIDIA, AMD, ecc.
+# display_inch: dimensione del display in pollici
+# battery_hrs: autonomia in ore

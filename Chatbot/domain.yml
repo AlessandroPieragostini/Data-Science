@@ -1,153 +1,149 @@
 version: "3.1"
 
 intents:
-  - saluta
-  - arrivederci
-  - ricerca_laptop
-  - filtra_per_prezzo
-  - filtra_per_marca
-  - filtra_per_ram
-  - filtra_per_storage
-  - filtra_per_processore
-  - filtra_per_gpu
-  - filtra_per_dimensione_schermo
-  - filtra_per_display
-  - filtra_per_battery_life
-  - filtra_per_modello
-  - mostra_dettagli
-  - salva_preferito
-  - rimuovi_preferito
-  - mostra_preferiti
-  - conferma_acquisto
-  - annulla
-  - nessuna_intenzione
-  - svuota_ricerca
+  - greet
+  - goodbye
+  - search_laptop
+  - inform
+  - affirm
+  - deny
 
 entities:
-  - prezzo_min
-  - prezzo_max
-  - marca
-  - ram
-  - storage
-  - processore
-  - gpu
-  - dimensione_schermo
-  - modello
-  - display
-  - battery_life
+  - brand
+  - price_min
+  - price_max
+  - processor_brand
+  - processor_name
+  - ram_gb
+  - ssd_gb
+  - hdd_gb
+  - GPU
+  - gpu_brand
+  - display_inch
+  - battery_hrs
 
 slots:
-  prezzo_min:
-    type: float
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: prezzo_min
-
-  prezzo_max:
-    type: float
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: prezzo_max
-
-  marca:
+  brand:
     type: text
-    influence_conversation: true
     mappings:
       - type: from_entity
-        entity: marca
-
-  ram:
+        entity: brand
+    influence_conversation: false
+  price_min:
     type: float
-    influence_conversation: true
     mappings:
       - type: from_entity
-        entity: ram
-
-  storage:
+        entity: price_min
+    influence_conversation: false
+  price_max:
     type: float
-    influence_conversation: true
     mappings:
       - type: from_entity
-        entity: storage
-
-  processore:
+        entity: price_max
+    influence_conversation: false
+  processor_brand:
     type: text
-    influence_conversation: true
     mappings:
       - type: from_entity
-        entity: processore
-
-  gpu:
+        entity: processor_brand
+    influence_conversation: false
+  processor_name:
     type: text
-    influence_conversation: true
     mappings:
       - type: from_entity
-        entity: gpu
-
-  dimensione_schermo:
+        entity: processor_name
+    influence_conversation: false
+  ram_gb:
     type: float
-    influence_conversation: true
     mappings:
       - type: from_entity
-        entity: dimensione_schermo
-
-  modello:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: modello
-
-  display:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: display
-
-  battery_life:
+        entity: ram_gb
+    influence_conversation: false
+  ssd_gb:
     type: float
-    influence_conversation: true
     mappings:
       - type: from_entity
-        entity: battery_life
+        entity: ssd_gb
+    influence_conversation: false
+  hdd_gb:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: hdd_gb
+    influence_conversation: false
+  GPU:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: GPU
+    influence_conversation: false
+  gpu_brand:
+    type: text
+    mappings:
+      - type: from_entity
+        entity: gpu_brand
+    influence_conversation: false
+  display_inch:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: display_inch
+    influence_conversation: false
+  battery_hrs:
+    type: float
+    mappings:
+      - type: from_entity
+        entity: battery_hrs
+    influence_conversation: false
+
+forms:
+  laptop_search_form:
+    required_slots:
+      - brand
+      - price_min
+      - price_max
+      - processor_brand
+      - processor_name
+      - ram_gb
+      - ssd_gb
+      - hdd_gb
+      - GPU
+      - gpu_brand
+      - display_inch
+      - battery_hrs
 
 responses:
-  utter_saluta:
-    - text: "Ciao! Come posso aiutarti nella ricerca del tuo nuovo laptop?"
-  utter_arrivederci:
-    - text: "A presto! Se hai bisogno di aiuto, torna pure."
-  utter_ask_requisiti:
-    - text: "Quali sono i requisiti che cerchi in un laptop?"
-  utter_ask_budget:
-    - text: "Qual è il tuo budget massimo?"
-  utter_ask_marca:
-    - text: "C'è una marca che preferisci?"
-  utter_ask_specifiche:
-    - text: "Hai qualche preferenza tecnica? RAM, processore, dimensioni, autonomia?"
-  utter_mostra_preferiti:
-    - text: "Ecco i laptop che hai salvato finora."
-  utter_conferma_salvataggio:
-    - text: "Laptop salvato tra i preferiti!"
-  utter_conferma_rimozione:
-    - text: "Rimosso dai preferiti."
-  utter_acquisto_confermato:
-    - text: "Perfetto! Procediamo con l'acquisto."
-  utter_azione_annullata:
-    - text: "Operazione annullata. Fammi sapere se vuoi fare altro."
+  utter_greet:
+    - text: "Ciao! Sono qui per aiutarti a trovare il laptop perfetto. Dimmi pure cosa cerchi."
+  utter_goodbye:
+    - text: "A presto! Se ti serve altro, chiedi pure."
+  utter_ask_brand:
+    - text: "Per quale marca sei interessato?"
+  utter_ask_price_min:
+    - text: "Qual è il prezzo minimo (in €)?"
+  utter_ask_price_max:
+    - text: "Qual è il prezzo massimo (in €)?"
+  utter_ask_processor_brand:
+    - text: "Quale marca di processore preferisci (Intel, AMD...)?"
+  utter_ask_processor_name:
+    - text: "Quale modello di processore (es. Core i7, Ryzen 5...)?"
+  utter_ask_ram_gb:
+    - text: "Quanta RAM ti serve (in GB)?"
+  utter_ask_ssd_gb:
+    - text: "Quanto spazio SSD desideri (in GB)?"
+  utter_ask_hdd_gb:
+    - text: "Quanto spazio HDD desideri (in GB)?"
+  utter_ask_GPU:
+    - text: "Quale modello di GPU ti interessa?"
+  utter_ask_gpu_brand:
+    - text: "Di quale marca di GPU (NVIDIA, AMD...)?"
+  utter_ask_display_inch:
+    - text: "Che dimensione di schermo (in pollici) preferisci?"
+  utter_ask_battery_hrs:
+    - text: "Quanta autonomia (in ore) ti serve?"
+  utter_submit:
+    - text: "Perfetto! Ecco i laptop che corrispondono ai tuoi filtri:\n{laptop_list}"
 
 actions:
-  - action_filtra_laptop
-  - action_mostra_dettagli
-  - action_salva_preferito
-  - action_rimuovi_preferito
-  - action_mostra_preferiti
-  - action_conferma_acquisto
-  - action_annulla_operazione
-  - action_svuota_slot
-
-session_config:
-  session_expiration_time: 60
-  carry_over_slots_to_new_session: true
+  - laptop_search_form
+  - action_search_laptop
