@@ -1,149 +1,146 @@
-version: "3.1"
-
+version: '3.1'
 intents:
-  - greet
-  - goodbye
-  - search_laptop
-  - inform
-  - affirm
-  - deny
-
+- affirm
+- deny
+- goodbye
+- greet
+- inform
+- search_laptop
 entities:
-  - brand
-  - price_min
-  - price_max
-  - processor_brand
-  - processor_name
-  - ram_gb
-  - ssd_gb
-  - hdd_gb
-  - GPU
-  - gpu_brand
-  - display_inch
-  - battery_hrs
-
+- brand
+- price_min
+- price_max
+- processor_brand
+- processor_name
+- ram_gb
+- ssd_gb
+- hdd_gb
+- gpu_brand
+- gpu
+- display_inch
+- battery_hrs
 slots:
   brand:
     type: text
     mappings:
-      - type: from_entity
-        entity: brand
+    - type: from_entity
+      entity: brand
     influence_conversation: false
   price_min:
     type: float
     mappings:
-      - type: from_entity
-        entity: price_min
+    - type: from_entity
+      entity: price_min
     influence_conversation: false
   price_max:
     type: float
     mappings:
-      - type: from_entity
-        entity: price_max
+    - type: from_entity
+      entity: price_max
     influence_conversation: false
   processor_brand:
     type: text
     mappings:
-      - type: from_entity
-        entity: processor_brand
+    - type: from_entity
+      entity: processor_brand
     influence_conversation: false
   processor_name:
     type: text
     mappings:
-      - type: from_entity
-        entity: processor_name
+    - type: from_entity
+      entity: processor_name
     influence_conversation: false
   ram_gb:
     type: float
     mappings:
-      - type: from_entity
-        entity: ram_gb
+    - type: from_entity
+      entity: ram_gb
     influence_conversation: false
   ssd_gb:
     type: float
     mappings:
-      - type: from_entity
-        entity: ssd_gb
+    - type: from_entity
+      entity: ssd_gb
     influence_conversation: false
   hdd_gb:
     type: float
     mappings:
-      - type: from_entity
-        entity: hdd_gb
-    influence_conversation: false
-  GPU:
-    type: text
-    mappings:
-      - type: from_entity
-        entity: GPU
+    - type: from_entity
+      entity: hdd_gb
     influence_conversation: false
   gpu_brand:
     type: text
     mappings:
-      - type: from_entity
-        entity: gpu_brand
+    - type: from_entity
+      entity: gpu_brand
+    influence_conversation: false
+  gpu:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: gpu
     influence_conversation: false
   display_inch:
     type: float
     mappings:
-      - type: from_entity
-        entity: display_inch
+    - type: from_entity
+      entity: display_inch
     influence_conversation: false
   battery_hrs:
     type: float
     mappings:
-      - type: from_entity
-        entity: battery_hrs
+    - type: from_entity
+      entity: battery_hrs
     influence_conversation: false
-
 forms:
   laptop_search_form:
     required_slots:
-      - brand
-      - price_min
-      - price_max
-      - processor_brand
-      - processor_name
-      - ram_gb
-      - ssd_gb
-      - hdd_gb
-      - GPU
-      - gpu_brand
-      - display_inch
-      - battery_hrs
-
+    - brand
+    - price_min
+    - price_max
+    - processor_brand
+    - processor_name
+    - ram_gb
+    - ssd_gb
+    - hdd_gb
+    - gpu_brand
+    - gpu
+    - display_inch
+    - battery_hrs
 responses:
   utter_greet:
-    - text: "Ciao! Sono qui per aiutarti a trovare il laptop perfetto. Dimmi pure cosa cerchi."
+  - text: Ciao! Sono qui per aiutarti a trovare il laptop perfetto. Dimmi pure cosa cerchi.
   utter_goodbye:
-    - text: "A presto! Se ti serve altro, chiedi pure."
+  - text: A presto! Se ti serve altro, chiedi pure.
   utter_ask_brand:
-    - text: "Per quale marca sei interessato?"
+  - text: Per quale marca sei interessato?
   utter_ask_price_min:
-    - text: "Qual è il prezzo minimo (in €)?"
+  - text: Qual è il prezzo minimo (in €)?
   utter_ask_price_max:
-    - text: "Qual è il prezzo massimo (in €)?"
+  - text: Qual è il prezzo massimo (in €)?
   utter_ask_processor_brand:
-    - text: "Quale marca di processore preferisci (Intel, AMD...)?"
+  - text: Quale marca di processore preferisci (Intel, AMD...)?
   utter_ask_processor_name:
-    - text: "Quale modello di processore (es. Core i7, Ryzen 5...)?"
+  - text: Quale modello di processore (es. Core i7, Ryzen 5...)?
   utter_ask_ram_gb:
-    - text: "Quanta RAM ti serve (in GB)?"
+  - text: Quanta RAM ti serve (in GB)?
   utter_ask_ssd_gb:
-    - text: "Quanto spazio SSD desideri (in GB)?"
+  - text: Quanto spazio SSD desideri (in GB)?
   utter_ask_hdd_gb:
-    - text: "Quanto spazio HDD desideri (in GB)?"
-  utter_ask_GPU:
-    - text: "Quale modello di GPU ti interessa?"
+  - text: Quanto spazio HDD desideri (in GB)?
   utter_ask_gpu_brand:
-    - text: "Di quale marca di GPU (NVIDIA, AMD...)?"
+  - text: Di quale marca di GPU (NVIDIA, AMD...)?
+  utter_ask_gpu:
+  - text: Quale modello di GPU ti interessa?
   utter_ask_display_inch:
-    - text: "Che dimensione di schermo (in pollici) preferisci?"
+  - text: Che dimensione di schermo (in pollici) preferisci?
   utter_ask_battery_hrs:
-    - text: "Quanta autonomia (in ore) ti serve?"
-  utter_submit:
-    - text: "Perfetto! Ecco i laptop che corrispondono ai tuoi filtri:\n{laptop_list}"
+  - text: Quanta autonomia (in ore) ti serve?
 
 actions:
-  - laptop_search_form
-  - action_search_laptop
+- validate_laptop_search_form
+- action_search_laptop
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true

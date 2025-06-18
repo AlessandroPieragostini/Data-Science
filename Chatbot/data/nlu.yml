@@ -1,81 +1,82 @@
 version: "3.1"
-
 nlu:
-  - intent: greet
-    examples: |
-      - ciao
-      - buongiorno
-      - salve
-      - ehi
-      - ciao a tutti
+- intent: greet
+  examples: |
+    - ciao
+    - buongiorno
+    - salve
+    - ehi
+    - ciao a tutti
 
-  - intent: goodbye
-    examples: |
-      - arrivederci
-      - a presto
-      - ciao ciao
-      - ci sentiamo
-      - grazie, ciao
+- intent: goodbye
+  examples: |
+    - arrivederci
+    - a presto
+    - ciao ciao
+    - ci sentiamo
+    - grazie, ciao
 
-  - intent: search_laptop
-    examples: |
-      - cerco un laptop
-      - voglio comprare un portatile
-      - aiutami a trovare un computer portatile
-      - ho bisogno di un nuovo laptop
-      - mostrami dei portatili disponibili
-      - fammi vedere i laptop
+- intent: search_laptop
+  examples: |
+    - cerco un laptop
+    - voglio comprare un portatile
+    - aiutami a trovare un computer portatile
+    - ho bisogno di un nuovo laptop
+    - mostrami dei portatili disponibili
+    - fammi vedere i laptop
+    - lascia stare
 
-  - intent: inform
-    examples: |
-      - della marca {brand}
-      - marca {brand}
-      - marchio {brand}
-      - prezzo massimo {price_max} euro
-      - non più di {price_max}€
-      - budget fino a {price_max}
-      - prezzo minimo {price_min}€
-      - almeno {price_min} euro
-      - processore {processor_brand}
-      - processore {processor_name}
-      - CPU {processor_brand}
-      - almeno {ram_gb} GB di RAM
-      - RAM {ram_gb}GB
-      - SSD {ssd_gb}GB
-      - HDD {hdd_gb}GB
-      - scheda grafica {gpu_brand}
-      - GPU {GPU}
-      - display da {display_inch} pollici
-      - schermo {display_inch}"
-      - autonomia di almeno {battery_hrs} ore
-      - batteria {battery_hrs} ore
+- intent: inform
+  examples: |
+    - cerco un laptop della marca [Samsung](brand)
+    - voglio un portatile [Samsung](brand)
+    - un notebook [MSI](brand)
+    - cerca un laptop [Apple](brand)
+    - mi serve un computer portatile [Lenovo](brand)
+    - budget massimo [900](price_max) euro
+    - non spendere più di [750](price_max)€
+    - prezzo minimo [650](price_min) euro
+    - almeno [550](price_min)€
+    - budget tra [800](price_min) e [1200](price_max) euro
+    - non più di [1500](price_max) euro e almeno [16](ram_gb) GB di RAM
+    - voglio un laptop con processore [Intel](processor_brand)
+    - cerco CPU [AMD](processor_brand)
+    - notebook con [Ryzen 5 5600U](processor_name)
+    - portatile con CPU [Core i7](processor_name)
+    - almeno [8](ram_gb) GB di RAM
+    - RAM [32](ram_gb) GB
+    - laptop con SSD da [256](ssd_gb) GB
+    - notebook con [1](hdd_gb) TB di HDD
+    - SSD [1](ssd_gb) TB
+    - HDD [512](hdd_gb) GB
+    - scheda grafica [NVIDIA](gpu_brand)
+    - voglio una scheda grafica [AMD](gpu_brand)
+    - GPU [GeForce GTX 1650 Ti](gpu)
+    - portatile con [RTX 3070](gpu)
+    - display da [17](display_inch) pollici
+    - schermo [13.3](display_inch) pollici
+    - laptop con autonomia di almeno [12](battery_hrs) ore
+    - voglio una batteria che duri [9](battery_hrs) ore
+    - cerco un modello con batteria [14](battery_hrs) ore
+    - portatile [Asus](brand) con SSD [512](ssd_gb) GB e HDD [1](hdd_gb) TB
+    - notebook [HP](brand) con CPU [Ryzen 7 5800H](processor_name) e [16](ram_gb) GB di RAM
+    - vorrei un laptop [Dell](brand) con GPU [Radeon RX 6600M](gpu_model) e display da [15.6](display_inch) pollici
+    - cerco un computer portatile con prezzo tra [700](price_min) e [1000](price_max) euro, RAM [8](ram_gb) GB e SSD [256](ssd_gb) GB
 
-  - intent: affirm
-    examples: |
-      - sì
-      - certo
-      - esatto
-      - confermo
-      - d’accordo
+- intent: affirm
+  examples: |
+    - mostra i risultati
+    - sì
+    - certo
+    - esatto
+    - d'accordo
+    - ok
+    - va bene
 
-  - intent: deny
-    examples: |
-      - no
-      - non adesso
-      - lasciamo stare
-      - no grazie
-
-# -----------------------------
-# Entities
-# -----------------------------
-# brand: nome del produttore (es. Asus, Dell, HP, Lenovo)
-# price_min / price_max: valori numerici per il budget
-# processor_brand: Intel, AMD, ecc.
-# processor_name: Intel Core i7, Ryzen 5, ecc.
-# ram_gb: quantità di RAM in GB
-# ssd_gb: capacità SSD in GB
-# hdd_gb: capacità HDD in GB
-# GPU: nome del modello GPU (es. GeForce GTX 1650)
-# gpu_brand: NVIDIA, AMD, ecc.
-# display_inch: dimensione del display in pollici
-# battery_hrs: autonomia in ore
+- intent: deny
+  examples: |
+    - no
+    - non ora
+    - non voglio
+    - magari poi
+    - per niente

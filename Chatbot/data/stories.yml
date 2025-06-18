@@ -59,3 +59,35 @@ stories:
       - intent: deny
       - action: utter_goodbye
       - active_loop: null
+
+  - story: interactive_story_1
+    steps:
+    - intent: inform
+      entities:
+      - brand: Samsung
+    - slot_was_set:
+      - brand: Samsung
+    - action: utter_ask_price_min
+    - intent: inform
+      entities:
+      - price_min: '200'
+    - slot_was_set:
+      - price_min: '200'
+    - action: utter_ask_price_max
+    - intent: inform
+      entities:
+      - price_max: '1000'
+    - slot_was_set:
+      - price_max: '1000'
+    - action: utter_ask_processor_name
+    - intent: inform
+      entities:
+      - processor_name: Core i7
+    - slot_was_set:
+      - processor_name: Core i7
+    - action: utter_ask_ram_gb
+    - intent: affirm
+    - action: action_search_laptop
+    - intent: goodbye
+    - action: utter_goodbye
+    
