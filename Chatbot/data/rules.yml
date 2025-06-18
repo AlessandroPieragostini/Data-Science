@@ -15,19 +15,46 @@ rules:
   - rule: Activate laptop search form
     steps:
       - intent: search_laptop
-      - action: laptop_search_form
+      - action: utter_ask_next_slot
       - active_loop: laptop_search_form
 
+  - rule: User chooses field to fill
+    condition:
+      - active_loop: laptop_search_form
+    steps:
+      - intent: choose_field
+      - action: action_choose_slot
+      - action: action_ask_selected_slot
+
+  # - rule: User provides slot value
+  #   condition:
+  #     - active_loop: laptop_search_form
+  #   steps:
+  #     - intent: inform
+  #     - action: validate_laptop_search_form
+  #     - action: utter_ask_next_slot  
+
+  - rule: Submit laptop search form
+    condition:
+      - active_loop: laptop_search_form
+    steps:
+      - intent: affirm
+      - action: action_search_laptop
+      - active_loop: null
+
   - rule: User denies search midway
+    condition:
+      - active_loop: laptop_search_form
     steps:
       - intent: deny
-      - active_loop: laptop_search_form
       - action: utter_goodbye
       - active_loop: null
 
-  - rule: Submit laptop search form
-    steps:
-      - intent: affirm
+  - rule: Fallback in form
+    condition:
       - active_loop: laptop_search_form
-      - action: action_search_laptop
-      - active_loop: null
+    steps:
+      - intent: nlu_fallback
+      - action: action_default_fallback
+      - action: utter_ask_next_slot
+      - active_loop: laptop_search_form

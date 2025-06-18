@@ -6,13 +6,43 @@ from rasa_sdk.events import SlotSet
 import pandas as pd
 
 # Carica il dataset dei laptop
+df_laptops = pd.DataFrame()
 try:
     df_laptops = pd.read_csv('./dataset/laptop.csv')
 except FileNotFoundError:
-    df_laptops = pd.DataFrame()
-    
+    pass
 
+# --- Azione per impostare lo slot richiesto in base al bottone ---
+class ActionChooseSlot(Action):
+    def name(self) -> Text:
+        return "action_choose_slot"
 
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+        slot_to_request = tracker.get_slot("slot_name")
+        return [SlotSet("requested_slot", slot_to_request)]
+
+# --- Azione per chiedere lo slot selezionato ---
+class ActionAskSelectedSlot(Action):
+    def name(self) -> Text:
+        return "action_ask_selected_slot"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+        slot = tracker.get_slot("requested_slot")
+        if slot:
+            dispatcher.utter_message(response=f"utter_ask_{slot}")
+        return []
+
+# --- Validazione centralizzata con re-ask o avanzamento ---
 class ValidateLaptopSearchForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_laptop_search_form"
@@ -22,17 +52,20 @@ class ValidateLaptopSearchForm(FormValidationAction):
         slot_value: Any,
         dispatcher: CollectingDispatcher,
         slot_name: str,
-        prompt: str,
+        invalid_prompt: str,
     ) -> Dict[Text, Any]:
         try:
             value = float(slot_value)
             if value < 0:
-                dispatcher.utter_message(template=prompt)
-                return {slot_name: None}
-            return {slot_name: value}
+                # input non valido: mostra errore e re-ask dello stesso slot
+                dispatcher.utter_message(template=invalid_prompt)
+                return {slot_name: None, "requested_slot": slot_name}
+            # input valido: chiedi il prossimo campo
+            dispatcher.utter_message(template="utter_ask_next_slot")
+            return {slot_name: value, "requested_slot": None}
         except (TypeError, ValueError):
-            dispatcher.utter_message(template=prompt)
-            return {slot_name: None}
+            dispatcher.utter_message(template=invalid_prompt)
+            return {slot_name: None, "requested_slot": slot_name}
 
     def validate_price_min(
         self,
@@ -41,7 +74,7 @@ class ValidateLaptopSearchForm(FormValidationAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        return self._validate_positive(slot_value, dispatcher, "price_min", "utter_ask_price_min")
+        return self._validate_positive(slot_value, dispatcher, "price_min", "utter_price_min_invalid")
 
     def validate_price_max(
         self,
@@ -50,41 +83,60 @@ class ValidateLaptopSearchForm(FormValidationAction):
         tracker: Tracker,
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        # controllo anche coerenza con price_min
-        validated = self._validate_positive(slot_value, dispatcher, "price_max", "utter_ask_price_max")
-        if validated.get("price_max") is not None:
+        result = self._validate_positive(slot_value, dispatcher, "price_max", "utter_price_max_invalid")
+        if result.get("price_max") is not None:
             min_p = tracker.get_slot("price_min")
-            if min_p is not None and float(validated["price_max"]) < float(min_p):
-                dispatcher.utter_message(template="utter_ask_price_max")
-                return {"price_max": None}
-        return validated
+            if min_p is not None and float(result["price_max"]) < float(min_p):
+                dispatcher.utter_message(template="utter_price_max_invalid")
+                return {"price_max": None, "requested_slot": "price_max"}
+        return result
 
     def validate_ram_gb(
-        self, slot_value, dispatcher, tracker, domain
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        return self._validate_positive(slot_value, dispatcher, "ram_gb", "utter_ask_ram_gb")
+        return self._validate_positive(slot_value, dispatcher, "ram_gb", "utter_ram_gb_invalid")
 
     def validate_ssd_gb(
-        self, slot_value, dispatcher, tracker, domain
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        return self._validate_positive(slot_value, dispatcher, "ssd_gb", "utter_ask_ssd_gb")
+        return self._validate_positive(slot_value, dispatcher, "ssd_gb", "utter_ssd_gb_invalid")
 
     def validate_hdd_gb(
-        self, slot_value, dispatcher, tracker, domain
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        return self._validate_positive(slot_value, dispatcher, "hdd_gb", "utter_ask_hdd_gb")
+        return self._validate_positive(slot_value, dispatcher, "hdd_gb", "utter_hdd_gb_invalid")
 
     def validate_display_inch(
-        self, slot_value, dispatcher, tracker, domain
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        return self._validate_positive(slot_value, dispatcher, "display_inch", "utter_ask_display_inch")
+        return self._validate_positive(slot_value, dispatcher, "display_inch", "utter_display_inch_invalid")
 
     def validate_battery_hrs(
-        self, slot_value, dispatcher, tracker, domain
+        self,
+        slot_value: Any,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
-        return self._validate_positive(slot_value, dispatcher, "battery_hrs", "utter_ask_battery_hrs")
+        return self._validate_positive(slot_value, dispatcher, "battery_hrs", "utter_battery_hrs_invalid")
 
-
+# --- Azione di ricerca finale ---
 class ActionSearchLaptop(Action):
     def name(self) -> Text:
         return "action_search_laptop"
@@ -95,12 +147,11 @@ class ActionSearchLaptop(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
-        
         if df_laptops.empty:
             dispatcher.utter_message(text="Errore interno: dataset dei laptop non disponibile.")
             return []
 
-        # Estrai i valori dei slot
+        # Estrazione dei valori dei slot
         brand = tracker.get_slot('brand')
         price_min = tracker.get_slot('price_min')
         price_max = tracker.get_slot('price_max')
@@ -141,7 +192,7 @@ class ActionSearchLaptop(Action):
         if battery_hrs is not None:
             df = df[df['battery_hrs'] >= float(battery_hrs)]
 
-        # Risultati
+        # Mostra i risultati
         if df.empty:
             dispatcher.utter_message(text="Mi dispiace, non ho trovato laptop che corrispondano ai tuoi filtri.")
         else:
@@ -156,21 +207,14 @@ class ActionSearchLaptop(Action):
                     f"GPU: {r['gpu']} ({r['gpu_brand']})\n"
                     f"Display: {r['display_type']} - {r['display_inch']}\" pollici\n"
                     f"Autonomia: {r['battery_hrs']} ore\n"
-                    f"Alimentatore: {r['adapter_w']} W"
+                    f"Alimentatore: {r['adapter_w']} W\n"
+                    + "="*100
                 ))
 
-        # Reset slot
-        return [
-            SlotSet('brand', None),
-            SlotSet('price_min', None),
-            SlotSet('price_max', None),
-            SlotSet('processor_brand', None),
-            SlotSet('processor_name', None),
-            SlotSet('ram_gb', None),
-            SlotSet('ssd_gb', None),
-            SlotSet('hdd_gb', None),
-            SlotSet('gpu_brand', None),
-            SlotSet('gpu', None),
-            SlotSet('display_inch', None),
-            SlotSet('battery_hrs', None)
+        # Reset dei slot
+        slots_to_reset = [
+            'brand', 'price_min', 'price_max', 'processor_brand', 'processor_name',
+            'ram_gb', 'ssd_gb', 'hdd_gb', 'gpu_brand', 'gpu', 'display_inch', 'battery_hrs',
+            'requested_slot', 'slot_name'
         ]
+        return [SlotSet(slot, None) for slot in slots_to_reset]

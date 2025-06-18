@@ -1,15 +1,17 @@
 version: '3.1'
 intents:
 - affirm
+- choose_field
 - deny
 - goodbye
 - greet
 - inform
 - search_laptop
 entities:
-- brand
-- price_min
 - price_max
+- brand
+- slot_name
+- price_min
 - processor_brand
 - processor_name
 - ram_gb
@@ -92,6 +94,17 @@ slots:
     - type: from_entity
       entity: battery_hrs
     influence_conversation: false
+  slot_name:
+    type: text
+    mappings:
+    - type: from_entity
+      entity: slot_name
+    influence_conversation: false
+  requested_slot:
+    type: text
+    mappings:
+    - type: from_text
+    influence_conversation: false
 forms:
   laptop_search_form:
     required_slots:
@@ -136,10 +149,52 @@ responses:
   - text: Che dimensione di schermo (in pollici) preferisci?
   utter_ask_battery_hrs:
   - text: Quanta autonomia (in ore) ti serve?
-
+  utter_price_min_invalid:
+  - text: Per favore inserisci un prezzo minimo valido (numero positivo).
+  utter_price_max_invalid:
+  - text: Il prezzo massimo deve essere un numero positivo e non inferiore al minimo. Riprova.
+  utter_ram_gb_invalid:
+  - text: Inserisci un valore di RAM valido (numero positivo).
+  utter_ssd_gb_invalid:
+  - text: Inserisci un valore di SSD valido (numero positivo).
+  utter_hdd_gb_invalid:
+  - text: Inserisci un valore di HDD valido (numero positivo).
+  utter_display_inch_invalid:
+  - text: Inserisci un valore di dimensione schermo valido (numero positivo).
+  utter_battery_hrs_invalid:
+  - text: Inserisci un valore di autonomia valido (numero positivo).
+  utter_ask_next_slot:
+  - text: Quale informazione vuoi inserire adesso?
+    buttons:
+    - title: Marca
+      payload: /choose_field{"slot_name":"brand"}
+    - title: Prezzo minimo
+      payload: /choose_field{"slot_name":"price_min"}
+    - title: Prezzo massimo
+      payload: /choose_field{"slot_name":"price_max"}
+    - title: RAM (GB)
+      payload: /choose_field{"slot_name":"ram_gb"}
+    - title: SSD (GB)
+      payload: /choose_field{"slot_name":"ssd_gb"}
+    - title: HDD (GB)
+      payload: /choose_field{"slot_name":"hdd_gb"}
+    - title: Processore
+      payload: /choose_field{"slot_name":"processor_name"}
+    - title: GPU
+      payload: /choose_field{"slot_name":"gpu"}
+    - title: Display (inch)
+      payload: /choose_field{"slot_name":"display_inch"}
+    - title: Batteria (ore)
+      payload: /choose_field{"slot_name":"battery_hrs"}
+      
 actions:
-- validate_laptop_search_form
+- utter_goodbye
+- action_choose_slot
 - action_search_laptop
+- action_ask_selected_slot
+- utter_ask_next_slot
+- utter_greet
+- validate_laptop_search_form
 
 session_config:
   session_expiration_time: 60

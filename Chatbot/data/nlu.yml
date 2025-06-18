@@ -7,7 +7,6 @@ nlu:
     - salve
     - ehi
     - ciao a tutti
-
 - intent: goodbye
   examples: |
     - arrivederci
@@ -15,7 +14,6 @@ nlu:
     - ciao ciao
     - ci sentiamo
     - grazie, ciao
-
 - intent: search_laptop
   examples: |
     - cerco un laptop
@@ -25,7 +23,6 @@ nlu:
     - mostrami dei portatili disponibili
     - fammi vedere i laptop
     - lascia stare
-
 - intent: inform
   examples: |
     - cerco un laptop della marca [Samsung](brand)
@@ -62,7 +59,7 @@ nlu:
     - notebook [HP](brand) con CPU [Ryzen 7 5800H](processor_name) e [16](ram_gb) GB di RAM
     - vorrei un laptop [Dell](brand) con GPU [Radeon RX 6600M](gpu) e display da [15.6](display_inch) pollici
     - cerco un computer portatile con prezzo tra [700](price_min) e [1000](price_max) euro, RAM [8](ram_gb) GB e SSD [256](ssd_gb) GB
-
+    - [600](price_max) euro
 - intent: affirm
   examples: |
     - mostra i risultati
@@ -72,7 +69,6 @@ nlu:
     - d'accordo
     - ok
     - va bene
-
 - intent: deny
   examples: |
     - no
@@ -80,3 +76,27 @@ nlu:
     - non voglio
     - magari poi
     - per niente
+- intent: choose_field
+  examples: |
+    - marca
+    - prezzo minimo
+    - prezzo massimo
+    - RAM
+    - SSD
+    - HDD
+    - marca della GPU
+    - GPU
+    - processore
+    - display
+    - batteria
+    - voglio inserire [brand](slot_name)
+    - scegli il [price_min](slot_name)
+    - scegli il [price_max](slot_name)
+    - scegli il [ram_gb](slot_name)
+    - scegli il [ssd_gb](slot_name)
+    - scegli il [hdd_gb](slot_name)
+    - scegli il [gpu](slot_name)
+    - scegli il [processor_name](slot_name)
+    - scegli il [display_inch](slot_name)
+    - scegli il [battery_hrs](slot_name)
+    - [Dell](brand)
