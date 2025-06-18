@@ -60,7 +60,7 @@ nlu:
     - cerco un modello con batteria [14](battery_hrs) ore
     - portatile [Asus](brand) con SSD [512](ssd_gb) GB e HDD [1](hdd_gb) TB
     - notebook [HP](brand) con CPU [Ryzen 7 5800H](processor_name) e [16](ram_gb) GB di RAM
-    - vorrei un laptop [Dell](brand) con GPU [Radeon RX 6600M](gpu_model) e display da [15.6](display_inch) pollici
+    - vorrei un laptop [Dell](brand) con GPU [Radeon RX 6600M](gpu) e display da [15.6](display_inch) pollici
     - cerco un computer portatile con prezzo tra [700](price_min) e [1000](price_max) euro, RAM [8](ram_gb) GB e SSD [256](ssd_gb) GB
 
 - intent: affirm

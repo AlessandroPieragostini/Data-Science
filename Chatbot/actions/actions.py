@@ -153,7 +153,7 @@ class ActionSearchLaptop(Action):
                     f"Processore: {r['processor_name']} ({r['processor_brand']}) - {r['ghz']} GHz\n"
                     f"RAM: {r['ram_gb']} GB ({r['ram_type']}, espandibile fino a {r['ram_expandable_gb']} GB)\n"
                     f"Storage: {r['ssd_gb']} GB SSD + {r['hdd_gb']} GB HDD\n"
-                    f"GPU: {r['GPU']} ({r['gpu_brand']})\n"
+                    f"GPU: {r['gpu']} ({r['gpu_brand']})\n"
                     f"Display: {r['display_type']} - {r['display_inch']}\" pollici\n"
                     f"Autonomia: {r['battery_hrs']} ore\n"
                     f"Alimentatore: {r['adapter_w']} W"
