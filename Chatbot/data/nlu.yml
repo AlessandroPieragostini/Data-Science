@@ -23,6 +23,7 @@ nlu:
     - mostrami dei portatili disponibili
     - fammi vedere i laptop
     - lascia stare
+    - laptop
 - intent: inform
   examples: |
     - cerco un laptop della marca [Samsung](brand)
@@ -60,6 +61,9 @@ nlu:
     - vorrei un laptop [Dell](brand) con GPU [Radeon RX 6600M](gpu) e display da [15.6](display_inch) pollici
     - cerco un computer portatile con prezzo tra [700](price_min) e [1000](price_max) euro, RAM [8](ram_gb) GB e SSD [256](ssd_gb) GB
     - [600](price_max) euro
+    - [lenovo]{"entity": "brand", "value": "Lenovo"}
+    - [-1](price_min)
+    - [100](price_max)
 - intent: affirm
   examples: |
     - mostra i risultati

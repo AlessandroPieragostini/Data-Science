@@ -24,6 +24,7 @@ pipeline:
 - name: EntitySynonymMapper
 - name: ResponseSelector
   epochs: 100
+  constrain_similarities: True
 - name: FallbackClassifier
   threshold: 0.3
 

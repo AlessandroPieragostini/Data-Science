@@ -8,94 +8,6 @@ stories:
       - intent: goodbye
       - action: utter_goodbye
 
-  - story: Happy path dynamic laptop search
-    steps:
-      - intent: search_laptop
-      - action: utter_ask_next_slot
-      - active_loop: laptop_search_form
-
-      # Utente sceglie marca
-      - intent: choose_field
-        entities:
-          - slot_name: brand
-      - action: action_choose_slot
-      - action: action_ask_selected_slot
-      - intent: inform
-        entities:
-          - brand: "Dell"
-      - action: validate_laptop_search_form
-      - action: utter_ask_next_slot
-
-      # Utente sceglie prezzo minimo
-      - intent: choose_field
-        entities:
-          - slot_name: price_min
-      - action: action_choose_slot
-      - action: action_ask_selected_slot
-      - intent: inform
-        entities:
-          - price_min: 500
-      - action: validate_laptop_search_form
-      - action: utter_ask_next_slot
-
-      # Utente sceglie prezzo massimo
-      - intent: choose_field
-        entities:
-          - slot_name: price_max
-      - action: action_choose_slot
-      - action: action_ask_selected_slot
-      - intent: inform
-        entities:
-          - price_max: 1200
-      - action: validate_laptop_search_form
-      - action: utter_ask_next_slot
-
-      # Utente sceglie RAM
-      - intent: choose_field
-        entities:
-          - slot_name: ram_gb
-      - action: action_choose_slot
-      - action: action_ask_selected_slot
-      - intent: inform
-        entities:
-          - ram_gb: 16
-      - action: validate_laptop_search_form
-      - action: utter_ask_next_slot
-
-      # Utente conferma ricerca
-      - intent: affirm
-      - action: action_search_laptop
-      - active_loop: null
-
-  - story: Invalid input then correct
-    steps:
-      - intent: search_laptop
-      - action: utter_ask_next_slot
-      - active_loop: laptop_search_form
-
-      # Utente inserisce price_min negativo
-      - intent: choose_field
-        entities:
-          - slot_name: price_min
-      - action: action_choose_slot
-      - action: action_ask_selected_slot
-      - intent: inform
-        entities:
-          - price_min: -100
-      - action: validate_laptop_search_form
-      - action: action_ask_selected_slot
-
-      # Utente corregge con valore valido
-      - intent: inform
-        entities:
-          - price_min: 300
-      - action: validate_laptop_search_form
-      - action: utter_ask_next_slot
-
-      # Utente abbandona
-      - intent: deny
-      - action: utter_goodbye
-      - active_loop: null
 
   - story: User denies search midway
     steps:
@@ -116,76 +28,118 @@ stories:
       - action: utter_ask_next_slot
       - active_loop: laptop_search_form
 
-- story: interactive_story_1
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: search_laptop
-  - action: utter_ask_next_slot
-  - intent: choose_field
-    entities:
-    - slot_name: brand
-  - slot_was_set:
-    - slot_name: brand
-  - action: action_choose_slot
-  - slot_was_set:
-    - requested_slot: brand
-  - action: action_ask_selected_slot
-  - intent: choose_field
-    entities:
-    - brand: Dell
-  - slot_was_set:
-    - brand: Dell
-  - intent: choose_field
-    entities:
-    - brand: Dell
-  - slot_was_set:
-    - brand: Dell
-  - action: utter_ask_next_slot
-  - intent: choose_field
-    entities:
-    - slot_name: price_max
-  - slot_was_set:
-    - slot_name: price_max
-  - action: action_choose_slot
-  - slot_was_set:
-    - requested_slot: price_max
-  - action: action_ask_selected_slot
-  - intent: inform
-    entities:
-    - price_max: '600'
-  - slot_was_set:
-    - price_max: '600'
-  - action: utter_ask_next_slot
-  - intent: affirm
-  - action: action_search_laptop
-  - slot_was_set:
-    - brand: null
-  - slot_was_set:
-    - price_min: null
-  - slot_was_set:
-    - price_max: null
-  - slot_was_set:
-    - processor_brand: null
-  - slot_was_set:
-    - processor_name: null
-  - slot_was_set:
-    - ram_gb: null
-  - slot_was_set:
-    - ssd_gb: null
-  - slot_was_set:
-    - hdd_gb: null
-  - slot_was_set:
-    - gpu_brand: null
-  - slot_was_set:
-    - gpu: null
-  - slot_was_set:
-    - display_inch: null
-  - slot_was_set:
-    - battery_hrs: null
-  - slot_was_set:
-    - requested_slot: null
-  - slot_was_set:
-    - slot_name: null
-  - intent: goodbye
-  - action: utter_goodbye
+  - story: interactive_story_1
+    steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: search_laptop
+    - action: utter_ask_next_slot
+    - intent: choose_field
+      entities:
+      - slot_name: brand
+    - slot_was_set:
+      - slot_name: brand
+    - action: action_choose_slot
+    - slot_was_set:
+      - requested_slot: brand
+    - action: action_ask_selected_slot
+    - intent: choose_field
+      entities:
+      - brand: Dell
+    - slot_was_set:
+      - brand: Dell
+    - intent: choose_field
+      entities:
+      - brand: Dell
+    - slot_was_set:
+      - brand: Dell
+    - action: utter_ask_next_slot
+    - intent: choose_field
+      entities:
+      - slot_name: price_max
+    - slot_was_set:
+      - slot_name: price_max
+    - action: action_choose_slot
+    - slot_was_set:
+      - requested_slot: price_max
+    - action: action_ask_selected_slot
+    - intent: inform
+      entities:
+      - price_max: '600'
+    - slot_was_set:
+      - price_max: '600'
+    - action: utter_ask_next_slot
+    - intent: affirm
+    - action: action_search_laptop
+    - slot_was_set:
+      - brand: null
+    - slot_was_set:
+      - price_min: null
+    - slot_was_set:
+      - price_max: null
+    - slot_was_set:
+      - processor_brand: null
+    - slot_was_set:
+      - processor_name: null
+    - slot_was_set:
+      - ram_gb: null
+    - slot_was_set:
+      - ssd_gb: null
+    - slot_was_set:
+      - hdd_gb: null
+    - slot_was_set:
+      - gpu_brand: null
+    - slot_was_set:
+      - gpu: null
+    - slot_was_set:
+      - display_inch: null
+    - slot_was_set:
+      - battery_hrs: null
+    - slot_was_set:
+      - requested_slot: null
+    - slot_was_set:
+      - slot_name: null
+    - intent: goodbye
+    - action: utter_goodbye
+
+  - story: interactive_story_2
+    steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: search_laptop
+    - action: utter_ask_next_slot
+    - intent: choose_field
+      entities:
+      - slot_name: brand
+    - slot_was_set:
+      - slot_name: brand
+    - action: action_choose_slot
+    - slot_was_set:
+      - requested_slot: brand
+    - action: action_ask_selected_slot
+    - intent: inform
+      entities:
+      - brand: Lenovo
+    - slot_was_set:
+      - brand: Lenovo
+    - action: utter_ask_next_slot
+    - intent: choose_field
+      entities:
+      - slot_name: price_min
+    - slot_was_set:
+      - slot_name: price_min
+    - action: action_choose_slot
+    - slot_was_set:
+      - requested_slot: price_min
+    - action: action_ask_selected_slot
+    - intent: inform
+      entities:
+      - price_min: '-1'
+    - slot_was_set:
+      - price_min: '-1'
+    - action: action_ask_selected_slot
+    - intent: inform
+      entities:
+      - price_min: '100'
+    - slot_was_set:
+      - price_min: '100'

@@ -8,10 +8,10 @@ intents:
 - inform
 - search_laptop
 entities:
-- price_max
-- brand
 - slot_name
+- brand
 - price_min
+- price_max
 - processor_brand
 - processor_name
 - ram_gb
@@ -186,16 +186,14 @@ responses:
       payload: /choose_field{"slot_name":"display_inch"}
     - title: Batteria (ore)
       payload: /choose_field{"slot_name":"battery_hrs"}
-      
 actions:
-- utter_goodbye
 - action_choose_slot
-- action_search_laptop
+- utter_greet
 - action_ask_selected_slot
 - utter_ask_next_slot
-- utter_greet
+- utter_goodbye
+- action_search_laptop
 - validate_laptop_search_form
-
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
