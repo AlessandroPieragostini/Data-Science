@@ -168,15 +168,15 @@ class ActionSearchLaptop(Action):
         # Filtra il DataFrame
         df = df_laptops.copy()
         if brand:
-            df = df[df['brand'].str.lower() == brand.lower()]
+            df = df[df['brand'].str.lower().str.contains(brand.lower())]
         if price_min is not None:
             df = df[df['price'] >= float(price_min)]
         if price_max is not None:
             df = df[df['price'] <= float(price_max)]
         if processor_brand:
-            df = df[df['processor_brand'].str.lower() == processor_brand.lower()]
+            df = df[df['processor_brand'].str.lower().str.contains(processor_brand.lower())]
         if processor_name:
-            df = df[df['processor_name'].str.lower() == processor_name.lower()]
+            df = df[df['processor_name'].str.lower().str.contains(processor_name.lower())]
         if ram_gb is not None:
             df = df[df['ram_gb'] >= float(ram_gb)]
         if ssd_gb is not None:
@@ -184,9 +184,9 @@ class ActionSearchLaptop(Action):
         if hdd_gb is not None:
             df = df[df['hdd_gb'] >= float(hdd_gb)]
         if gpu_brand:
-            df = df[df['gpu_brand'].str.lower() == gpu_brand.lower()]
+            df = df[df['gpu_brand'].str.lower().str.contains(gpu_brand.lower())]
         if gpu:
-            df = df[df['gpu'].str.lower() == gpu.lower()]
+            df = df[df['gpu'].str.lower().str.contains(gpu.lower())]
         if display_inch is not None:
             df = df[df['display_inch'] >= float(display_inch)]
         if battery_hrs is not None:
