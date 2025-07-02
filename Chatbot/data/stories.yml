@@ -1,145 +1,248 @@
 version: "3.1"
 
 stories:
-  - story: Greet and exit
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - intent: goodbye
-      - action: utter_goodbye
 
+- story: Set RAM
+  steps:
+  - intent: search_laptop
+  - action: utter_ask_next_slot
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: ram_gb
+  - intent: inform
+    entities:
+      - ram_gb: "16"
+  - slot_was_set:
+    - ram_gb: "16"
+  - action: utter_ask_next_slot
 
-  - story: User denies search midway
-    steps:
-      - intent: search_laptop
-      - action: utter_ask_next_slot
-      - active_loop: laptop_search_form
-      - intent: deny
-      - action: utter_goodbye
-      - active_loop: null
+- story: Set SSD
+  steps:
+  - intent: search_laptop
+  - action: utter_ask_next_slot
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: ssd_gb
+  - intent: inform
+    entities:
+      - ssd_gb: "512"
+  - slot_was_set:
+    - ssd_gb: "512"
+  - action: utter_ask_next_slot
 
-  - story: Fallback during form
-    steps:
-      - intent: search_laptop
-      - action: utter_ask_next_slot
-      - active_loop: laptop_search_form
-      - intent: nlu_fallback
-      - action: action_default_fallback
-      - action: utter_ask_next_slot
-      - active_loop: laptop_search_form
+- story: Set HDD
+  steps:
+  - intent: search_laptop
+  - action: utter_ask_next_slot
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: hdd_gb
+  - intent: inform
+    entities:
+      - hdd_gb: "1000"
+  - slot_was_set:
+    - hdd_gb: "1000"
+  - action: utter_ask_next_slot
 
-  - story: interactive_story_1
-    steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: search_laptop
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: brand
-    - slot_was_set:
-      - slot_name: brand
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: brand
-    - action: action_ask_selected_slot
-    - intent: choose_field
-      entities:
-      - brand: Dell
-    - slot_was_set:
-      - brand: Dell
-    - intent: choose_field
-      entities:
-      - brand: Dell
-    - slot_was_set:
-      - brand: Dell
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: price_max
-    - slot_was_set:
-      - slot_name: price_max
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: price_max
-    - action: action_ask_selected_slot
-    - intent: inform
-      entities:
-      - price_max: '600'
-    - slot_was_set:
-      - price_max: '600'
-    - action: utter_ask_next_slot
-    - intent: affirm
-    - action: action_search_laptop
-    - slot_was_set:
-      - brand: null
-    - slot_was_set:
-      - price_min: null
-    - slot_was_set:
-      - price_max: null
-    - slot_was_set:
-      - processor_brand: null
-    - slot_was_set:
-      - processor_name: null
-    - slot_was_set:
-      - ram_gb: null
-    - slot_was_set:
-      - ssd_gb: null
-    - slot_was_set:
-      - hdd_gb: null
-    - slot_was_set:
-      - gpu_brand: null
-    - slot_was_set:
-      - gpu: null
-    - slot_was_set:
-      - display_inch: null
-    - slot_was_set:
-      - battery_hrs: null
-    - slot_was_set:
-      - asked_slot: null
-    - slot_was_set:
-      - slot_name: null
-    - intent: goodbye
-    - action: utter_goodbye
+- story: Set GPU brand
+  steps:
+  - intent: search_laptop
+  - action: utter_ask_next_slot
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: gpu_brand
+  - intent: inform
+    entities:
+      - gpu_brand: "NVIDIA"
+  - slot_was_set:
+    - gpu_brand: "NVIDIA"
+  - action: utter_ask_next_slot
 
-  - story: interactive_story_2
-    steps:
-    - intent: greet
-    - action: utter_greet
-    - intent: search_laptop
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: brand
-    - slot_was_set:
-      - slot_name: brand
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: brand
-    - action: action_ask_selected_slot
-    - intent: inform
-      entities:
-      - brand: Lenovo
-    - slot_was_set:
-      - brand: Lenovo
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: price_min
-    - slot_was_set:
-      - slot_name: price_min
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: price_min
-    - action: action_ask_selected_slot
-    - intent: inform
-      entities:
-      - price_min: '-1'
-    - slot_was_set:
-      - price_min: '-1'
-    - action: action_ask_selected_slot
-    - intent: inform
-      entities:
-      - price_min: '100'
-    - slot_was_set:
-      - price_min: '100'
+- story: Set GPU model
+  steps:
+  - intent: search_laptop
+  - action: utter_ask_next_slot
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: gpu
+  - intent: inform
+    entities:
+      - gpu: "RTX 4060"
+  - slot_was_set:
+    - gpu: "RTX 4060"
+  - action: utter_ask_next_slot
+
+- story: Set processor brand
+  steps:
+  - intent: search_laptop
+  - action: utter_ask_next_slot
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: processor_brand
+  - intent: inform
+    entities:
+      - processor_brand: "Intel"
+  - slot_was_set:
+    - processor_brand: "Intel"
+  - action: utter_ask_next_slot
+
+- story: Set processor name
+  steps:
+  - intent: search_laptop
+  - action: utter_ask_next_slot
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: processor_name
+  - intent: inform
+    entities:
+      - processor_name: "i7"
+  - slot_was_set:
+    - processor_name: "i7"
+  - action: utter_ask_next_slot
+
+- story: Full laptop search flow
+  steps:
+  - intent: search_laptop
+  - action: utter_ask_next_slot
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: brand
+  - intent: inform
+    entities:
+      - brand: "HP"
+  - slot_was_set:
+    - brand: "HP"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: price_min
+  - intent: inform
+    entities:
+      - price_min: "500"
+  - slot_was_set:
+    - price_min: "500"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: price_max
+  - intent: inform
+    entities:
+      - price_max: "1200"
+  - slot_was_set:
+    - price_max: "1200"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: processor_brand
+  - intent: inform
+    entities:
+      - processor_brand: "AMD"
+  - slot_was_set:
+    - processor_brand: "AMD"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: processor_name
+  - intent: inform
+    entities:
+      - processor_name: "Ryzen 7"
+  - slot_was_set:
+    - processor_name: "Ryzen 7"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: ram_gb
+  - intent: inform
+    entities:
+      - ram_gb: "16"
+  - slot_was_set:
+    - ram_gb: "16"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: ssd_gb
+  - intent: inform
+    entities:
+      - ssd_gb: "1000"
+  - slot_was_set:
+    - ssd_gb: "1000"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: hdd_gb
+  - intent: inform
+    entities:
+      - hdd_gb: "0"
+  - slot_was_set:
+    - hdd_gb: "0"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: gpu_brand
+  - intent: inform
+    entities:
+      - gpu_brand: "NVIDIA"
+  - slot_was_set:
+    - gpu_brand: "NVIDIA"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: gpu
+  - intent: inform
+    entities:
+      - gpu: "RTX 4050"
+  - slot_was_set:
+    - gpu: "RTX 4050"
+  - action: action_search_laptop
+  - slot_was_set:
+    - brand: null
+    - price_min: null
+    - price_max: null
+    - processor_brand: null
+    - processor_name: null
+    - ram_gb: null
+    - ssd_gb: null
+    - hdd_gb: null
+    - gpu_brand: null
+    - gpu: null
+    - asked_slot: null
+  - intent: goodbye
+  - action: utter_goodbye
+
+- story: Skip some fields and search
+  steps:
+  - intent: search_laptop
+  - action: utter_ask_next_slot
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: brand
+  - intent: inform
+    entities:
+      - brand: "Lenovo"
+  - slot_was_set:
+    - brand: "Lenovo"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: price_min
+  - intent: inform
+    entities:
+      - price_min: "700"
+  - slot_was_set:
+    - price_min: "700"
+  - action: utter_ask_next_slot
+  - slot_was_set:
+    - requested_slot: ram_gb
+  - intent: inform
+    entities:
+      - ram_gb: "8"
+  - slot_was_set:
+    - ram_gb: "8"
+  - action: utter_ask_next_slot
+  - intent: deny
+  - action: utter_goodbye
+
+  - slot_was_set:
+    - brand: null
+    - price_min: null
+    - price_max: null
+    - processor_brand: null
+    - processor_name: null
+    - ram_gb: null
+    - ssd_gb: null
+    - hdd_gb: null
+    - gpu_brand: null
+    - gpu: null
+    - asked_slot: null
+  - intent: goodbye
+  - action: utter_goodbye
