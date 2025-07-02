@@ -5,6 +5,7 @@ stories:
     steps:
       - intent: greet
       - action: utter_greet
+      - action: utter_ask_next_slot 
 
   - story: selezione marca e continua richiesta
     steps:
@@ -25,11 +26,11 @@ stories:
       - action: utter_ask_next_slot
 
 
-  - story: interactive_story_1
+  - story: selezione marca, ram e ricerca laptop
     steps:
     - intent: greet
     - action: utter_greet
-    - intent: search_laptop
+    # - intent: search_laptop
     - action: utter_ask_next_slot
     - intent: choose_field
       entities:
@@ -91,13 +92,13 @@ stories:
       - asked_slot: null
     - slot_was_set:
       - slot_name: null
-    - intent: search_laptop
+    # - intent: search_laptop
 
-    - story: seleziona processore e ricerca laptop
+  - story: seleziona processore e ricerca laptop
     steps:
     - intent: greet
     - action: utter_greet
-    - intent: search_laptop
+    # - intent: search_laptop
     - action: utter_ask_next_slot
     - intent: choose_field
       entities:
@@ -149,7 +150,7 @@ stories:
     steps:
     - intent: greet
     - action: utter_greet
-    - intent: search_laptop
+    # - intent: search_laptop
     - action: utter_ask_next_slot
     - intent: choose_field
       entities:
@@ -165,7 +166,6 @@ stories:
       - price_min: '100'
     - slot_was_set:
       - price_min: '100'
-
     - action: utter_ask_next_slot
     - intent: choose_field
       entities:

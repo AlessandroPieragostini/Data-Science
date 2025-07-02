@@ -6,6 +6,7 @@ rules:
       - intent: greet
       - action: utter_greet
       - action: utter_ask_next_slot
+      - active_loop: laptop_search_form
 
   - rule: Say goodbye
     steps:

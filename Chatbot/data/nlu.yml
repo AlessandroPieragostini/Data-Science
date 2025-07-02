@@ -96,9 +96,9 @@ nlu:
     - scegli il [battery_hrs](slot_name)
     - [Dell](brand)
     - [dell]{"entity": "brand", "value": "Dell"}
-- intent: search_laptop
-  examples: |
-    - cerco un laptop
-- synonym: Lenovo
-  examples: |
-    - lenovo
+# - intent: search_laptop
+#   examples: |
+#     - cerco un laptop
+# - synonym: Lenovo
+#   examples: |
+#     - lenovo

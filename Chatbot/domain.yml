@@ -6,7 +6,7 @@ intents:
 - goodbye
 - greet
 - inform
-- search_laptop
+# - search_laptop
 entities:
 - slot_name
 - ram_gb
