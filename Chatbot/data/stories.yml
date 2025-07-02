@@ -200,6 +200,7 @@ stories:
   - intent: goodbye
   - action: utter_goodbye
 
+
 - story: Skip some fields and search
   steps:
   - intent: search_laptop
