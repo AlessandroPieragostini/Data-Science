@@ -41,7 +41,7 @@ stories:
     - slot_was_set:
       - asked_slot: brand
     - action: action_ask_selected_slot
-    - intent: choose_field
+    - intent: inform
       entities:
       - brand: Dell
     - slot_was_set:
@@ -109,7 +109,7 @@ stories:
     - slot_was_set:
       - asked_slot: processor_name
     - action: action_ask_selected_slot
-    - intent: choose_field
+    - intent: inform
       entities:
       - processor_name: i7
     - slot_was_set:

@@ -5,8 +5,10 @@ rules:
     steps:
       - intent: greet
       - action: utter_greet
-      - action: utter_ask_next_slot
       - active_loop: laptop_search_form
+      - action: utter_ask_next_slot
+
+
 
   - rule: Say goodbye
     steps:
@@ -14,39 +16,26 @@ rules:
       - action: utter_goodbye
       - active_loop: null
 
-  # - rule: Activate laptop search form
-  #   steps:
-  #     - intent: search_laptop
-  #     - action: utter_ask_next_slot
-  #     - active_loop: laptop_search_form
-
   - rule: User chooses field to fill
-    condition:
-      - active_loop: laptop_search_form
     steps:
       - intent: choose_field
       - action: action_choose_slot
-      - active_loop: laptop_search_form
+      - action: action_ask_selected_slot
 
   - rule: Slot filled
     condition:
-      - active_loop: laptop_search_form
       - slot_was_set:
         - asked_slot: None
     steps:
+      - intent: inform
       - action: utter_ask_next_slot
-      - active_loop: laptop_search_form
 
   - rule: Slot to fill
     condition:
-      - active_loop: laptop_search_form
       - slot_was_set:
         - asked_slot
     steps:
       - action: action_ask_selected_slot
-      - active_loop: laptop_search_form
-
-
 
   - rule: Submit laptop search form
     # condition:
@@ -65,10 +54,9 @@ rules:
       - active_loop: null
 
   - rule: Fallback in form
-    condition:
-      - active_loop: laptop_search_form
+    #condition:
+    #  - active_loop: laptop_search_form
     steps:
       - intent: nlu_fallback
       - action: action_default_fallback
       - action: utter_ask_next_slot
-      - active_loop: laptop_search_form

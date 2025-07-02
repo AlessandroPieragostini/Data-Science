@@ -25,15 +25,17 @@ nlu:
     - non spendere più di [750](price_max)€
     - prezzo minimo [650](price_min) euro
     - almeno [550](price_min)€
-    - budget tra [800](price_min) e [1200](price_max) euro
-    - non più di [1500](price_max) euro e almeno [16](ram_gb) GB di RAM
+    - budget [1200](price_max) euro
+    - non più di [1500](price_max)
     - voglio un laptop con processore [Intel](processor_brand)
     - cerco CPU [AMD](processor_brand)
     - notebook con [Ryzen 5 5600U](processor_name)
     - portatile con CPU [Core i7](processor_name)
     - almeno [8](ram_gb) GB di RAM
     - RAM [32](ram_gb) GB
+    - [16](ram_gb)
     - laptop con SSD da [256](ssd_gb) GB
+    - [256](ssd_gb) gb
     - notebook con [1](hdd_gb) TB di HDD
     - SSD [1](ssd_gb) TB
     - HDD [512](hdd_gb) GB
@@ -46,13 +48,11 @@ nlu:
     - laptop con autonomia di almeno [12](battery_hrs) ore
     - voglio una batteria che duri [9](battery_hrs) ore
     - cerco un modello con batteria [14](battery_hrs) ore
-    - portatile [Asus](brand) con SSD [512](ssd_gb) GB e HDD [1](hdd_gb) TB
-    - notebook [HP](brand) con CPU [Ryzen 7 5800H](processor_name) e [16](ram_gb) GB di RAM
-    - vorrei un laptop [Dell](brand) con GPU [Radeon RX 6600M](gpu) e display da [15.6](display_inch) pollici
-    - cerco un computer portatile con prezzo tra [700](price_min) e [1000](price_max) euro, RAM [8](ram_gb) GB e SSD [256](ssd_gb) GB
+    - SSD [512](ssd_gb)
+    - notebook con [16](ram_gb) GB di RAM
+    - vorrei un laptop [Dell](brand)
     - [600](price_max) euro
-    - [lenovo]{"entity": "brand", "value": "Lenovo"}
-    - [-1](price_min)
+    - [-10](price_min)
     - [100](price_max)
     - [16](ram_gb) GB
 - intent: affirm
@@ -96,9 +96,4 @@ nlu:
     - scegli il [battery_hrs](slot_name)
     - [Dell](brand)
     - [dell]{"entity": "brand", "value": "Dell"}
-# - intent: search_laptop
-#   examples: |
-#     - cerco un laptop
-# - synonym: Lenovo
-#   examples: |
-#     - lenovo
+
