@@ -5,6 +5,7 @@ rules:
     steps:
       - intent: greet
       - action: utter_greet
+      - action: utter_ask_next_slot
 
   - rule: Say goodbye
     steps:
@@ -12,11 +13,11 @@ rules:
       - action: utter_goodbye
       - active_loop: null
 
-  - rule: Activate laptop search form
-    steps:
-      - intent: search_laptop
-      - action: utter_ask_next_slot
-      - active_loop: laptop_search_form
+  # - rule: Activate laptop search form
+  #   steps:
+  #     - intent: search_laptop
+  #     - action: utter_ask_next_slot
+  #     - active_loop: laptop_search_form
 
   - rule: User chooses field to fill
     condition:

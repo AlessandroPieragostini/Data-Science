@@ -7,15 +7,14 @@ intents:
 - greet
 - inform
 - search_laptop
-# - next_page
 entities:
 - slot_name
+- ram_gb
 - brand
 - price_min
 - price_max
 - processor_brand
 - processor_name
-- ram_gb
 - ssd_gb
 - hdd_gb
 - gpu_brand
@@ -106,12 +105,6 @@ slots:
     mappings:
     - type: custom
     influence_conversation: false
-  # page_number:
-  #   type: float
-  #   mappings:
-  #   - type: from_text
-  #   initial_value: 1.0
-  #   influence_conversation: false
 forms:
   laptop_search_form:
     required_slots:
@@ -174,32 +167,32 @@ responses:
   - text: Quale informazione vuoi inserire?
     buttons:
     - title: Marca
-      payload: '/choose_field{{"slot_name":"brand"}}'
+      payload: /choose_field{{"slot_name":"brand"}}
     - title: Prezzo minimo
-      payload: '/choose_field{{"slot_name":"price_min"}}'
+      payload: /choose_field{{"slot_name":"price_min"}}
     - title: Prezzo massimo
-      payload: '/choose_field{{"slot_name":"price_max"}}'
+      payload: /choose_field{{"slot_name":"price_max"}}
     - title: RAM (GB)
-      payload: '/choose_field{{"slot_name":"ram_gb"}}'
+      payload: /choose_field{{"slot_name":"ram_gb"}}
     - title: SSD (GB)
-      payload: '/choose_field{{"slot_name":"ssd_gb"}}'
+      payload: /choose_field{{"slot_name":"ssd_gb"}}
     - title: HDD (GB)
-      payload: '/choose_field{{"slot_name":"hdd_gb"}}'
+      payload: /choose_field{{"slot_name":"hdd_gb"}}
     - title: Processore
-      payload: '/choose_field{{"slot_name":"processor_name"}}'
+      payload: /choose_field{{"slot_name":"processor_name"}}
     - title: GPU
-      payload: '/choose_field{{"slot_name":"gpu"}}'
+      payload: /choose_field{{"slot_name":"gpu"}}
     - title: Display (inch)
-      payload: '/choose_field{{"slot_name":"display_inch"}}'
+      payload: /choose_field{{"slot_name":"display_inch"}}
     - title: Batteria (ore)
-      payload: '/choose_field{{"slot_name":"battery_hrs"}}'
+      payload: /choose_field{{"slot_name":"battery_hrs"}}
 actions:
-- action_choose_slot
 - utter_greet
-- action_ask_selected_slot
 - utter_ask_next_slot
-- utter_goodbye
+- action_choose_slot
+- action_ask_selected_slot
 - action_search_laptop
+- utter_goodbye
 - validate_laptop_search_form
 session_config:
   session_expiration_time: 60

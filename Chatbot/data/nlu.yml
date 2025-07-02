@@ -14,16 +14,6 @@ nlu:
     - ciao ciao
     - ci sentiamo
     - grazie, ciao
-- intent: search_laptop
-  examples: |
-    - cerco un laptop
-    - voglio comprare un portatile
-    - aiutami a trovare un computer portatile
-    - ho bisogno di un nuovo laptop
-    - mostrami dei portatili disponibili
-    - fammi vedere i laptop
-    - lascia stare
-    - laptop
 - intent: inform
   examples: |
     - cerco un laptop della marca [Samsung](brand)
@@ -64,6 +54,7 @@ nlu:
     - [lenovo]{"entity": "brand", "value": "Lenovo"}
     - [-1](price_min)
     - [100](price_max)
+    - [16](ram_gb) GB
 - intent: affirm
   examples: |
     - mostra i risultati
@@ -104,19 +95,10 @@ nlu:
     - scegli il [display_inch](slot_name)
     - scegli il [battery_hrs](slot_name)
     - [Dell](brand)
-# - intent: next_page
-#   examples: |
-#     - mostrane altri
-#     - mostra altri risultati
-#     - voglio vedere di più
-#     - voglio vedere altri laptop
-#     - voglio vedere altri portatili
-#     - voglio vedere altri risultati
-#     - mostrane altri 5
-#     - pagina successiva
-#     - mostra la pagina successiva
-#     - vai alla pagina successiva
-#     - avanti
-#     - successivo
-#     - voglio vedere la pagina [2](page_number)
-#     - vai alla pagina [3](page_number)
+    - [dell]{"entity": "brand", "value": "Dell"}
+- intent: search_laptop
+  examples: |
+    - cerco un laptop
+- synonym: Lenovo
+  examples: |
+    - lenovo
