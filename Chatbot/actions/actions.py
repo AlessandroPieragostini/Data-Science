@@ -37,7 +37,7 @@ class ActionAskSelectedSlot(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
-        slot = tracker.get_slot("asked_slot")
+        slot = tracker.get_slot("slot_name")
         if slot:
             dispatcher.utter_message(response=f"utter_ask_{slot}")
         return []

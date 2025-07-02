@@ -7,6 +7,7 @@ intents:
 - greet
 - inform
 - search_laptop
+# - next_page
 entities:
 - slot_name
 - brand
@@ -103,8 +104,14 @@ slots:
   asked_slot:
     type: text
     mappings:
-    - type: from_text
+    - type: custom
     influence_conversation: false
+  # page_number:
+  #   type: float
+  #   mappings:
+  #   - type: from_text
+  #   initial_value: 1.0
+  #   influence_conversation: false
 forms:
   laptop_search_form:
     required_slots:
@@ -164,7 +171,7 @@ responses:
   utter_battery_hrs_invalid:
   - text: Inserisci un valore di autonomia valido (numero positivo).
   utter_ask_next_slot:
-  - text: Quale informazione vuoi inserire adesso?
+  - text: Quale informazione vuoi inserire?
     buttons:
     - title: Marca
       payload: '/choose_field{{"slot_name":"brand"}}'
