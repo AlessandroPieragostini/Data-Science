@@ -24,27 +24,31 @@ rules:
     steps:
       - intent: choose_field
       - action: action_choose_slot
+      - active_loop: laptop_search_form
 
   - rule: Slot filled
     condition:
       - active_loop: laptop_search_form
       - slot_was_set:
-        - requested_slot: None
+        - asked_slot: None
     steps:
       - action: utter_ask_next_slot
+      - active_loop: laptop_search_form
 
   - rule: Slot to fill
     condition:
+      - active_loop: laptop_search_form
       - slot_was_set:
-        - requested_slot
+        - asked_slot
     steps:
       - action: action_ask_selected_slot
+      - active_loop: laptop_search_form
 
 
 
   - rule: Submit laptop search form
-    condition:
-      - active_loop: laptop_search_form
+    # condition:
+    #   - active_loop: laptop_search_form
     steps:
       - intent: affirm
       - action: action_search_laptop

@@ -24,7 +24,7 @@ class ActionChooseSlot(Action):
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
         slot_to_request = tracker.get_slot("slot_name")
-        return [SlotSet("requested_slot", slot_to_request)]
+        return [SlotSet("asked_slot", slot_to_request)]
 
 # --- Azione per chiedere lo slot selezionato ---
 class ActionAskSelectedSlot(Action):
@@ -37,7 +37,7 @@ class ActionAskSelectedSlot(Action):
         tracker: Tracker,
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
-        slot = tracker.get_slot("requested_slot")
+        slot = tracker.get_slot("asked_slot")
         if slot:
             dispatcher.utter_message(response=f"utter_ask_{slot}")
         return []
@@ -59,13 +59,13 @@ class ValidateLaptopSearchForm(FormValidationAction):
             if value < 0:
                 # input non valido: mostra errore e re-ask dello stesso slot
                 dispatcher.utter_message(template=invalid_prompt)
-                return {slot_name: None, "requested_slot": slot_name}
+                return {slot_name: None, "asked_slot": slot_name}
             # input valido: chiedi il prossimo campo
             dispatcher.utter_message(template="utter_ask_next_slot")
-            return {slot_name: value, "requested_slot": None}
+            return {slot_name: value, "asked_slot": None}
         except (TypeError, ValueError):
             dispatcher.utter_message(template=invalid_prompt)
-            return {slot_name: None, "requested_slot": slot_name}
+            return {slot_name: None, "asked_slot": slot_name}
 
     def validate_price_min(
         self,
@@ -88,7 +88,7 @@ class ValidateLaptopSearchForm(FormValidationAction):
             min_p = tracker.get_slot("price_min")
             if min_p is not None and float(result["price_max"]) < float(min_p):
                 dispatcher.utter_message(template="utter_price_max_invalid")
-                return {"price_max": None, "requested_slot": "price_max"}
+                return {"price_max": None, "asked_slot": "price_max"}
         return result
 
     def validate_ram_gb(
@@ -215,6 +215,6 @@ class ActionSearchLaptop(Action):
         slots_to_reset = [
             'brand', 'price_min', 'price_max', 'processor_brand', 'processor_name',
             'ram_gb', 'ssd_gb', 'hdd_gb', 'gpu_brand', 'gpu', 'display_inch', 'battery_hrs',
-            'requested_slot', 'slot_name'
+            'asked_slot', 'slot_name'
         ]
         return [SlotSet(slot, None) for slot in slots_to_reset]

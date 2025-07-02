@@ -100,7 +100,7 @@ slots:
     - type: from_entity
       entity: slot_name
     influence_conversation: false
-  requested_slot:
+  asked_slot:
     type: text
     mappings:
     - type: from_text
@@ -167,25 +167,25 @@ responses:
   - text: Quale informazione vuoi inserire adesso?
     buttons:
     - title: Marca
-      payload: /choose_field{"slot_name":"brand"}
+      payload: '/choose_field{{"slot_name":"brand"}}'
     - title: Prezzo minimo
-      payload: /choose_field{"slot_name":"price_min"}
+      payload: '/choose_field{{"slot_name":"price_min"}}'
     - title: Prezzo massimo
-      payload: /choose_field{"slot_name":"price_max"}
+      payload: '/choose_field{{"slot_name":"price_max"}}'
     - title: RAM (GB)
-      payload: /choose_field{"slot_name":"ram_gb"}
+      payload: '/choose_field{{"slot_name":"ram_gb"}}'
     - title: SSD (GB)
-      payload: /choose_field{"slot_name":"ssd_gb"}
+      payload: '/choose_field{{"slot_name":"ssd_gb"}}'
     - title: HDD (GB)
-      payload: /choose_field{"slot_name":"hdd_gb"}
+      payload: '/choose_field{{"slot_name":"hdd_gb"}}'
     - title: Processore
-      payload: /choose_field{"slot_name":"processor_name"}
+      payload: '/choose_field{{"slot_name":"processor_name"}}'
     - title: GPU
-      payload: /choose_field{"slot_name":"gpu"}
+      payload: '/choose_field{{"slot_name":"gpu"}}'
     - title: Display (inch)
-      payload: /choose_field{"slot_name":"display_inch"}
+      payload: '/choose_field{{"slot_name":"display_inch"}}'
     - title: Batteria (ore)
-      payload: /choose_field{"slot_name":"battery_hrs"}
+      payload: '/choose_field{{"slot_name":"battery_hrs"}}'
 actions:
 - action_choose_slot
 - utter_greet

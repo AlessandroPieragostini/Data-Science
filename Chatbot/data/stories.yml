@@ -41,7 +41,7 @@ stories:
       - slot_name: brand
     - action: action_choose_slot
     - slot_was_set:
-      - requested_slot: brand
+      - asked_slot: brand
     - action: action_ask_selected_slot
     - intent: choose_field
       entities:
@@ -61,7 +61,7 @@ stories:
       - slot_name: price_max
     - action: action_choose_slot
     - slot_was_set:
-      - requested_slot: price_max
+      - asked_slot: price_max
     - action: action_ask_selected_slot
     - intent: inform
       entities:
@@ -96,7 +96,7 @@ stories:
     - slot_was_set:
       - battery_hrs: null
     - slot_was_set:
-      - requested_slot: null
+      - asked_slot: null
     - slot_was_set:
       - slot_name: null
     - intent: goodbye
@@ -115,7 +115,7 @@ stories:
       - slot_name: brand
     - action: action_choose_slot
     - slot_was_set:
-      - requested_slot: brand
+      - asked_slot: brand
     - action: action_ask_selected_slot
     - intent: inform
       entities:
@@ -130,7 +130,7 @@ stories:
       - slot_name: price_min
     - action: action_choose_slot
     - slot_was_set:
-      - requested_slot: price_min
+      - asked_slot: price_min
     - action: action_ask_selected_slot
     - intent: inform
       entities:
