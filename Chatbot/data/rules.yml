@@ -34,7 +34,7 @@ rules:
     - active_loop: laptop_search_form
     steps:
     - intent: affirm
-    - action: laptop_search_form
+    - action: action_deactivate_loop
     - active_loop: null
     - action: action_search_laptop
 
@@ -52,3 +52,8 @@ rules:
       - intent: next_page
       - action: action_increment_page
       - action: action_search_laptop
+    
+  - rule: "Reset Filters"
+    steps:
+      - intent: reset_filters
+      - action: action_reset_filters

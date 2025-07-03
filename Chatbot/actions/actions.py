@@ -1,3 +1,4 @@
+from tkinter import EventType
 from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.forms import FormValidationAction
@@ -184,11 +185,8 @@ class ActionSearchLaptop(Action):
                     ))
 
         # Reset dei slot, se vuoi mantenere il page (per navigazione avanti/indietro) NON resettarlo
-        slots_to_reset = [
-            'brand', 'price_max', 'processor_brand', 'processor_name',
-            'ram_gb', 'ssd_gb', 'hdd_gb', 'gpu_brand', 'gpu', 'display_inch', 'battery_hrs'
-        ]
-        return [SlotSet(slot, None) for slot in slots_to_reset]
+        
+        return []
 
 class ActionIncrementPage(Action):
     def name(self) -> Text:
@@ -206,3 +204,39 @@ class ActionIncrementPage(Action):
         new_page = page_num + 1
         # Aggiorna slot page
         return [SlotSet("page", new_page), SlotSet("requested_slot", None)]
+    
+class ActionResetFilters(Action):
+    """
+    Action che azzera i filtri specificati.
+    """
+    def name(self) -> Text:
+        return "action_reset_filters"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]
+    ) -> List[EventType]:
+        # Lista degli slot da resettare
+        slots_to_reset = [
+            'brand',
+            'price_max',
+            'processor_brand',
+            'processor_name',
+            'ram_gb',
+            'ssd_gb',
+            'hdd_gb',
+            'gpu_brand',
+            'gpu',
+            'display_inch',
+            'battery_hrs'
+        ]
+
+        # Genera eventi SlotSet per azzerare ogni slot
+        events = [SlotSet(slot, None) for slot in slots_to_reset]
+
+        # Messaggio di conferma
+        dispatcher.utter_message(text="Ho azzerato tutti i filtri.")
+
+        return events

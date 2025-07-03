@@ -5,15 +5,16 @@ intents:
 - goodbye
 - greet
 - inform
-- request_form
 - next_page
+- request_form
+- reset_filters
 entities:
+- processor_name
+- ram_gb
 - price_max
 - battery_hrs
 - brand
 - display_inch
-- processor_name
-- ram_gb
 - processor_brand
 - ssd_gb
 - hdd_gb
@@ -128,13 +129,14 @@ responses:
   utter_didnt_understand:
   - text: Scusami, non ho capito.
 actions:
-- utter_ask_filters
 - utter_greet
+- action_increment_page
+- action_reset_filters
 - utter_goodbye
 - action_search_laptop
+- utter_ask_filters
 - action_recap_filters
 - validate_laptop_search_form
-- action_increment_page
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

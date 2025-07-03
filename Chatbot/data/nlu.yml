@@ -21,6 +21,7 @@ nlu:
     - cerco un pc
     - aiutami a trovare un portatile
     - come posso cercare un computer
+    - cerco un laptop
 - intent: inform
   examples: |
     - cerco un laptop della marca [Samsung](brand)
@@ -106,6 +107,7 @@ nlu:
     - vorrei un processore della marca [intel]{"entity": "processor_brand", "value": "Intel"}
     - vorrei un laptop [lenovo]{"entity": "brand", "value": "Lenovo"} con un processore [i7](processor_name) e ho un budget di [1000](price_max) euro
     - vorrei un display da [13.3](display_inch) pollici e una batteria che duri almeno [10](battery_hrs) ore
+    - cerco un laptop con una RAM di [16](ram_gb) GB e un processore [Core i7](processor_name)
 - intent: affirm
   examples: |
     - mostra i risultati
@@ -131,9 +133,19 @@ nlu:
     - altri
     - pagina successiva
     - ne hai altri?
+- intent: reset_filters
+  examples: |
+    - resetta i filtri
+    - voglio ricominciare
+    - azzera i filtri
+    - cancella i filtri
+    - voglio ripartire da zero
 - synonym: Samsung
   examples: |
     - samsung
 - synonym: Intel
   examples: |
     - intel
+- synonym: Lenovo
+  examples: |
+    - lenovo
