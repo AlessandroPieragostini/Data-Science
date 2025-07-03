@@ -6,13 +6,12 @@ intents:
 - goodbye
 - greet
 - inform
-# - search_laptop
 entities:
-- slot_name
-- ram_gb
 - brand
-- price_min
 - price_max
+- slot_name
+- price_min
+- ram_gb
 - processor_brand
 - processor_name
 - ssd_gb
@@ -167,33 +166,34 @@ responses:
   - text: Quale informazione vuoi inserire?
     buttons:
     - title: Marca
-      payload: '/choose_field{{"slot_name":"brand"}}'
+      payload: /choose_field{{"slot_name":"brand"}}
     - title: Prezzo minimo
-      payload: '/choose_field{{"slot_name":"price_min"}}'
+      payload: /choose_field{{"slot_name":"price_min"}}
     - title: Prezzo massimo
-      payload: '/choose_field{{"slot_name":"price_max"}}'
+      payload: /choose_field{{"slot_name":"price_max"}}
     - title: RAM (GB)
-      payload: '/choose_field{{"slot_name":"ram_gb"}}'
+      payload: /choose_field{{"slot_name":"ram_gb"}}
     - title: SSD (GB)
-      payload: '/choose_field{{"slot_name":"ssd_gb"}}'
+      payload: /choose_field{{"slot_name":"ssd_gb"}}
     - title: HDD (GB)
-      payload: '/choose_field{{"slot_name":"hdd_gb"}}'
+      payload: /choose_field{{"slot_name":"hdd_gb"}}
     - title: Processore
-      payload: '/choose_field{{"slot_name":"processor_name"}}'
+      payload: /choose_field{{"slot_name":"processor_name"}}
     - title: GPU
-      payload: '/choose_field{{"slot_name":"gpu"}}'
+      payload: /choose_field{{"slot_name":"gpu"}}
     - title: Display (inch)
-      payload: '/choose_field{{"slot_name":"display_inch"}}'
+      payload: /choose_field{{"slot_name":"display_inch"}}
     - title: Batteria (ore)
-      payload: '/choose_field{{"slot_name":"battery_hrs"}}'
+      payload: /choose_field{{"slot_name":"battery_hrs"}}
 actions:
 - utter_greet
-- utter_ask_next_slot
 - action_choose_slot
-- action_ask_selected_slot
-- action_search_laptop
 - utter_goodbye
+- utter_ask_next_slot
+- action_search_laptop
+- action_ask_selected_slot
 - validate_laptop_search_form
+- laptop_search_form
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

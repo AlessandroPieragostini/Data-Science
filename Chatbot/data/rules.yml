@@ -5,10 +5,7 @@ rules:
     steps:
       - intent: greet
       - action: utter_greet
-      - active_loop: laptop_search_form
       - action: utter_ask_next_slot
-
-
 
   - rule: Say goodbye
     steps:
@@ -21,6 +18,8 @@ rules:
       - intent: choose_field
       - action: action_choose_slot
       - action: action_ask_selected_slot
+      - active_loop: laptop_search_form
+
 
   - rule: Slot filled
     condition:
@@ -30,12 +29,14 @@ rules:
       - intent: inform
       - action: utter_ask_next_slot
 
+
   - rule: Slot to fill
     condition:
       - slot_was_set:
         - asked_slot
     steps:
       - action: action_ask_selected_slot
+      - active_loop: laptop_search_form
 
   - rule: Submit laptop search form
     # condition:
@@ -46,8 +47,6 @@ rules:
       - active_loop: null
 
   - rule: User denies search midway
-    condition:
-      - active_loop: laptop_search_form
     steps:
       - intent: deny
       - action: utter_goodbye

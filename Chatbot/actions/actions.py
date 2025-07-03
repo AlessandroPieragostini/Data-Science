@@ -24,7 +24,9 @@ class ActionChooseSlot(Action):
         domain: Dict[Text, Any]
     ) -> List[Dict[Text, Any]]:
         slot_to_request = tracker.get_slot("slot_name")
-        return [SlotSet("asked_slot", slot_to_request)]
+        return [SlotSet("asked_slot", slot_to_request),
+    SlotSet("requested_slot", slot_to_request)
+                ]
 
 # --- Azione per chiedere lo slot selezionato ---
 class ActionAskSelectedSlot(Action):

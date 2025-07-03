@@ -55,6 +55,9 @@ nlu:
     - [-10](price_min)
     - [100](price_max)
     - [16](ram_gb) GB
+    - [1000](price_max) euro
+    - [samsung]{"entity": "brand", "value": "Samsung"}
+    - [-1](price_min) euro
 - intent: affirm
   examples: |
     - mostra i risultati
@@ -96,4 +99,6 @@ nlu:
     - scegli il [battery_hrs](slot_name)
     - [Dell](brand)
     - [dell]{"entity": "brand", "value": "Dell"}
-
+- synonym: Dell
+  examples: |
+    - dell
