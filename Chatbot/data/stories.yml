@@ -214,3 +214,65 @@ stories:
   - action: action_search_laptop
   - intent: goodbye
   - action: utter_goodbye
+
+- story: reset filtri
+  steps:
+    - intent: greet
+    - action: utter_greet
+    - intent: request_form
+    - action: utter_ask_filters
+    - action: laptop_search_form
+    - active_loop: laptop_search_form
+    - slot_was_set:
+        - requested_slot: brand
+    - intent: inform
+      entities:
+        - ram_gb: '16'
+        - processor_name: Core i7
+    - slot_was_set:
+        - processor_name: Core i7
+    - slot_was_set:
+        - ram_gb: '16'
+    - action: action_recap_filters
+    - action: laptop_search_form
+    - slot_was_set:
+        - requested_slot: brand
+    - intent: affirm
+    - action: action_deactivate_loop
+    - active_loop: null
+    - slot_was_set:
+        - requested_slot: null
+    - action: action_search_laptop
+    - intent: next_page
+    - action: action_increment_page
+    - slot_was_set:
+        - page: 2
+    - slot_was_set:
+        - requested_slot: null
+    - action: action_search_laptop
+    - intent: reset_filters
+    - action: action_reset_filters
+    - slot_was_set:
+        - brand: null
+    - slot_was_set:
+        - price_max: null
+    - slot_was_set:
+        - processor_brand: null
+    - slot_was_set:
+        - processor_name: null
+    - slot_was_set:
+        - ram_gb: null
+    - slot_was_set:
+        - ssd_gb: null
+    - slot_was_set:
+        - hdd_gb: null
+    - slot_was_set:
+        - gpu_brand: null
+    - slot_was_set:
+        - gpu: null
+    - slot_was_set:
+        - display_inch: null
+    - slot_was_set:
+        - battery_hrs: null
+    - intent: goodbye
+    - action: utter_goodbye
