@@ -6,21 +6,26 @@ intents:
 - greet
 - inform
 - request_form
-
+- next_page
 entities:
-- brand
 - price_max
+- battery_hrs
+- brand
+- display_inch
+- processor_name
 - ram_gb
 - processor_brand
-- processor_name
 - ssd_gb
 - hdd_gb
 - gpu_brand
 - gpu
-- display_inch
-- battery_hrs
-
 slots:
+  page:
+    type: float
+    initial_value: 1
+    mappings:
+    - type: custom
+    influence_conversation: false
   brand:
     type: text
     mappings:
@@ -87,7 +92,6 @@ slots:
     - type: from_entity
       entity: battery_hrs
     influence_conversation: false
-
 forms:
   laptop_search_form:
     required_slots:
@@ -102,7 +106,6 @@ forms:
     - gpu
     - display_inch
     - battery_hrs
-
 responses:
   utter_greet:
   - text: Ciao! Sono qui per aiutarti a trovare il laptop perfetto. Dimmi pure come posso aiutarti.
@@ -110,8 +113,6 @@ responses:
   - text: A presto! Se ti serve altro, chiedi pure.
   utter_ask_filters:
   - text: Bene! Dimmi pure quali sono i tuoi requisiti.
-  utter_price_min_invalid:
-  - text: Per favore inserisci un prezzo minimo valido (numero positivo).
   utter_price_max_invalid:
   - text: Il prezzo massimo deve essere un numero positivo e non inferiore al minimo. Riprova.
   utter_ram_gb_invalid:
@@ -126,14 +127,14 @@ responses:
   - text: Inserisci un valore di autonomia valido (numero positivo).
   utter_didnt_understand:
   - text: Scusami, non ho capito.
-
 actions:
-- action_search_laptop
-- action_recap_filters
 - utter_ask_filters
 - utter_greet
 - utter_goodbye
+- action_search_laptop
+- action_recap_filters
 - validate_laptop_search_form
+- action_increment_page
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

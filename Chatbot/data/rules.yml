@@ -28,7 +28,6 @@ rules:
       # slot_was_set???
       - action: action_recap_filters
       - action: laptop_search_form
-      - active_loop: laptop_search_form
 
   - rule: Form submit
     condition:
@@ -47,4 +46,9 @@ rules:
       - action: utter_didnt_understand
       - action: action_recap_filters
       - action: laptop_search_form
-      - active_loop: laptop_search_form
+
+  - rule: More results
+    steps:
+      - intent: next_page
+      - action: action_increment_page
+      - action: action_search_laptop

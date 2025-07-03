@@ -14,6 +14,7 @@ nlu:
     - ciao ciao
     - ci sentiamo
     - grazie, ciao
+    - grazie, arrivederci
 - intent: request_form
   examples: |
     - vorrei un laptop
@@ -29,7 +30,7 @@ nlu:
     - mi serve un computer portatile [Lenovo](brand)
     - budget massimo [900](price_max) euro
     - non spendere più di [750](price_max)€
-    - prezzo minimo [650](price_min) euro
+    - prezzo massimo [650](price_max) euro
     - budget [1200](price_max) euro
     - non più di [1500](price_max)
     - voglio un laptop con processore [Intel](processor_brand)
@@ -103,6 +104,8 @@ nlu:
     - vorrei un laptop [samsung]{"entity": "brand", "value": "Samsung"} con [16](ram_gb) GB di RAM
     - voglio spendere al massimo [1000](price_max) euro
     - vorrei un processore della marca [intel]{"entity": "processor_brand", "value": "Intel"}
+    - vorrei un laptop [lenovo]{"entity": "brand", "value": "Lenovo"} con un processore [i7](processor_name) e ho un budget di [1000](price_max) euro
+    - vorrei un display da [13.3](display_inch) pollici e una batteria che duri almeno [10](battery_hrs) ore
 - intent: affirm
   examples: |
     - mostra i risultati
@@ -113,6 +116,7 @@ nlu:
     - ok
     - va bene
     - mostrami i risultati
+    - va bene così, mostra i risultati
 - intent: deny
   examples: |
     - no
@@ -120,3 +124,16 @@ nlu:
     - non voglio
     - magari poi
     - per niente
+- intent: next_page
+  examples: |
+    - mostrane altri
+    - ne voglio di più
+    - altri
+    - pagina successiva
+    - ne hai altri?
+- synonym: Samsung
+  examples: |
+    - samsung
+- synonym: Intel
+  examples: |
+    - intel

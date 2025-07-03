@@ -43,11 +43,6 @@ class ValidateLaptopSearchForm(FormValidationAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         result = self._validate_positive(slot_value, dispatcher, "price_max", "utter_price_max_invalid")
-        if result.get("price_max") is not None:
-            min_p = tracker.get_slot("price_min")
-            if min_p is not None and float(result["price_max"]) < float(min_p):
-                dispatcher.utter_message(template="utter_price_max_invalid")
-                return {"price_max": None}
         return result
 
     def validate_ram_gb(self, slot_value, dispatcher, tracker, domain):
@@ -125,6 +120,15 @@ class ActionSearchLaptop(Action):
         gpu = tracker.get_slot('gpu')
         display_inch = tracker.get_slot('display_inch')
         battery_hrs = tracker.get_slot('battery_hrs')
+        page = tracker.get_slot('page')  # Nuovo slot page
+
+        # Default a 1 se page non è valorizzato o non valido
+        try:
+            page_num = int(page)
+            if page_num < 1:
+                page_num = 1
+        except (TypeError, ValueError):
+            page_num = 1
 
         # Filtra il DataFrame
         df = df_laptops.copy()
@@ -151,28 +155,54 @@ class ActionSearchLaptop(Action):
         if battery_hrs is not None:
             df = df[df['battery_hrs'] >= float(battery_hrs)]
 
+        # Calcola range di righe da mostrare in base a page_num
+        page_size = 5
+        start_idx = (page_num - 1) * page_size
+        end_idx = start_idx + page_size
+
         # Mostra i risultati
         if df.empty:
             dispatcher.utter_message(text="Mi dispiace, non ho trovato laptop che corrispondano ai tuoi filtri.")
         else:
-            for _, r in df.head(5).iterrows():
-                dispatcher.utter_message(text=(
-                    f"Modello: {r['name']}\n"
-                    f"Marca: {r['brand']}\n"
-                    f"Prezzo: {r['price']}€\n"
-                    f"Processore: {r['processor_name']} ({r['processor_brand']}) - {r['ghz']} GHz\n"
-                    f"RAM: {r['ram_gb']} GB ({r['ram_type']}, espandibile fino a {r['ram_expandable_gb']} GB)\n"
-                    f"Storage: {r['ssd_gb']} GB SSD + {r['hdd_gb']} GB HDD\n"
-                    f"GPU: {r['gpu']} ({r['gpu_brand']})\n"
-                    f"Display: {r['display_type']} - {r['display_inch']}\" pollici\n"
-                    f"Autonomia: {r['battery_hrs']} ore\n"
-                    f"Alimentatore: {r['adapter_w']} W\n"
-                    + "="*100
-                ))
+            subset = df.iloc[start_idx:end_idx]
+            if subset.empty:
+                dispatcher.utter_message(text="Non ci sono più risultati da mostrare per questa pagina.")
+            else:
+                for _, r in subset.iterrows():
+                    dispatcher.utter_message(text=(
+                        f"Modello: {r['name']}\n"
+                        f"Marca: {r['brand']}\n"
+                        f"Prezzo: {r['price']}€\n"
+                        f"Processore: {r['processor_name']} ({r['processor_brand']}) - {r['ghz']} GHz\n"
+                        f"RAM: {r['ram_gb']} GB ({r['ram_type']}, espandibile fino a {r['ram_expandable_gb']} GB)\n"
+                        f"Storage: {r['ssd_gb']} GB SSD + {r['hdd_gb']} GB HDD\n"
+                        f"GPU: {r['gpu']} ({r['gpu_brand']})\n"
+                        f"Display: {r['display_type']} - {r['display_inch']}\" pollici\n"
+                        f"Autonomia: {r['battery_hrs']} ore\n"
+                        f"Alimentatore: {r['adapter_w']} W\n"
+                        + "="*100
+                    ))
 
-        # Reset dei slot
+        # Reset dei slot, se vuoi mantenere il page (per navigazione avanti/indietro) NON resettarlo
         slots_to_reset = [
             'brand', 'price_max', 'processor_brand', 'processor_name',
             'ram_gb', 'ssd_gb', 'hdd_gb', 'gpu_brand', 'gpu', 'display_inch', 'battery_hrs'
         ]
         return [SlotSet(slot, None) for slot in slots_to_reset]
+
+class ActionIncrementPage(Action):
+    def name(self) -> Text:
+        return "action_increment_page"
+
+    def run(self, dispatcher, tracker, domain):
+        current_page = tracker.get_slot("page")
+        try:
+            page_num = int(current_page)
+            if page_num < 1:
+                page_num = 1
+        except (TypeError, ValueError):
+            page_num = 1
+
+        new_page = page_num + 1
+        # Aggiorna slot page
+        return [SlotSet("page", new_page), SlotSet("requested_slot", None)]
