@@ -1,16 +1,15 @@
 version: '3.1'
 intents:
 - affirm
-- choose_field
 - deny
 - goodbye
 - greet
 - inform
+- request_form
+
 entities:
 - brand
 - price_max
-- slot_name
-- price_min
 - ram_gb
 - processor_brand
 - processor_name
@@ -20,18 +19,13 @@ entities:
 - gpu
 - display_inch
 - battery_hrs
+
 slots:
   brand:
     type: text
     mappings:
     - type: from_entity
       entity: brand
-    influence_conversation: false
-  price_min:
-    type: float
-    mappings:
-    - type: from_entity
-      entity: price_min
     influence_conversation: false
   price_max:
     type: float
@@ -93,22 +87,11 @@ slots:
     - type: from_entity
       entity: battery_hrs
     influence_conversation: false
-  slot_name:
-    type: text
-    mappings:
-    - type: from_entity
-      entity: slot_name
-    influence_conversation: false
-  asked_slot:
-    type: text
-    mappings:
-    - type: custom
-    influence_conversation: false
+
 forms:
   laptop_search_form:
     required_slots:
     - brand
-    - price_min
     - price_max
     - processor_brand
     - processor_name
@@ -119,35 +102,14 @@ forms:
     - gpu
     - display_inch
     - battery_hrs
+
 responses:
   utter_greet:
-  - text: Ciao! Sono qui per aiutarti a trovare il laptop perfetto. Dimmi pure cosa cerchi.
+  - text: Ciao! Sono qui per aiutarti a trovare il laptop perfetto. Dimmi pure come posso aiutarti.
   utter_goodbye:
   - text: A presto! Se ti serve altro, chiedi pure.
-  utter_ask_brand:
-  - text: Per quale marca sei interessato?
-  utter_ask_price_min:
-  - text: Qual è il prezzo minimo (in €)?
-  utter_ask_price_max:
-  - text: Qual è il prezzo massimo (in €)?
-  utter_ask_processor_brand:
-  - text: Quale marca di processore preferisci (Intel, AMD...)?
-  utter_ask_processor_name:
-  - text: Quale modello di processore (es. Core i7, Ryzen 5...)?
-  utter_ask_ram_gb:
-  - text: Quanta RAM ti serve (in GB)?
-  utter_ask_ssd_gb:
-  - text: Quanto spazio SSD desideri (in GB)?
-  utter_ask_hdd_gb:
-  - text: Quanto spazio HDD desideri (in GB)?
-  utter_ask_gpu_brand:
-  - text: Di quale marca di GPU (NVIDIA, AMD...)?
-  utter_ask_gpu:
-  - text: Quale modello di GPU ti interessa?
-  utter_ask_display_inch:
-  - text: Che dimensione di schermo (in pollici) preferisci?
-  utter_ask_battery_hrs:
-  - text: Quanta autonomia (in ore) ti serve?
+  utter_ask_filters:
+  - text: Bene! Dimmi pure quali sono i tuoi requisiti.
   utter_price_min_invalid:
   - text: Per favore inserisci un prezzo minimo valido (numero positivo).
   utter_price_max_invalid:
@@ -162,38 +124,16 @@ responses:
   - text: Inserisci un valore di dimensione schermo valido (numero positivo).
   utter_battery_hrs_invalid:
   - text: Inserisci un valore di autonomia valido (numero positivo).
-  utter_ask_next_slot:
-  - text: Quale informazione vuoi inserire?
-    buttons:
-    - title: Marca
-      payload: /choose_field{{"slot_name":"brand"}}
-    - title: Prezzo minimo
-      payload: /choose_field{{"slot_name":"price_min"}}
-    - title: Prezzo massimo
-      payload: /choose_field{{"slot_name":"price_max"}}
-    - title: RAM (GB)
-      payload: /choose_field{{"slot_name":"ram_gb"}}
-    - title: SSD (GB)
-      payload: /choose_field{{"slot_name":"ssd_gb"}}
-    - title: HDD (GB)
-      payload: /choose_field{{"slot_name":"hdd_gb"}}
-    - title: Processore
-      payload: /choose_field{{"slot_name":"processor_name"}}
-    - title: GPU
-      payload: /choose_field{{"slot_name":"gpu"}}
-    - title: Display (inch)
-      payload: /choose_field{{"slot_name":"display_inch"}}
-    - title: Batteria (ore)
-      payload: /choose_field{{"slot_name":"battery_hrs"}}
+  utter_didnt_understand:
+  - text: Scusami, non ho capito.
+
 actions:
-- utter_greet
-- action_choose_slot
-- utter_goodbye
-- utter_ask_next_slot
 - action_search_laptop
-- action_ask_selected_slot
+- action_recap_filters
+- utter_ask_filters
+- utter_greet
+- utter_goodbye
 - validate_laptop_search_form
-- laptop_search_form
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

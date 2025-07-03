@@ -1,272 +1,59 @@
 version: "3.1"
 
 stories:
-  - story: greet user
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - action: utter_ask_next_slot
-      - active_loop: laptop_search_form
-
-  - story: selezione marca e continua richiesta
-    steps:
-      - intent: greet
-      - action: utter_greet
-      - action: utter_ask_next_slot
-      - intent: choose_field
-        entities:
-          - slot_name: "brand"
-      - action: action_choose_slot
-      - action: action_ask_selected_slot
-      - active_loop: laptop_search_form
-      - intent: inform
-        entities:
-          - brand: "Samsung"
-      - slot_was_set:
-          - brand: "Samsung"
-      - action: utter_ask_next_slot
-
-
-  - story: selezione marca, ram e ricerca laptop
-    steps:
-    - intent: greet
-    - action: utter_greet
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: brand
-    - slot_was_set:
-      - slot_name: brand
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: brand
-    - action: action_ask_selected_slot
-    - active_loop: laptop_search_form
-    - intent: inform
-      entities:
-      - brand: Dell
-    - slot_was_set:
-      - brand: Dell
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: ram_gb
-    - slot_was_set:
-      - slot_name: ram_gb
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: ram_gb
-    - action: action_ask_selected_slot
-    - active_loop: laptop_search_form
-    - intent: inform
-      entities:
-      - ram_gb: '16'
-    - slot_was_set:
-      - ram_gb: '16'
-    - action: utter_ask_next_slot
-    - intent: affirm
-    - action: action_search_laptop
-    - slot_was_set:
-      - brand: null
-    - slot_was_set:
-      - price_min: null
-    - slot_was_set:
-      - price_max: null
-    - slot_was_set:
-      - processor_brand: null
-    - slot_was_set:
-      - processor_name: null
-    - slot_was_set:
-      - ram_gb: null
-    - slot_was_set:
-      - ssd_gb: null
-    - slot_was_set:
-      - hdd_gb: null
-    - slot_was_set:
-      - gpu_brand: null
-    - slot_was_set:
-      - gpu: null
-    - slot_was_set:
-      - display_inch: null
-    - slot_was_set:
-      - battery_hrs: null
-    - slot_was_set:
-      - asked_slot: null
-    - slot_was_set:
-      - slot_name: null
-    # - intent: search_laptop
-
-  - story: seleziona processore e ricerca laptop
-    steps:
-    - intent: greet
-    - action: utter_greet
-    # - intent: search_laptop
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: processor_name
-    - slot_was_set:
-      - slot_name: processor_name
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: processor_name
-    - action: action_ask_selected_slot
-    - active_loop: laptop_search_form
-    - intent: inform
-      entities:
-      - processor_name: i7
-    - slot_was_set:
-      - processor_name: i7
-    - action: utter_ask_next_slot
-    - intent: affirm
-    - action: action_search_laptop
-    - active_loop: null
-    - slot_was_set:
-      - brand: null
-    - slot_was_set:
-      - price_min: null
-    - slot_was_set:
-      - price_max: null
-    - slot_was_set:
-      - processor_brand: null
-    - slot_was_set:
-      - processor_name: null
-    - slot_was_set:
-      - ram_gb: null
-    - slot_was_set:
-      - ssd_gb: null
-    - slot_was_set:
-      - hdd_gb: null
-    - slot_was_set:
-      - gpu_brand: null
-    - slot_was_set:
-      - gpu: null
-    - slot_was_set:
-      - display_inch: null
-    - slot_was_set:
-      - battery_hrs: null
-    - slot_was_set:
-      - asked_slot: null
-    - slot_was_set:
-      - slot_name: null
-
-  - story: prezzo massimo e prezzo minimo
-    steps:
-    - intent: greet
-    - action: utter_greet
-    # - intent: search_laptop
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: price_min
-    - slot_was_set:
-      - slot_name: price_min
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: price_min
-    - action: action_ask_selected_slot
-    - active_loop: laptop_search_form
-    - intent: inform
-      entities:
-      - price_min: '100'
-    - slot_was_set:
-      - price_min: '100'
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: price_max
-    - slot_was_set:
-      - slot_name: price_max
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: price_max
-    - action: action_ask_selected_slot
-    - active_loop: laptop_search_form
-    - intent: inform
-      entities:
-      - price_max: '700'
-    - slot_was_set:
-      - price_max: '700'
-    - action: utter_ask_next_slot
-    - intent: choose_field
-      entities:
-      - slot_name: price_min
-    - slot_was_set:
-      - slot_name: price_min
-    - action: action_choose_slot
-    - slot_was_set:
-      - asked_slot: price_min
-    - action: action_ask_selected_slot
-    - active_loop: laptop_search_form
-    - intent: inform
-      entities:
-      - price_min: '200'
-    - slot_was_set:
-      - price_min: '200'
-    - action: utter_ask_next_slot
 
 - story: interactive_story_1
   steps:
   - intent: greet
   - action: utter_greet
-  - action: utter_ask_next_slot
-  - intent: choose_field
-    entities:
-    - slot_name: price_max
-  - slot_was_set:
-    - slot_name: price_max
-  - action: action_choose_slot
-  - slot_was_set:
-    - asked_slot: price_max
-  - slot_was_set:
-    - requested_slot: price_max
-  - action: action_ask_selected_slot
-  - intent: inform
-    entities:
-    - price_max: '1000'
-  - slot_was_set:
-    - price_max: '1000'
-  - action: utter_ask_next_slot
-  - intent: choose_field
-    entities:
-    - slot_name: brand
-  - slot_was_set:
-    - slot_name: brand
-  - action: action_choose_slot
-  - slot_was_set:
-    - asked_slot: brand
+  - intent: request_form
+  - action: utter_ask_filters
+  - action: laptop_search_form
+  - active_loop: laptop_search_form
   - slot_was_set:
     - requested_slot: brand
-  - action: action_ask_selected_slot
   - intent: inform
     entities:
     - brand: Samsung
+    - ram_gb: '16'
   - slot_was_set:
     - brand: Samsung
-  - action: utter_ask_next_slot
-  - intent: choose_field
-    entities:
-    - slot_name: price_min
   - slot_was_set:
-    - slot_name: price_min
-  - action: action_choose_slot
+    - ram_gb: '16'
+  - action: action_recap_filters
+  - action: laptop_search_form
   - slot_was_set:
-    - asked_slot: price_min
+      - brand: Samsung
   - slot_was_set:
-    - requested_slot: price_min
-  - action: action_ask_selected_slot
+      - ram_gb: 16.0
+  - slot_was_set:
+      - requested_slot: price_max
   - intent: inform
     entities:
-    - price_min: '-1'
+    - price_max: '1000'
   - slot_was_set:
-    - price_min: '-1'
-  - action: utter_ask_next_slot
+    - price_max: '1000'
+  - action: action_recap_filters
+  - action: laptop_search_form
+  - slot_was_set:
+    - requested_slot: processor_brand
+  - intent: inform
+    entities:
+    - processor_brand: Intel
+  - slot_was_set:
+    - processor_brand: Intel
+  - action: action_recap_filters
+  - action: laptop_search_form
+  - slot_was_set:
+    - requested_slot: processor_name
   - intent: affirm
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
   - action: action_search_laptop
   - slot_was_set:
     - brand: null
-  - slot_was_set:
-    - price_min: null
   - slot_was_set:
     - price_max: null
   - slot_was_set:
@@ -287,9 +74,5 @@ stories:
     - display_inch: null
   - slot_was_set:
     - battery_hrs: null
-  - slot_was_set:
-    - asked_slot: null
-  - slot_was_set:
-    - slot_name: null
   - intent: goodbye
   - action: utter_goodbye

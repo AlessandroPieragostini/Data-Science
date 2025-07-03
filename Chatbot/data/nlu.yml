@@ -14,6 +14,12 @@ nlu:
     - ciao ciao
     - ci sentiamo
     - grazie, ciao
+- intent: request_form
+  examples: |
+    - vorrei un laptop
+    - cerco un pc
+    - aiutami a trovare un portatile
+    - come posso cercare un computer
 - intent: inform
   examples: |
     - cerco un laptop della marca [Samsung](brand)
@@ -24,21 +30,21 @@ nlu:
     - budget massimo [900](price_max) euro
     - non spendere più di [750](price_max)€
     - prezzo minimo [650](price_min) euro
-    - almeno [550](price_min)€
     - budget [1200](price_max) euro
     - non più di [1500](price_max)
     - voglio un laptop con processore [Intel](processor_brand)
     - cerco CPU [AMD](processor_brand)
     - notebook con [Ryzen 5 5600U](processor_name)
     - portatile con CPU [Core i7](processor_name)
-    - almeno [8](ram_gb) GB di RAM
-    - RAM [32](ram_gb) GB
-    - [16](ram_gb)
+    - almeno [8](ram_gb) gb di RAM
+    - ram [32](ram_gb) GB
+    - ram da [16](ram_gb)
     - laptop con SSD da [256](ssd_gb) GB
-    - [256](ssd_gb) gb
-    - notebook con [1](hdd_gb) TB di HDD
-    - SSD [1](ssd_gb) TB
+    - [256](ssd_gb) gb di ssd
+    - notebook con [1000](hdd_gb) gb di HDD
+    - SSD [1000](ssd_gb) GB
     - HDD [512](hdd_gb) GB
+    - [256](hdd_gb) giga di memoria HDD
     - scheda grafica [NVIDIA](gpu_brand)
     - voglio una scheda grafica [AMD](gpu_brand)
     - GPU [GeForce GTX 1650 Ti](gpu)
@@ -52,12 +58,51 @@ nlu:
     - notebook con [16](ram_gb) GB di RAM
     - vorrei un laptop [Dell](brand)
     - [600](price_max) euro
-    - [-10](price_min)
-    - [100](price_max)
-    - [16](ram_gb) GB
+    - [100](price_max) euro massimo
+    - [16](ram_gb) GB di ram
     - [1000](price_max) euro
-    - [samsung]{"entity": "brand", "value": "Samsung"}
-    - [-1](price_min) euro
+    - cerco un portatile [HP](brand) con almeno [8](ram_gb) GB di RAM
+    - voglio un laptop [Asus](brand) sotto i [900](price_max) euro
+    - preferisco [Acer](brand) con processore [Intel](processor_brand)
+    - notebook [Dell](brand) con [Core i5](processor_name)
+    - uno [MSI](brand) con [RTX 3060](gpu) e [16](ram_gb) GB di ram
+    - portatile da [14](display_inch) pollici e batteria di [10](battery_hrs) ore
+    - cerca un [Lenovo](brand) con SSD da [512](ssd_gb) GB e [8](ram_gb) GB di RAM
+    - voglio un laptop con [Ryzen 7](processor_name) e GPU [AMD](gpu_brand)
+    - display da [15.6](display_inch) pollici e autonomia di almeno [8](battery_hrs) ore
+    - budget fino a [1200](price_max) euro
+    - SSD [256](ssd_gb) e HDD [512](hdd_gb) gb
+    - schermo [13](display_inch) pollici e batteria da [12](battery_hrs) ore
+    - CPU [Intel](processor_brand), modello [Core i9](processor_name)
+    - RAM [32](ram_gb) e SSD da [1](ssd_gb) TB
+    - [Acer](brand) con [GTX 1650](gpu) e display da [17](display_inch)
+    - autonomia minima di [10](battery_hrs) ore e RAM [16](ram_gb)
+    - HDD [512](hdd_gb) GB e processore [Ryzen 5](processor_name)
+    - voglio un notebook [Apple](brand) con [8](ram_gb) GB di RAM e [256](ssd_gb) SSD
+    - GPU [GeForce RTX 4050](gpu), marca [NVIDIA](gpu_brand)
+    - cerco un portatile [Lenovo](brand) con massimo [1000](price_max) euro e [512](ssd_gb) GB di SSD
+    - voglio un laptop [Dell](brand) con [16](ram_gb) gb di ram e GPU [NVIDIA](gpu_brand)
+    - un notebook [Asus](brand) con [GeForce GTX 1650](gpu) e schermo da [15.6](display_inch) pollici
+    - mi serve un portatile con [Core i5](processor_name) e batteria da [10](battery_hrs) ore
+    - budget [900](price_max) euro, preferibilmente marca [HP](brand)
+    - laptop [Apple](brand) con [256](ssd_gb) GB SSD e [8](ram_gb) GB RAM
+    - cerco un portatile con [Ryzen 7](processor_name) e display da [14](display_inch) pollici
+    - [MSI](brand) con [1000](hdd_gb) giga di HDD e [16](ram_gb) giga di RAM
+    - un notebook con processore [AMD](processor_brand), [GeForce RTX 4060](gpu) e batteria da [12](battery_hrs) ore
+    - vorrei un laptop [Lenovo](brand) con GPU [AMD](gpu_brand) e schermo [13.3](display_inch) pollici
+    - cerca un modello [Samsung](brand) con [1000](ssd_gb) giga di SSD e [32](ram_gb) GB ram
+    - portatile [Acer](brand), [Core i7](processor_name), GPU [NVIDIA](gpu_brand)
+    - schermo da [17](display_inch) pollici, autonomia [9](battery_hrs) ore, marca [Dell](brand)
+    - budget [800](price_max), ram [16](ram_gb) GB, SSD [512](ssd_gb)
+    - voglio un [HP](brand) con [RTX 3050](gpu) e [256](ssd_gb) SSD
+    - cerca un notebook con CPU [Intel](processor_brand), RAM [8](ram_gb), GPU [AMD](gpu_brand)
+    - [Asus](brand) con [512](ssd_gb) GB SSD e [GeForce GTX 1660](gpu)
+    - laptop con [Ryzen 5](processor_name), display da [15.6](display_inch), batteria da [11](battery_hrs) ore
+    - voglio un [MSI](brand) con GPU [NVIDIA](gpu_brand) e [1](ssd_gb) TB SSD
+    - [Apple](brand), SSD [512](ssd_gb), display [13](display_inch) pollici
+    - vorrei un laptop [samsung]{"entity": "brand", "value": "Samsung"} con [16](ram_gb) GB di RAM
+    - voglio spendere al massimo [1000](price_max) euro
+    - vorrei un processore della marca [intel]{"entity": "processor_brand", "value": "Intel"}
 - intent: affirm
   examples: |
     - mostra i risultati
@@ -67,6 +112,7 @@ nlu:
     - d'accordo
     - ok
     - va bene
+    - mostrami i risultati
 - intent: deny
   examples: |
     - no
@@ -74,31 +120,3 @@ nlu:
     - non voglio
     - magari poi
     - per niente
-- intent: choose_field
-  examples: |
-    - marca
-    - prezzo minimo
-    - prezzo massimo
-    - RAM
-    - SSD
-    - HDD
-    - marca della GPU
-    - GPU
-    - processore
-    - display
-    - batteria
-    - voglio inserire [brand](slot_name)
-    - scegli il [price_min](slot_name)
-    - scegli il [price_max](slot_name)
-    - scegli il [ram_gb](slot_name)
-    - scegli il [ssd_gb](slot_name)
-    - scegli il [hdd_gb](slot_name)
-    - scegli il [gpu](slot_name)
-    - scegli il [processor_name](slot_name)
-    - scegli il [display_inch](slot_name)
-    - scegli il [battery_hrs](slot_name)
-    - [Dell](brand)
-    - [dell]{"entity": "brand", "value": "Dell"}
-- synonym: Dell
-  examples: |
-    - dell

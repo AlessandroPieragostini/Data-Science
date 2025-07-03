@@ -5,7 +5,6 @@ rules:
     steps:
       - intent: greet
       - action: utter_greet
-      - action: utter_ask_next_slot
 
   - rule: Say goodbye
     steps:
@@ -13,49 +12,39 @@ rules:
       - action: utter_goodbye
       - active_loop: null
 
-  - rule: User chooses field to fill
+  - rule: Activate form
     steps:
-      - intent: choose_field
-      - action: action_choose_slot
-      - action: action_ask_selected_slot
+      - intent: request_form
+      - action: utter_ask_filters
+      - action: laptop_search_form
       - active_loop: laptop_search_form
 
 
-  - rule: Slot filled
+  - rule: Keep filtering
     condition:
-      - slot_was_set:
-        - asked_slot: None
+    - active_loop: laptop_search_form
     steps:
       - intent: inform
-      - action: utter_ask_next_slot
-
-
-  - rule: Slot to fill
-    condition:
-      - slot_was_set:
-        - asked_slot
-    steps:
-      - action: action_ask_selected_slot
+      # slot_was_set???
+      - action: action_recap_filters
+      - action: laptop_search_form
       - active_loop: laptop_search_form
 
-  - rule: Submit laptop search form
-    # condition:
-    #   - active_loop: laptop_search_form
+  - rule: Form submit
+    condition:
+    - active_loop: laptop_search_form
     steps:
-      - intent: affirm
-      - action: action_search_laptop
-      - active_loop: null
+    - intent: affirm
+    - action: laptop_search_form
+    - active_loop: null
+    - action: action_search_laptop
 
-  - rule: User denies search midway
-    steps:
-      - intent: deny
-      - action: utter_goodbye
-      - active_loop: null
-
-  - rule: Fallback in form
-    #condition:
-    #  - active_loop: laptop_search_form
+  - rule: Handle fallback during form
+    condition:
+      - active_loop: laptop_search_form
     steps:
       - intent: nlu_fallback
-      - action: action_default_fallback
-      - action: utter_ask_next_slot
+      - action: utter_didnt_understand
+      - action: action_recap_filters
+      - action: laptop_search_form
+      - active_loop: laptop_search_form

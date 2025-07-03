@@ -13,19 +13,25 @@ pipeline:
 - name: RegexFeaturizer
 - name: LexicalSyntacticFeaturizer
 - name: CountVectorsFeaturizer
-  analyzer: char_wb
+  analyzer: word  # parola anziché char_wb per certe entità
   min_ngram: 1
-  max_ngram: 4
+  max_ngram: 2
+- name: CountVectorsFeaturizer
+  analyzer: char_wb
+  min_ngram: 3
+  max_ngram: 5
 - name: DIETClassifier
-  epochs: 100
+  epochs: 200
   entity_recognition: True
   constrain_similarities: True
+  entity_recognition_batch_size: 64  # o un valore più alto se la RAM lo permette
 - name: EntitySynonymMapper
 - name: ResponseSelector
-  epochs: 100
+  epochs: 200
   constrain_similarities: True
 - name: FallbackClassifier
   threshold: 0.3
+
 
 policies:
 - name: RulePolicy
