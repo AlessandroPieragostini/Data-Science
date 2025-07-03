@@ -120,17 +120,17 @@ stories:
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: brand
-  - intent: inform
-    entities:
-    - ram_gb: '512'
-    - processor_brand: Intel
-    - price_max: '1200'
-  - slot_was_set:
-    - price_max: '1200'
-  - slot_was_set:
-    - processor_brand: Intel
-  - slot_was_set:
-    - ram_gb: '512'
+  # - intent: inform
+  #   entities:
+  #   - ram_gb: '512'
+  #   - processor_brand: Intel
+  #   - price_max: '1200'
+  # - slot_was_set:
+  #   - price_max: '1200'
+  # - slot_was_set:
+  #   - processor_brand: Intel
+  # - slot_was_set:
+  #   - ram_gb: '512'
   - intent: inform
     entities:
     - ssd_gb: '512'
@@ -276,3 +276,30 @@ stories:
         - battery_hrs: null
     - intent: goodbye
     - action: utter_goodbye
+- story: interactive_story_1
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_form
+  - action: utter_ask_filters
+  - action: laptop_search_form
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: brand
+  - intent: inform
+    entities:
+    - brand: Apple
+  - slot_was_set:
+    - brand: Apple
+  - action: action_recap_filters
+  - action: laptop_search_form
+  - slot_was_set:
+    - requested_slot: price_max
+  - intent: cheapest_laptop
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_search_cheapest_laptop
+  - intent: goodbye
+  - action: utter_goodbye

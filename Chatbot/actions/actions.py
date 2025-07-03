@@ -165,6 +165,7 @@ class ActionSearchLaptop(Action):
         if df.empty:
             dispatcher.utter_message(text="Mi dispiace, non ho trovato laptop che corrispondano ai tuoi filtri.")
         else:
+            dispatcher.utter_message(text=f"📄 Risultati - Pagina {page_num}:")
             subset = df.iloc[start_idx:end_idx]
             if subset.empty:
                 dispatcher.utter_message(text="Non ci sono più risultati da mostrare per questa pagina.")
@@ -240,3 +241,99 @@ class ActionResetFilters(Action):
         dispatcher.utter_message(text="Ho azzerato tutti i filtri.")
 
         return events
+    
+class ActionSuggestBestLaptop(Action):
+    """
+    Suggerisce il laptop che meglio si adatta ai filtri, in base a un criterio di ranking.
+    """
+    def name(self) -> Text:
+        return "action_suggest_best_laptop"
+
+    def run(self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[EventType]:
+        # Esempio: ranking sul prezzo più basso
+        params = {k: v for k, v in tracker.current_slot_values().items() if v is not None}
+        # Mock dei risultati
+        products = [
+            {"name": "Laptop Ultra", "price": 1100},
+            {"name": "EcoBook", "price": 850}
+        ]
+        best = sorted(products, key=lambda x: x['price'])[0]
+        dispatcher.utter_message(text=f"Ti consiglio il modello {best['name']} al prezzo di €{best['price']}.")
+        return []
+    
+class ActionSearchCheapestLaptop(Action):
+    """
+    Cerca il laptop più economico in base ai filtri e lo propone.
+    """
+    def name(self) -> Text:
+        return "action_search_cheapest_laptop"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+        # Controllo dataset
+        try:
+            df = df_laptops.copy()
+        except NameError:
+            dispatcher.utter_message(text="Errore interno: dataset dei laptop non disponibile.")
+            return []
+
+        # Estrazione e applicazione filtri (stessa logica di ActionSearchLaptop)
+        filters = {
+            'brand': tracker.get_slot('brand'),
+            'price_max': tracker.get_slot('price_max'),
+            'processor_brand': tracker.get_slot('processor_brand'),
+            'processor_name': tracker.get_slot('processor_name'),
+            'ram_gb': tracker.get_slot('ram_gb'),
+            'ssd_gb': tracker.get_slot('ssd_gb'),
+            'hdd_gb': tracker.get_slot('hdd_gb'),
+            'gpu_brand': tracker.get_slot('gpu_brand'),
+            'gpu': tracker.get_slot('gpu'),
+            'display_inch': tracker.get_slot('display_inch'),
+            'battery_hrs': tracker.get_slot('battery_hrs')
+        }
+        # Filtro come sopra
+        if filters['brand']:
+            df = df[df['brand'].str.lower().str.contains(filters['brand'].lower())]
+        if filters['price_max'] is not None:
+            df = df[df['price'] <= float(filters['price_max'])]
+        if filters['processor_brand']:
+            df = df[df['processor_brand'].str.lower().str.contains(filters['processor_brand'].lower())]
+        if filters['processor_name']:
+            df = df[df['processor_name'].str.lower().str.contains(filters['processor_name'].lower())]
+        if filters['ram_gb'] is not None:
+            df = df[df['ram_gb'] >= float(filters['ram_gb'])]
+        if filters['ssd_gb'] is not None:
+            df = df[df['ssd_gb'] >= float(filters['ssd_gb'])]
+        if filters['hdd_gb'] is not None:
+            df = df[df['hdd_gb'] >= float(filters['hdd_gb'])]
+        if filters['gpu_brand']:
+            df = df[df['gpu_brand'].str.lower().str.contains(filters['gpu_brand'].lower())]
+        if filters['gpu']:
+            df = df[df['gpu'].str.lower().str.contains(filters['gpu'].lower())]
+        if filters['display_inch'] is not None:
+            df = df[df['display_inch'] >= float(filters['display_inch'])]
+        if filters['battery_hrs'] is not None:
+            df = df[df['battery_hrs'] >= float(filters['battery_hrs'])]
+
+        if df.empty:
+            dispatcher.utter_message(text="Mi dispiace, non ho trovato alcun laptop con quei filtri.")
+            return []
+
+        # Seleziona quello con prezzo minimo
+        cheapest = df.loc[df['price'].idxmin()]
+        dispatcher.utter_message(text=(
+            f"Il laptop più economico che ho trovato è:\n"
+            f"Modello: {cheapest['name']}\n"
+            f"Marca: {cheapest['brand']}\n"
+            f"Prezzo: {cheapest['price']}€\n"
+            f"Processore: {cheapest['processor_name']} ({cheapest['processor_brand']})\n"
+            f"RAM: {cheapest['ram_gb']} GB\n"
+        ))
+        return []

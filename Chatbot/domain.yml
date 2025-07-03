@@ -1,6 +1,7 @@
 version: '3.1'
 intents:
 - affirm
+- cheapest_laptop
 - deny
 - goodbye
 - greet
@@ -9,11 +10,11 @@ intents:
 - request_form
 - reset_filters
 entities:
+- brand
 - processor_name
 - ram_gb
 - price_max
 - battery_hrs
-- brand
 - display_inch
 - processor_brand
 - ssd_gb
@@ -129,13 +130,14 @@ responses:
   utter_didnt_understand:
   - text: Scusami, non ho capito.
 actions:
+- utter_ask_filters
+- action_search_cheapest_laptop
 - utter_greet
+- utter_goodbye
+- action_recap_filters
 - action_increment_page
 - action_reset_filters
-- utter_goodbye
 - action_search_laptop
-- utter_ask_filters
-- action_recap_filters
 - validate_laptop_search_form
 session_config:
   session_expiration_time: 60

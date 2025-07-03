@@ -108,6 +108,7 @@ nlu:
     - vorrei un laptop [lenovo]{"entity": "brand", "value": "Lenovo"} con un processore [i7](processor_name) e ho un budget di [1000](price_max) euro
     - vorrei un display da [13.3](display_inch) pollici e una batteria che duri almeno [10](battery_hrs) ore
     - cerco un laptop con una RAM di [16](ram_gb) GB e un processore [Core i7](processor_name)
+    - voglio un laptop [Apple](brand)
 - intent: affirm
   examples: |
     - mostra i risultati
@@ -140,6 +141,13 @@ nlu:
     - azzera i filtri
     - cancella i filtri
     - voglio ripartire da zero
+- intent: cheapest_laptop
+  examples: |
+    - voglio il laptop più economico
+    - cerca il portatile più economico
+    - mostrami il laptop più conveniente
+    - ho bisogno di un laptop a buon mercato
+    - qual è il laptop meno costoso?
 - synonym: Samsung
   examples: |
     - samsung
