@@ -20,14 +20,6 @@ rules:
       - active_loop: laptop_search_form
 
 
-  - rule: Keep filtering
-    condition:
-    - active_loop: laptop_search_form
-    steps:
-      - intent: inform
-      - action: action_recap_filters
-      - action: laptop_search_form
-
   - rule: Form submit
     condition:
     - active_loop: laptop_search_form

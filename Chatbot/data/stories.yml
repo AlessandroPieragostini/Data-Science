@@ -455,9 +455,6 @@ stories:
   - action: action_save_laptop
   - intent: save_laptop_preference
     entities:
-    - laptop_name: Lenovo Ideapad 3
-  - intent: save_laptop_preference
-    entities:
     - laptop_name: Lenovo Ideapad 3 CB
   - action: action_save_laptop
   - slot_was_set:
