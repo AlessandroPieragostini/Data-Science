@@ -1,5 +1,5 @@
 from tkinter import EventType
-from typing import Any, Text, Dict, List
+from typing import Any, Text, Dict, List, Optional
 from rasa_sdk import Action, Tracker
 from rasa_sdk.forms import FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
@@ -13,14 +13,54 @@ try:
 except FileNotFoundError:
     pass
 
+VALID_BRANDS = ["asus", "acer", "dell", "hp", "lenovo", "apple", "msi", "samsung"]
+VALID_PROCESSOR_BRANDS = ["intel", "amd", "apple"]
+VALID_GPU_BRANDS = ["nvidia", "amd", "intel"]
 
-# --- Validazione centralizzata con re-ask o avanzamento ---
+SYNONYMS = {
+    "intel": ["intel", "intel hd", "uhd", "intel iris"],
+    "amd": ["amd", "radeon", "radeon graphics"],
+    "nvidia": ["nvidia", "geforce", "rtx", "gtx"]
+}
 class ValidateLaptopSearchForm(FormValidationAction):
+    def _normalize(self, value: str) -> str:
+        return value.strip().lower()
+
+    def _validate_choice(
+            self,
+            slot_value: Any,
+            dispatcher: CollectingDispatcher,
+            slot_name: str,
+            valid_values: List[str],
+            invalid_prompt: str,
+            synonyms: Optional[Dict[str, List[str]]] = None,
+    ) -> Dict[Text, Any]:
+
+        normalized = self._normalize(str(slot_value))
+
+        if synonyms:
+            for canonical, variations in synonyms.items():
+                if normalized in variations:
+                    return {slot_name: canonical}
+
+        if normalized in valid_values:
+            return {slot_name: normalized}
+
+        dispatcher.utter_message(template=invalid_prompt)
+        return {slot_name: None}
+
     def name(self) -> Text:
         return "validate_laptop_search_form"
 
-    
-    
+    def _out(
+        self,
+        dispatcher: CollectingDispatcher,
+        out_message: str,
+    ) -> None:
+        if not dispatcher.messages:
+            dispatcher.utter_message(text="Molto bene, puoi confermare la ricerca o inserire altri filtri, ricapitoliamo:")
+        dispatcher.utter_message(text=out_message)
+
     def _validate_positive(
         self,
         slot_value: Any,
@@ -31,7 +71,7 @@ class ValidateLaptopSearchForm(FormValidationAction):
         try:
             value = float(slot_value)
             if value < 0:
-                dispatcher.utter_message(template=invalid_prompt)
+                dispatcher.utter_message(text= "Non va bene, riprova")
                 return {slot_name: None}
             return {slot_name: value}
         except (TypeError, ValueError):
@@ -46,55 +86,75 @@ class ValidateLaptopSearchForm(FormValidationAction):
         domain: Dict[Text, Any],
     ) -> Dict[Text, Any]:
         result = self._validate_positive(slot_value, dispatcher, "price_max", "utter_price_max_invalid")
+        if result.get("price_max") is not None:
+            self._out(dispatcher, f"Prezzo massimo: {result.get('price_max')}")
         return result
 
     def validate_ram_gb(self, slot_value, dispatcher, tracker, domain):
-        return self._validate_positive(slot_value, dispatcher, "ram_gb", "utter_ram_gb_invalid")
+        result = self._validate_positive(slot_value, dispatcher, "ram_gb", "utter_ram_gb_invalid")
+        if result.get("ram_gb") is not None:
+            self._out(dispatcher, f"RAM minima: {result.get('ram_gb')} GB")
+        return result
 
     def validate_ssd_gb(self, slot_value, dispatcher, tracker, domain):
-        return self._validate_positive(slot_value, dispatcher, "ssd_gb", "utter_ssd_gb_invalid")
+        result = self._validate_positive(slot_value, dispatcher, "ssd_gb", "utter_ssd_gb_invalid")
+        if result.get("ssd_gb") is not None:
+            self._out(dispatcher, f"SSD minima: {result.get('ssd_gb')} GB")
+        return result
 
     def validate_hdd_gb(self, slot_value, dispatcher, tracker, domain):
-        return self._validate_positive(slot_value, dispatcher, "hdd_gb", "utter_hdd_gb_invalid")
+        result = self._validate_positive(slot_value, dispatcher, "hdd_gb", "utter_hdd_gb_invalid")
+        if result.get("hdd_gb") is not None:
+            self._out(dispatcher, f"HDD minima: {result.get('hdd_gb')} GB")
+        return result
 
     def validate_display_inch(self, slot_value, dispatcher, tracker, domain):
-        return self._validate_positive(slot_value, dispatcher, "display_inch", "utter_display_inch_invalid")
+        result = self._validate_positive(slot_value, dispatcher, "display_inch", "utter_display_inch_invalid")
+        if result.get("display_inch") is not None:
+            self._out(dispatcher, f"Dimensione minima display: {result.get('display_inch')}")
+        return result
 
     def validate_battery_hrs(self, slot_value, dispatcher, tracker, domain):
-        return self._validate_positive(slot_value, dispatcher, "battery_hrs", "utter_battery_hrs_invalid")
+        result = self._validate_positive(slot_value, dispatcher, "battery_hrs", "utter_battery_hrs_invalid")
+        if result.get("battery_hrs") is not None:
+            self._out(dispatcher, f"Durata minima batteria: {result.get('battery_hrs')} ore")
+        return result
 
+    def validate_brand(self, slot_value, dispatcher, tracker, domain):
+        result = self._validate_choice(slot_value, dispatcher, "brand", VALID_BRANDS, "utter_brand_invalid")
+        if result.get("brand") is not None:
+            self._out(dispatcher, f"Marca: {result.get('brand').capitalize()}")
+        return result
 
-class ActionRecapFilters(Action):
-    def name(self) -> Text:
-        return "action_recap_filters"
+    def validate_processor_brand(self, slot_value, dispatcher, tracker, domain):
+        result = self._validate_choice(slot_value, dispatcher, "processor_brand", VALID_PROCESSOR_BRANDS,
+                                       "utter_processor_brand_invalid", SYNONYMS)
+        if result.get("processor_brand") is not None:
+            self._out(dispatcher, f"Processore: {result.get('processor_brand').capitalize()}")
+        return result
 
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    def validate_gpu_brand(self, slot_value, dispatcher, tracker, domain):
+        result = self._validate_choice(slot_value, dispatcher, "gpu_brand", VALID_GPU_BRANDS, "utter_gpu_brand_invalid",
+                                       SYNONYMS)
+        if result.get("gpu_brand") is not None:
+            self._out(dispatcher, f"GPU: {result.get('gpu_brand').capitalize()}")
+        return result
 
-        # Ottieni i valori dei filtri settati finora
-        filter_slots = [
-            "brand",  "price_max", "processor_brand",
-            "processor_name", "ram_gb", "ssd_gb", "hdd_gb",
-            "gpu_brand", "gpu", "display_inch", "battery_hrs"
-        ]
+    def validate_processor_name(self, slot_value, dispatcher, tracker, domain):
+        if slot_value and len(slot_value.strip()) >= 2:
+            normalized = self._normalize(slot_value)
+            self._out(dispatcher, f"Modello processore: {normalized}")
+            return {"processor_name": normalized}
+        dispatcher.utter_message(template="utter_processor_name_invalid")
+        return {"processor_name": None}
 
-        applied_filters = []
-        for slot in filter_slots:
-            value = tracker.get_slot(slot)
-            if value is not None:
-                applied_filters.append(f"{slot.replace('_', ' ').capitalize()}: {value}")
-
-        if applied_filters:
-            filters_text = "\n- " + "\n- ".join(applied_filters)
-            dispatcher.utter_message(text=f"Hai applicato i seguenti filtri finora:{filters_text}")
-        else:
-            dispatcher.utter_message(text="Non hai ancora applicato nessun filtro.")
-
-        # Chiedi all'utente cosa vuole fare
-        dispatcher.utter_message(text="Vuoi aggiungere altri filtri o avviare la ricerca?")
-
-        return []
+    def validate_gpu(self, slot_value, dispatcher, tracker, domain):
+        if slot_value and len(slot_value.strip()) >= 2:
+            normalized = self._normalize(slot_value)
+            self._out(dispatcher, f"Modello GPU: {normalized}")
+            return {"gpu": normalized}
+        dispatcher.utter_message(template="utter_gpu_invalid")
+        return {"gpu": None}
 
 # --- Azione di ricerca finale ---
 class ActionSearchLaptop(Action):
