@@ -20,7 +20,6 @@ stories:
     - brand: Samsung
   - slot_was_set:
     - ram_gb: '16'
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
       - brand: Samsung
@@ -33,7 +32,6 @@ stories:
     - price_max: '1000'
   - slot_was_set:
     - price_max: '1000'
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_brand
@@ -42,7 +40,6 @@ stories:
     - processor_brand: Intel
   - slot_was_set:
     - processor_brand: Intel
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_name
@@ -76,7 +73,6 @@ stories:
     - price_max: '1000'
   - slot_was_set:
     - processor_name: i7
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_brand
@@ -88,7 +84,6 @@ stories:
     - display_inch: '13.3'
   - slot_was_set:
     - battery_hrs: '10'
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_brand
@@ -116,7 +111,6 @@ stories:
     - display_inch: '15.6'
   - slot_was_set:
     - display_inch: '15.6'
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: brand
@@ -136,7 +130,6 @@ stories:
     - ssd_gb: '512'
     - processor_brand: Intel
     - price_max: '1200'
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: brand
@@ -151,7 +144,6 @@ stories:
     - processor_brand: Intel
   - slot_was_set:
     - processor_name: Core i7
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: price_max
@@ -190,7 +182,6 @@ stories:
     - price_max: '1000'
   - slot_was_set:
     - processor_name: i7
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_brand
@@ -202,7 +193,6 @@ stories:
     - display_inch: '13.3'
   - slot_was_set:
     - battery_hrs: '10'
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_brand
@@ -233,7 +223,6 @@ stories:
         - processor_name: Core i7
     - slot_was_set:
         - ram_gb: '16'
-    - action: action_recap_filters
     - action: laptop_search_form
     - slot_was_set:
         - requested_slot: brand
@@ -292,7 +281,6 @@ stories:
     - brand: Apple
   - slot_was_set:
     - brand: Apple
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: price_max
@@ -323,7 +311,6 @@ stories:
     - brand: Lenovo
   - slot_was_set:
     - price_max: '500'
-  - action: action_recap_filters
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_brand
