@@ -407,3 +407,31 @@ class ActionShowFavorites(Action):
             ))
 
         return []
+
+class ActionRemoveFavorite(Action):
+    def name(self) -> Text:
+        return "action_remove_favorite"
+
+    def run(self, dispatcher, tracker, domain):
+        laptop_name = next(tracker.get_latest_entity_values("laptop_name"), None)
+        favorites = tracker.get_slot("favorite_laptops") or []
+
+        if not laptop_name:
+            dispatcher.utter_message(text="Per favore, dimmi quale laptop vuoi rimuovere dai preferiti.")
+            return []
+
+        # Cerca nei favoriti per nome (match parziale)
+        remaining = []
+        removed = None
+        for laptop in favorites:
+            if laptop_name.lower() in laptop["name"].lower():
+                removed = laptop
+                continue
+            remaining.append(laptop)
+
+        if removed:
+            dispatcher.utter_message(text=f"✅ Il laptop \"{removed['name']}\" è stato rimosso dai tuoi preferiti.")
+            return [SlotSet("favorite_laptops", remaining)]
+        else:
+            dispatcher.utter_message(text=f"❌ Non ho trovato \"{laptop_name}\" nella lista dei preferiti.")
+            return []

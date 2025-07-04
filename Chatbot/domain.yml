@@ -11,6 +11,7 @@ intents:
 - reset_filters
 - save_laptop_preference
 - show_favorites
+- remove_favorite
 entities:
 - brand
 - processor_name
@@ -152,6 +153,10 @@ responses:
   - text: Laptop salvato tra i preferiti.
   utter_no_match_for_name:
   - text: Non ho trovato un laptop con quel nome nei risultati precedenti.
+  utter_favorite_removed:
+  - text: Il laptop \"{laptop_name}\" è stato rimosso dai tuoi preferiti.
+  utter_favorite_not_found:
+  - text: Non ho trovato \"{laptop_name}\" nella lista dei preferiti.
 actions:
 - utter_ask_filters
 - action_search_cheapest_laptop
@@ -164,6 +169,7 @@ actions:
 - validate_laptop_search_form
 - action_show_favorites
 - action_save_laptop
+- action_remove_favorite
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true

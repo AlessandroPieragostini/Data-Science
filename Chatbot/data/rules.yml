@@ -66,4 +66,16 @@ rules:
       - active_loop: null
       - action: action_search_cheapest_laptop
 
-  
+  - rule: Salva un laptop tra i preferiti
+    steps:
+      - intent: save_laptop_preference
+      - action: action_save_laptop
+
+  - rule: Mostra i preferiti salvati
+    steps:
+      - intent: show_favorites
+      - action: action_show_favorites
+  - rule: Rimuove un laptop dai preferiti
+    steps:
+      - intent: remove_favorite
+      - action: action_remove_favorite

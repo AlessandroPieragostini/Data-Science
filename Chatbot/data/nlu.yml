@@ -141,6 +141,7 @@ nlu:
     - azzera i filtri
     - cancella i filtri
     - voglio ripartire da zero
+    - rimuovi filtri
 - intent: cheapest_laptop
   examples: |
     - voglio il laptop più economico
@@ -168,6 +169,14 @@ nlu:
     - lista dei preferiti
     - visualizza preferiti
     - mostra preferiti
+- intent: remove_favorite
+  examples: |
+    - rimuovi il laptop [HP Spectre x360](laptop_name) dai preferiti
+    - elimina [MacBook Air](laptop_name) dalla lista dei preferiti
+    - togli dai preferiti [Dell XPS 13](laptop_name)
+    - cancella il laptop [Lenovo Yoga](laptop_name)
+    - voglio rimuovere [Asus Vivobook](laptop_name) dai preferiti
+    - rimuovi [Lenovo Ideapad 3 CB 11IGL05](laptop_name) dai preferiti
 
 
 
