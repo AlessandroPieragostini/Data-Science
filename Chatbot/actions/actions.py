@@ -19,6 +19,8 @@ class ValidateLaptopSearchForm(FormValidationAction):
     def name(self) -> Text:
         return "validate_laptop_search_form"
 
+    
+    
     def _validate_positive(
         self,
         slot_value: Any,
@@ -160,7 +162,7 @@ class ActionSearchLaptop(Action):
         page_size = 5
         start_idx = (page_num - 1) * page_size
         end_idx = start_idx + page_size
-
+        shown_laptops = []
         # Mostra i risultati
         if df.empty:
             dispatcher.utter_message(text="Mi dispiace, non ho trovato laptop che corrispondano ai tuoi filtri.")
@@ -171,6 +173,9 @@ class ActionSearchLaptop(Action):
                 dispatcher.utter_message(text="Non ci sono più risultati da mostrare per questa pagina.")
             else:
                 for _, r in subset.iterrows():
+                    laptop_dict = r.to_dict()
+                    shown_laptops.append(laptop_dict)
+                    
                     dispatcher.utter_message(text=(
                         f"Modello: {r['name']}\n"
                         f"Marca: {r['brand']}\n"
@@ -187,7 +192,7 @@ class ActionSearchLaptop(Action):
 
         # Reset dei slot, se vuoi mantenere il page (per navigazione avanti/indietro) NON resettarlo
         
-        return []
+        return [SlotSet("last_results", shown_laptops)]
 
 class ActionIncrementPage(Action):
     def name(self) -> Text:
@@ -336,4 +341,69 @@ class ActionSearchCheapestLaptop(Action):
             f"Processore: {cheapest['processor_name']} ({cheapest['processor_brand']})\n"
             f"RAM: {cheapest['ram_gb']} GB\n"
         ))
+        return []
+    
+class ActionSaveLaptop(Action):
+    def name(self) -> Text:
+        return "action_save_laptop"
+
+    def run(self, dispatcher, tracker, domain):
+        laptop_name = next(tracker.get_latest_entity_values("laptop_name"), None)
+
+        if not laptop_name:
+            dispatcher.utter_message(template="utter_no_match_for_name")
+            return []
+
+        last_results = tracker.get_slot("last_results") or []
+
+        # Cerca il laptop all’interno dei risultati appena mostrati
+        matches = [
+            laptop for laptop in last_results
+            if laptop_name.lower() in laptop["name"].lower()
+        ]
+
+        if not matches:
+            dispatcher.utter_message(template="utter_no_match_for_name")
+            return []
+
+        if len(matches) > 1:
+            dispatcher.utter_message(text=(
+                f"⚠️ Ho trovato {len(matches)} laptop nei risultati recenti che corrispondono a \"{laptop_name}\".\n"
+                "Per favore, specifica meglio il nome completo."
+            ))
+            return []
+
+        selected_laptop = matches[0]
+        favorites = tracker.get_slot("favorite_laptops") or []
+        favorites.append(selected_laptop)
+
+        dispatcher.utter_message(text=f"✅ Ho salvato \"{selected_laptop['name']}\" tra i tuoi preferiti.")
+        return [SlotSet("favorite_laptops", favorites)]
+
+
+class ActionShowFavorites(Action):
+    def name(self) -> Text:
+        return "action_show_favorites"
+
+    def run(self, dispatcher, tracker, domain):
+        favorites = tracker.get_slot("favorite_laptops") or []
+
+        if not favorites:
+            dispatcher.utter_message(response="utter_no_favorites")
+            return []
+
+        for i, laptop in enumerate(favorites, 1):
+            dispatcher.utter_message(text=(
+                    f"{i}. {laptop['name']}\n"
+                    f"Marca: {laptop['brand']}\n"
+                    f"Prezzo: {laptop['price']}€\n"
+                    f"Processore: {laptop['processor_name']} ({laptop['processor_brand']})\n"
+                    f"RAM: {laptop['ram_gb']} GB\n"
+                    f"SSD: {laptop['ssd_gb']} GB | HDD: {laptop['hdd_gb']} GB\n"
+                    f"GPU: {laptop['gpu']} ({laptop['gpu_brand']})\n"
+                    f"Display: {laptop['display_inch']}\" {laptop['display_type']}\n"
+                    f"Batteria: {laptop['battery_hrs']} ore\n"
+                    + "-" * 80
+            ))
+
         return []

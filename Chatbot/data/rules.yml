@@ -65,3 +65,5 @@ rules:
       - action: action_deactivate_loop
       - active_loop: null
       - action: action_search_cheapest_laptop
+
+  

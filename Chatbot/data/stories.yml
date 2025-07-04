@@ -276,7 +276,8 @@ stories:
         - battery_hrs: null
     - intent: goodbye
     - action: utter_goodbye
-- story: interactive_story_1
+
+- story: più economico
   steps:
   - intent: greet
   - action: utter_greet
@@ -303,3 +304,197 @@ stories:
   - action: action_search_cheapest_laptop
   - intent: goodbye
   - action: utter_goodbye
+
+- story: preferiti
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: request_form
+  - action: utter_ask_filters
+  - action: laptop_search_form
+  - active_loop: laptop_search_form
+  - slot_was_set:
+    - requested_slot: brand
+  - intent: inform
+    entities:
+    - brand: Lenovo
+    - price_max: '500'
+  - slot_was_set:
+    - brand: Lenovo
+  - slot_was_set:
+    - price_max: '500'
+  - action: action_recap_filters
+  - action: laptop_search_form
+  - slot_was_set:
+    - requested_slot: processor_brand
+  - intent: affirm
+  - action: action_deactivate_loop
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: action_search_laptop
+  - slot_was_set:
+    - last_results:
+      - brand: Lenovo
+        name: 'Lenovo Ideapad Slim 3 (82KU017KIN) '
+        processor_name: AMD Hexa-Core Ryzen 5
+        processor_brand: AMD
+        ram_type: ' DDR4 RAM '
+        display_type: LCD
+        gpu_brand: AMD
+        gpu: Radeon
+        price: 370.15
+        ghz: 4.0
+        ram_gb: 8.0
+        ssd_gb: 512.0
+        hdd_gb: 0.0
+        display_inch: 15.6
+        adapter_w: 65.0
+        battery_hrs: 11.0
+        ram_expandable_gb: 12.0
+      - brand: Lenovo
+        name: 'Lenovo Ideapad S145 (81VD008PIN) '
+        processor_name: Intel Core i3 (8th Gen)
+        processor_brand: Intel
+        ram_type: ' DDR4 RAM '
+        display_type: LED
+        gpu_brand: Intel
+        gpu: Uhd 620
+        price: 337.73
+        ghz: 2.2
+        ram_gb: 4.0
+        ssd_gb: 0.0
+        hdd_gb: 1024.0
+        display_inch: 15.6
+        adapter_w: 45.0
+        battery_hrs: 45.0
+        ram_expandable_gb: 12.0
+      - brand: Lenovo
+        name: 'Lenovo Ideapad 3 15ITL6 (82H801L7IN) '
+        processor_name: Intel Core i3 (11th Gen)
+        processor_brand: Intel
+        ram_type: ' DDR4 RAM '
+        display_type: LCD
+        gpu_brand: Intel
+        gpu: Uhd
+        price: 345.78
+        ghz: 4.0
+        ram_gb: 8.0
+        ssd_gb: 512.0
+        hdd_gb: 0.0
+        display_inch: 15.6
+        adapter_w: 45.0
+        battery_hrs: 12.0
+        ram_expandable_gb: 12.0
+      - brand: Lenovo
+        name: 'Lenovo Ideapad Slim 3 15ITL6 (82H803LKIN) '
+        processor_name: Intel Core i5 (11th Gen)
+        processor_brand: Intel
+        ram_type: ' DDR4 RAM '
+        display_type: LCD
+        gpu_brand: Intel
+        gpu: Iris Xe
+        price: 418.1
+        ghz: 2.5
+        ram_gb: 16.0
+        ssd_gb: 512.0
+        hdd_gb: 0.0
+        display_inch: 15.6
+        adapter_w: 0.0
+        battery_hrs: 7.0
+        ram_expandable_gb: 16.0
+      - brand: Lenovo
+        name: 'Lenovo Ideapad 3 CB 11IGL05 (82BA001PHA) '
+        processor_name: Intel Celeron Dual-Core
+        processor_brand: Intel
+        ram_type: ' LPDDR4 RAM'
+        display_type: LED
+        gpu_brand: Intel
+        gpu: Uhd
+        price: 193.79
+        ghz: 2.8
+        ram_gb: 4.0
+        ssd_gb: 64.0
+        hdd_gb: 0.0
+        display_inch: 11.6
+        adapter_w: 0.0
+        battery_hrs: 10.0
+        ram_expandable_gb: 0.0
+  - intent: save_laptop_preference
+    entities:
+    - laptop_name: Lenovo Ideapad S145
+  - action: action_save_laptop
+  - slot_was_set:
+    - favorite_laptops:
+      - brand: Lenovo
+        name: 'Lenovo Ideapad S145 (81VD008PIN) '
+        processor_name: Intel Core i3 (8th Gen)
+        processor_brand: Intel
+        ram_type: ' DDR4 RAM '
+        display_type: LED
+        gpu_brand: Intel
+        gpu: Uhd 620
+        price: 337.73
+        ghz: 2.2
+        ram_gb: 4.0
+        ssd_gb: 0.0
+        hdd_gb: 1024.0
+        display_inch: 15.6
+        adapter_w: 45.0
+        battery_hrs: 45.0
+        ram_expandable_gb: 12.0
+  - intent: show_favorites
+  - action: action_show_favorites
+  - intent: save_laptop_preference
+    entities:
+    - laptop_name: Lenovo Ideapad Slim 3
+  - action: action_save_laptop
+  - intent: save_laptop_preference
+    entities:
+    - laptop_name: Lenovo Ideapad 3
+  - action: action_save_laptop
+  - intent: save_laptop_preference
+    entities:
+    - laptop_name: Lenovo Ideapad 3
+  - intent: save_laptop_preference
+    entities:
+    - laptop_name: Lenovo Ideapad 3 CB
+  - action: action_save_laptop
+  - slot_was_set:
+    - favorite_laptops:
+      - brand: Lenovo
+        name: 'Lenovo Ideapad S145 (81VD008PIN) '
+        processor_name: Intel Core i3 (8th Gen)
+        processor_brand: Intel
+        ram_type: ' DDR4 RAM '
+        display_type: LED
+        gpu_brand: Intel
+        gpu: Uhd 620
+        price: 337.73
+        ghz: 2.2
+        ram_gb: 4.0
+        ssd_gb: 0.0
+        hdd_gb: 1024.0
+        display_inch: 15.6
+        adapter_w: 45.0
+        battery_hrs: 45.0
+        ram_expandable_gb: 12.0
+      - brand: Lenovo
+        name: 'Lenovo Ideapad 3 CB 11IGL05 (82BA001PHA) '
+        processor_name: Intel Celeron Dual-Core
+        processor_brand: Intel
+        ram_type: ' LPDDR4 RAM'
+        display_type: LED
+        gpu_brand: Intel
+        gpu: Uhd
+        price: 193.79
+        ghz: 2.8
+        ram_gb: 4.0
+        ssd_gb: 64.0
+        hdd_gb: 0.0
+        display_inch: 11.6
+        adapter_w: 0.0
+        battery_hrs: 10.0
+        ram_expandable_gb: 0.0
+  - intent: show_favorites
+  - action: action_show_favorites

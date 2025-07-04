@@ -148,6 +148,35 @@ nlu:
     - mostrami il laptop più conveniente
     - ho bisogno di un laptop a buon mercato
     - qual è il laptop meno costoso?
+
+- intent: save_laptop_preference
+  examples: |
+    - salva questo laptop
+    - aggiungi il modello [HP Spectre x360](laptop_name) ai preferiti
+    - metti nei preferiti il [MacBook Air M2](laptop_name)
+    - voglio salvare il laptop [Dell XPS 13](laptop_name)
+    - salva il modello [Lenovo Ideapad S145](laptop_name) ai preferiti
+    - salvalo
+    - salva nei preferiti  [Lenovo Ideapad S145](laptop_name)
+    - salva [Lenovo Ideapad Slim 3 15ITL6](laptop_name) tra i preferiti
+    - salva [Lenovo Ideapad 3 CB 11IGL05](laptop_name) tra i preferiti
+- intent: show_favorites
+  examples: |
+    - mostrami i miei preferiti
+    - quali laptop ho salvato?
+    - fammi vedere i laptop preferiti
+    - lista dei preferiti
+    - visualizza preferiti
+    - mostra preferiti
+
+
+
+
+
+
+
+
+
 - synonym: Samsung
   examples: |
     - samsung

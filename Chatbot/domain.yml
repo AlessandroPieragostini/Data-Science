@@ -9,6 +9,8 @@ intents:
 - next_page
 - request_form
 - reset_filters
+- save_laptop_preference
+- show_favorites
 entities:
 - brand
 - processor_name
@@ -94,6 +96,23 @@ slots:
     - type: from_entity
       entity: battery_hrs
     influence_conversation: false
+
+  laptop_name:
+    type: list
+    mappings:
+    - type: custom
+    influence_conversation: false
+  favorite_laptops:
+    type: list
+    mappings:
+    - type: custom
+    influence_conversation: false
+  last_results:
+    type: list
+    mappings:
+    - type: custom
+    influence_conversation: false
+
 forms:
   laptop_search_form:
     required_slots:
@@ -129,6 +148,10 @@ responses:
   - text: Inserisci un valore di autonomia valido (numero positivo).
   utter_didnt_understand:
   - text: Scusami, non ho capito.
+  utter_saved_laptop:
+  - text: Laptop salvato tra i preferiti.
+  utter_no_match_for_name:
+  - text: Non ho trovato un laptop con quel nome nei risultati precedenti.
 actions:
 - utter_ask_filters
 - action_search_cheapest_laptop
@@ -139,6 +162,8 @@ actions:
 - action_reset_filters
 - action_search_laptop
 - validate_laptop_search_form
+- action_show_favorites
+- action_save_laptop
 session_config:
   session_expiration_time: 60
   carry_over_slots_to_new_session: true
