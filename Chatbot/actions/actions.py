@@ -55,10 +55,42 @@ class ValidateLaptopSearchForm(FormValidationAction):
     def _out(
         self,
         dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        current_slot: str,
         out_message: str,
+        intro: Optional[str] = "Molto bene, puoi inserire altri filtri o confermare la ricerca, riepiloghiamo:",
+        show_intro_if_first: bool = True,
     ) -> None:
-        if not dispatcher.messages:
-            dispatcher.utter_message(text="Molto bene, puoi confermare la ricerca o inserire altri filtri, ricapitoliamo:")
+        # Messaggio introduttivo (solo se non ci sono messaggi precedenti)
+        if show_intro_if_first and not dispatcher.messages and intro:
+            dispatcher.utter_message(text=intro)
+
+        # Riepiloga gli slot già settati, esclusi quelli non rilevanti
+            slot_labels = {
+                "price_max": "Prezzo massimo",
+                "ram_gb": "RAM minima",
+                "ssd_gb": "SSD minima",
+                "hdd_gb": "HDD minima",
+                "display_inch": "Dimensione display",
+                "battery_hrs": "Durata batteria",
+                "brand": "Marca",
+                "processor_brand": "Marca processore",
+                "processor_name": "Modello processore",
+                "gpu_brand": "Marca GPU",
+                "gpu": "Modello GPU",
+            }
+
+            # Riepiloga gli slot già settati, esclusi quelli irrilevanti
+            excluded_slots = {"requested_slot", current_slot, "page"}
+            previous = {
+                k: v for k, v in tracker.slots.items()
+                if v is not None and k not in excluded_slots
+            }
+            for k, v in previous.items():
+                label = slot_labels.get(k, k.replace('_', ' ').capitalize())
+                dispatcher.utter_message(text=f"{label}: {v}")
+
+        # Infine, aggiunge il messaggio dello slot corrente
         dispatcher.utter_message(text=out_message)
 
     def _validate_positive(
@@ -78,72 +110,66 @@ class ValidateLaptopSearchForm(FormValidationAction):
             dispatcher.utter_message(template=invalid_prompt)
             return {slot_name: None}
 
-    def validate_price_max(
-        self,
-        slot_value: Any,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any],
-    ) -> Dict[Text, Any]:
+    def validate_price_max(self, slot_value, dispatcher, tracker, domain):
         result = self._validate_positive(slot_value, dispatcher, "price_max", "utter_price_max_invalid")
         if result.get("price_max") is not None:
-            self._out(dispatcher, f"Prezzo massimo: {result.get('price_max')}")
+            self._out(dispatcher, tracker, "price_max", f"Prezzo massimo: {result.get('price_max')}")
         return result
 
     def validate_ram_gb(self, slot_value, dispatcher, tracker, domain):
         result = self._validate_positive(slot_value, dispatcher, "ram_gb", "utter_ram_gb_invalid")
         if result.get("ram_gb") is not None:
-            self._out(dispatcher, f"RAM minima: {result.get('ram_gb')} GB")
+            self._out(dispatcher, tracker, "ram_gb", f"RAM minima: {result.get('ram_gb')} GB")
         return result
 
     def validate_ssd_gb(self, slot_value, dispatcher, tracker, domain):
         result = self._validate_positive(slot_value, dispatcher, "ssd_gb", "utter_ssd_gb_invalid")
         if result.get("ssd_gb") is not None:
-            self._out(dispatcher, f"SSD minima: {result.get('ssd_gb')} GB")
+            self._out(dispatcher, tracker, "ssd_gb", f"SSD minima: {result.get('ssd_gb')} GB")
         return result
 
     def validate_hdd_gb(self, slot_value, dispatcher, tracker, domain):
         result = self._validate_positive(slot_value, dispatcher, "hdd_gb", "utter_hdd_gb_invalid")
         if result.get("hdd_gb") is not None:
-            self._out(dispatcher, f"HDD minima: {result.get('hdd_gb')} GB")
+            self._out(dispatcher, tracker, "hdd_gb", f"HDD minima: {result.get('hdd_gb')} GB")
         return result
 
     def validate_display_inch(self, slot_value, dispatcher, tracker, domain):
         result = self._validate_positive(slot_value, dispatcher, "display_inch", "utter_display_inch_invalid")
         if result.get("display_inch") is not None:
-            self._out(dispatcher, f"Dimensione minima display: {result.get('display_inch')}")
+            self._out(dispatcher, tracker, "display_inch", f"Dimensione minima display: {result.get('display_inch')}")
         return result
 
     def validate_battery_hrs(self, slot_value, dispatcher, tracker, domain):
         result = self._validate_positive(slot_value, dispatcher, "battery_hrs", "utter_battery_hrs_invalid")
         if result.get("battery_hrs") is not None:
-            self._out(dispatcher, f"Durata minima batteria: {result.get('battery_hrs')} ore")
+            self._out(dispatcher, tracker, "battery_hrs", f"Durata minima batteria: {result.get('battery_hrs')} ore")
         return result
 
     def validate_brand(self, slot_value, dispatcher, tracker, domain):
         result = self._validate_choice(slot_value, dispatcher, "brand", VALID_BRANDS, "utter_brand_invalid")
         if result.get("brand") is not None:
-            self._out(dispatcher, f"Marca: {result.get('brand').capitalize()}")
+            self._out(dispatcher, tracker, "brand", f"Marca: {result.get('brand').capitalize()}")
         return result
 
     def validate_processor_brand(self, slot_value, dispatcher, tracker, domain):
         result = self._validate_choice(slot_value, dispatcher, "processor_brand", VALID_PROCESSOR_BRANDS,
                                        "utter_processor_brand_invalid", SYNONYMS)
         if result.get("processor_brand") is not None:
-            self._out(dispatcher, f"Processore: {result.get('processor_brand').capitalize()}")
+            self._out(dispatcher, tracker, "processor_brand", f"Processore: {result.get('processor_brand').capitalize()}")
         return result
 
     def validate_gpu_brand(self, slot_value, dispatcher, tracker, domain):
-        result = self._validate_choice(slot_value, dispatcher, "gpu_brand", VALID_GPU_BRANDS, "utter_gpu_brand_invalid",
-                                       SYNONYMS)
+        result = self._validate_choice(slot_value, dispatcher, "gpu_brand", VALID_GPU_BRANDS,
+                                       "utter_gpu_brand_invalid", SYNONYMS)
         if result.get("gpu_brand") is not None:
-            self._out(dispatcher, f"GPU: {result.get('gpu_brand').capitalize()}")
+            self._out(dispatcher, tracker, "gpu_brand", f"GPU: {result.get('gpu_brand').capitalize()}")
         return result
 
     def validate_processor_name(self, slot_value, dispatcher, tracker, domain):
         if slot_value and len(slot_value.strip()) >= 2:
             normalized = self._normalize(slot_value)
-            self._out(dispatcher, f"Modello processore: {normalized}")
+            self._out(dispatcher, tracker, "processor_name", f"Modello processore: {normalized}")
             return {"processor_name": normalized}
         dispatcher.utter_message(template="utter_processor_name_invalid")
         return {"processor_name": None}
@@ -151,7 +177,7 @@ class ValidateLaptopSearchForm(FormValidationAction):
     def validate_gpu(self, slot_value, dispatcher, tracker, domain):
         if slot_value and len(slot_value.strip()) >= 2:
             normalized = self._normalize(slot_value)
-            self._out(dispatcher, f"Modello GPU: {normalized}")
+            self._out(dispatcher, tracker, "gpu", f"Modello GPU: {normalized}")
             return {"gpu": normalized}
         dispatcher.utter_message(template="utter_gpu_invalid")
         return {"gpu": None}
