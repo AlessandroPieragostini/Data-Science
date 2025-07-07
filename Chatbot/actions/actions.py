@@ -66,7 +66,7 @@ class ValidateLaptopSearchForm(FormValidationAction):
         try:
             value = float(slot_value)
             if value < 0:
-                dispatcher.utter_message(text= "Non va bene, riprova")
+                dispatcher.utter_message(text= "Hai inserito un numero negativo, riprova")
                 return {slot_name: None}
             return {slot_name: value}
         except (TypeError, ValueError):

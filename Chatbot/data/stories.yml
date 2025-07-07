@@ -43,7 +43,7 @@ stories:
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_name
-  - intent: affirm
+  - intent: submit
   - action: action_deactivate_loop
   - active_loop: null
   - slot_was_set:
@@ -87,7 +87,7 @@ stories:
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_brand
-  - intent: affirm
+  - intent: submit
   - action: action_deactivate_loop
   - active_loop: null
   - slot_was_set:
@@ -147,7 +147,7 @@ stories:
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: price_max
-  - intent: affirm
+  - intent: submit
   - action: action_deactivate_loop
   - active_loop: null
   - slot_was_set:
@@ -196,7 +196,7 @@ stories:
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_brand
-  - intent: affirm
+  - intent: submit
   - action: action_deactivate_loop
   - active_loop: null
   - slot_was_set:
@@ -226,7 +226,7 @@ stories:
     - action: laptop_search_form
     - slot_was_set:
         - requested_slot: brand
-    - intent: affirm
+    - intent: submit
     - action: action_deactivate_loop
     - active_loop: null
     - slot_was_set:
@@ -314,7 +314,7 @@ stories:
   - action: laptop_search_form
   - slot_was_set:
     - requested_slot: processor_brand
-  - intent: affirm
+  - intent: submit
   - action: action_deactivate_loop
   - active_loop: null
   - slot_was_set:

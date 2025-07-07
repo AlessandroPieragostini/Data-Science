@@ -22,6 +22,30 @@ nlu:
     - aiutami a trovare un portatile
     - come posso cercare un computer
     - cerco un laptop
+    - continua la ricerca
+    - mi serve un nuovo portatile
+    - voglio acquistare un computer portatile
+    - consigliami un notebook
+    - dammi un laptop adatto a me
+    - inizia la ricerca di un portatile
+    - desidero un computer portatile
+    - aiutami a scegliere un laptop
+    - voglio un computer nuovo
+    - voglio un notebook per lavoro
+    - cerco un portatile per lo studio
+    - ho bisogno di un laptop leggero
+    - mostrami come cercare un computer portatile
+    - voglio trovare un buon notebook
+    - prosegui con la ricerca
+    - vai avanti con la ricerca
+    - riprendi la ricerca
+    - continuiamo a cercare
+    - prosegui nella ricerca
+    - avanti con i risultati
+    - continua a mostrarmi opzioni
+    - porta avanti la ricerca
+    - prosegui con i risultati
+    - andiamo avanti con la ricerca
 - intent: inform
   examples: |
     - cerco un laptop della marca [Samsung](brand)
@@ -76,7 +100,7 @@ nlu:
     - SSD [256](ssd_gb) e HDD [512](hdd_gb) gb
     - schermo [13](display_inch) pollici e batteria da [12](battery_hrs) ore
     - CPU [Intel](processor_brand), modello [Core i9](processor_name)
-    - RAM [32](ram_gb) e SSD da [1](ssd_gb) TB
+    - RAM [32](ram_gb) e SSD da [1a](ssd_gb) TB
     - [Acer](brand) con [GTX 1650](gpu) e display da [17](display_inch)
     - autonomia minima di [10](battery_hrs) ore e RAM [16](ram_gb)
     - HDD [512](hdd_gb) GB e processore [Ryzen 5](processor_name)
@@ -109,17 +133,32 @@ nlu:
     - vorrei un display da [13.3](display_inch) pollici e una batteria che duri almeno [10](battery_hrs) ore
     - cerco un laptop con una RAM di [16](ram_gb) GB e un processore [Core i7](processor_name)
     - voglio un laptop [Apple](brand)
-- intent: affirm
+
+- intent: submit
   examples: |
     - mostra i risultati
-    - sì
-    - certo
-    - esatto
-    - d'accordo
-    - ok
+    - va bene, mostra i risultati
+    - va bene, mostrami i risultati
+    - va bene, fammi vedere i risultati
+    - mostrami i laptop
+    - va bene, mostrami i portatili
+    - mostrami i computer
+    - va bene, mostrami i notebook
+    - mostrami i modelli
     - va bene
     - mostrami i risultati
     - va bene così, mostra i risultati
+    - procedi con la ricerca
+    - esegui la ricerca
+    - confermo e mostra i risultati
+    - ok, procedi
+    - bene, ricerca i portatili
+    - cerca ora i risultati
+    - avvia la ricerca
+    - conferma ricerca
+    - ok, esegui
+    - perfetto, fammi vedere
+
 - intent: deny
   examples: |
     - no
@@ -127,6 +166,7 @@ nlu:
     - non voglio
     - magari poi
     - per niente
+
 - intent: next_page
   examples: |
     - mostrane altri
@@ -134,6 +174,12 @@ nlu:
     - altri
     - pagina successiva
     - ne hai altri?
+    - vai alla pagina successiva
+    - continua con i risultati
+    - mostra la pagina dopo
+    - fammi vedere altro
+    - passa alla successiva
+
 - intent: reset_filters
   examples: |
     - resetta i filtri
@@ -142,6 +188,11 @@ nlu:
     - cancella i filtri
     - voglio ripartire da zero
     - rimuovi filtri
+    - ripristina impostazioni di ricerca
+    - togli tutti i filtri
+    - reimposta i criteri
+    - ricomincia la selezione
+
 - intent: cheapest_laptop
   examples: |
     - voglio il laptop più economico
@@ -149,6 +200,13 @@ nlu:
     - mostrami il laptop più conveniente
     - ho bisogno di un laptop a buon mercato
     - qual è il laptop meno costoso?
+    - trova il portatile con il prezzo più basso
+    - indicami l’opzione più economica
+    - mostrami il modello più a buon prezzo
+    - qual è la scelta più economica?
+    - suggerisci il laptop più economico disponibile
+    - mostrami il meno caro
+
 
 - intent: save_laptop_preference
   examples: |

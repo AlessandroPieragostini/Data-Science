@@ -1,6 +1,6 @@
 version: '3.1'
 intents:
-- affirm
+- submit
 - cheapest_laptop
 - deny
 - goodbye
@@ -134,7 +134,7 @@ responses:
   utter_goodbye:
   - text: A presto! Se ti serve altro, chiedi pure.
   utter_ask_filters:
-  - text: Bene! Dimmi pure quali sono i tuoi requisiti.
+  - text: Bene! Dimmi pure quali sono i tuoi requisiti. Puoi indicarmi la marca, il prezzo massimo, il tipo di processore, la RAM (in GB), lo spazio SSD (in GB) o HDD (in GB), la scheda grafica, la dimensione dello schermo e l'autonomia della batteria.
   utter_price_max_invalid:
   - text: Il prezzo massimo deve essere un numero positivo e non inferiore al minimo. Riprova.
   utter_ram_gb_invalid:
