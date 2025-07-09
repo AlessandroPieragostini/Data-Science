@@ -21,7 +21,7 @@ I progetti spaziano su argomenti come **previsioni su serie temporali, algoritmi
 - Studio dei **rapporti** e individuazione dei soggetti centrali nella rete.
 
 📁 **Percorso:** `Social_Network_Analysis`  
-💻 **Stack tecnologico:** Python, NetworkX, Gephi, Matplotlib  
+💻 **Stack tecnologico:** Python, NetworkX, Matplotlib  
 
 ---
 
